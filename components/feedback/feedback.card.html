@@ -1,0 +1,70 @@
+<!-- @dsCard group="Components" viewport="700x440" name="Feedback" subtitle="Badge, Tag, Tooltip, Toast" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../../styles.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; background: var(--surface-canvas); padding: 28px; }
+  .wrap { display: flex; flex-direction: column; gap: 26px; max-width: 644px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .lbl { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; }
+  .toasts { display: flex; flex-direction: column; gap: 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { Badge, Tag, Tooltip, Toast, Button } = window.FabricDesignSystem_7bb975;
+  function Demo() {
+    return (
+      <div className="wrap">
+        <div>
+          <div className="lbl">Badge</div>
+          <div className="row">
+            <Badge tone="neutral">12 items</Badge>
+            <Badge tone="primary">New</Badge>
+            <Badge tone="success" dot>On track</Badge>
+            <Badge tone="warning" dot>At risk</Badge>
+            <Badge tone="danger" dot>Blocked</Badge>
+            <Badge tone="warm">Draft</Badge>
+            <Badge tone="cool">Synced</Badge>
+            <Badge tone="solid">Pro</Badge>
+          </div>
+        </div>
+        <div>
+          <div className="lbl">Tag</div>
+          <div className="row">
+            <Tag color="var(--terracotta-500)">Writing</Tag>
+            <Tag color="var(--marsh-500)">Research</Tag>
+            <Tag selectable selected>Today</Tag>
+            <Tag selectable>Later</Tag>
+            <Tag onRemove={() => {}}>removable</Tag>
+          </div>
+        </div>
+        <div>
+          <div className="lbl">Tooltip</div>
+          <div className="row">
+            <Tooltip label="Shown above on hover" placement="top"><Button variant="secondary" size="sm">Hover me</Button></Tooltip>
+            <Tooltip label="To the right" placement="right"><Button variant="ghost" size="sm">And me</Button></Tooltip>
+          </div>
+        </div>
+        <div>
+          <div className="lbl">Toast</div>
+          <div className="toasts">
+            <Toast tone="success" title="Saved" onClose={() => {}}>Your changes are tucked away.</Toast>
+            <Toast tone="warning" title="You're offline">We'll sync when you reconnect.</Toast>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+/* Fabric — Seasons
+ * A gentle seasonal layer, orthogonal to light/dark (Nightfall). A season
+ * rotates the *accent* and the *signature texture* so the product can feel the
+ * turn of the year — WITHOUT touching the calm neutral core (surfaces, ink,
+ * the sage primary all stay put). Seasons are a whisper, not a reskin:
+ * use them for soft highlights, dots, borders, banners, illustration tints.
+ *
+ * Apply to the whole page with <html data-season="autumn">, or to any single
+ * element to season just that banner/section (the attribute selector matches
+ * the element and inherits to its subtree).
+ *
+ * The soft fill and accent-text are derived with color-mix against the CURRENT
+ * surface/ink, so a season composes with light AND dark for free — no per-theme
+ * duplication. Spring is the default.
+ *
+ * Signature texture (apply the matching utility on the surface):
+ *   spring → .fabric-weave   summer → .fabric-ribbed
+ *   autumn → .fabric-felt    winter → .fabric-frost
+ *
+ * Canvas whisper: --season-canvas is the page canvas with a ~5% breath of the
+ * season's accent mixed in — warm in autumn, cool in winter, fresh in spring,
+ * golden in summer. Use it in place of --surface-canvas on page/app backgrounds
+ * that should feel the season. Derived against the current --surface-canvas, so
+ * it adapts to Nightfall for free and stays a true whisper.
+ */
+
+:root,
+[data-season="spring"] {
+  --season-accent:      var(--sage-500);
+  --season-accent-soft: color-mix(in oklab, var(--season-accent) 15%, var(--surface-card));
+  --season-on-soft:     color-mix(in oklab, var(--season-accent) 62%, var(--text-strong));
+  --season-canvas:      color-mix(in oklab, var(--season-accent) 5%, var(--surface-canvas));
+}
+
+[data-season="summer"] {
+  --season-accent:      var(--ochre-500);
+  --season-accent-soft: color-mix(in oklab, var(--season-accent) 15%, var(--surface-card));
+  --season-on-soft:     color-mix(in oklab, var(--season-accent) 62%, var(--text-strong));
+  --season-canvas:      color-mix(in oklab, var(--season-accent) 5%, var(--surface-canvas));
+}
+
+[data-season="autumn"] {
+  --season-accent:      var(--terracotta-500);
+  --season-accent-soft: color-mix(in oklab, var(--season-accent) 15%, var(--surface-card));
+  --season-on-soft:     color-mix(in oklab, var(--season-accent) 62%, var(--text-strong));
+  --season-canvas:      color-mix(in oklab, var(--season-accent) 6%, var(--surface-canvas));
+}
+
+[data-season="winter"] {
+  --season-accent:      var(--marsh-500);
+  --season-accent-soft: color-mix(in oklab, var(--season-accent) 15%, var(--surface-card));
+  --season-on-soft:     color-mix(in oklab, var(--season-accent) 62%, var(--text-strong));
+  --season-canvas:      color-mix(in oklab, var(--season-accent) 6%, var(--surface-canvas));
+}

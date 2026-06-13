@@ -1,0 +1,48 @@
+/* Fabric — Typography
+ * Humanist type for a human design system. Newsreader carries warmth and
+ * literary calm in display sizes; Hanken Grotesk is the steady, legible
+ * voice of the UI; IBM Plex Mono handles data, labels and code.
+ */
+:root {
+  /* ---- Families ---- */
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-sans:  'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:  'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Semantic family aliases */
+  --font-display: var(--font-serif);  /* headlines, hero, quotes */
+  --font-body:    var(--font-sans);   /* paragraphs, UI labels */
+  --font-data:    var(--font-mono);   /* numerals, code, kbd, eyebrows */
+
+  /* ---- Type scale (1.20 minor-third, rem on 16px root) ---- */
+  --text-2xs:  0.6875rem;  /* 11px — micro labels */
+  --text-xs:   0.75rem;    /* 12px — captions, meta */
+  --text-sm:   0.875rem;   /* 14px — secondary UI */
+  --text-base: 1rem;       /* 16px — body */
+  --text-md:   1.125rem;   /* 18px — lead body */
+  --text-lg:   1.375rem;   /* 22px — small headings */
+  --text-xl:   1.75rem;    /* 28px — section headings */
+  --text-2xl:  2.25rem;    /* 36px — page titles */
+  --text-3xl:  2.875rem;   /* 46px — display */
+  --text-4xl:  3.75rem;    /* 60px — hero */
+  --text-5xl:  4.75rem;    /* 76px — oversized hero */
+
+  /* ---- Weights ---- */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ---- Line heights ---- */
+  --leading-tight:   1.12;  /* display / headlines */
+  --leading-snug:    1.28;  /* sub-heads */
+  --leading-normal:  1.55;  /* body */
+  --leading-relaxed: 1.72;  /* long-form reading */
+
+  /* ---- Letter spacing ---- */
+  --tracking-tight:  -0.02em;  /* large serif display */
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;   /* small caps, UI labels */
+  --tracking-eyebrow: 0.16em;  /* mono eyebrows / kickers */
+}

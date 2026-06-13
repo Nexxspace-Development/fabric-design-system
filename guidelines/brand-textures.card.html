@@ -1,0 +1,33 @@
+<!-- @dsCard group="Brand" viewport="700x330" name="Texture" subtitle="Woven, grained, felted & stitched surface treatments" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--surface-card); padding: 26px 28px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tile { height: 96px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);
+    background-color: var(--surface-sunken); display: flex; align-items: flex-end; padding: 10px; }
+  .name { font-family: var(--font-data); font-size: 11px; color: var(--text-muted); }
+  .stitchrow { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
+  .stitchrow .lbl { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); white-space: nowrap; }
+  .fabric-stitch { flex: 1; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="tile fabric-weave"><span class="name">.fabric-weave</span></div>
+    <div class="tile fabric-linen"><span class="name">.fabric-linen</span></div>
+    <div class="tile fabric-grain"><span class="name">.fabric-grain</span></div>
+    <div class="tile fabric-ribbed"><span class="name">.fabric-ribbed</span></div>
+    <div class="tile fabric-felt"><span class="name">.fabric-felt</span></div>
+    <div class="tile fabric-frost"><span class="name">.fabric-frost</span></div>
+  </div>
+  <div class="stitchrow">
+    <span class="lbl">Running stitch</span>
+    <hr class="fabric-stitch" />
+    <span class="lbl">.fabric-stitch</span>
+  </div>
+</body>
+</html>

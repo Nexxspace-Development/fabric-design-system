@@ -1,0 +1,35 @@
+<!-- @dsCard group="Brand" viewport="700x220" name="Logo & mark" subtitle="The Fabric leaf mark and wordmark lockup" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--surface-card); padding: 30px 34px; display: flex; gap: 48px; align-items: center; }
+  .lockup { display: flex; align-items: center; gap: 14px; }
+  .lockup img { width: 44px; height: 44px; }
+  .wordmark { font-family: var(--font-display); font-size: 38px; font-weight: 500; letter-spacing: -0.01em; color: var(--text-strong); }
+  .stack { display: flex; flex-direction: column; gap: 24px; }
+  .mark-on-dark { background: var(--surface-inverse); border-radius: var(--radius-lg); padding: 18px 22px; display: flex; align-items: center; gap: 12px; }
+  .mark-on-dark .wordmark { color: var(--stone-100); font-size: 26px; }
+  .mark-on-dark img { width: 30px; height: 30px; }
+  .meta { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+</style>
+</head>
+<body>
+  <div class="stack">
+    <div class="lockup">
+      <img src="../assets/fabric-mark.svg" alt="Fabric mark" />
+      <span class="wordmark">Fabric</span>
+    </div>
+    <div class="mark-on-dark">
+      <img src="../assets/fabric-mark.svg" alt="" />
+      <span class="wordmark">Fabric</span>
+    </div>
+  </div>
+  <div class="stack">
+    <img src="../assets/fabric-mark.svg" alt="Fabric mark" style="width:72px;height:72px" />
+    <span class="meta">Leaf mark · clear space ≥ mark height ÷ 2</span>
+  </div>
+</body>
+</html>

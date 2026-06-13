@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Marsh — cool accent" subtitle="Still water & overcast sky. Info, links." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--surface-card); padding: 24px 28px; }
+  .scale { display: grid; grid-template-columns: repeat(10, 1fr); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-xs); }
+  .sw { height: 72px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; }
+  .sw span { font-family: var(--font-data); font-size: 10px; }
+  .light span { color: rgba(40,35,28,0.55); } .dark span { color: rgba(255,253,248,0.72); }
+</style>
+</head>
+<body>
+  <div class="scale">
+    <div class="sw light" style="background:var(--marsh-50)"><span>50</span></div>
+    <div class="sw light" style="background:var(--marsh-100)"><span>100</span></div>
+    <div class="sw light" style="background:var(--marsh-200)"><span>200</span></div>
+    <div class="sw light" style="background:var(--marsh-300)"><span>300</span></div>
+    <div class="sw light" style="background:var(--marsh-400)"><span>400</span></div>
+    <div class="sw dark" style="background:var(--marsh-500)"><span>500</span></div>
+    <div class="sw dark" style="background:var(--marsh-600)"><span>600</span></div>
+    <div class="sw dark" style="background:var(--marsh-700)"><span>700</span></div>
+    <div class="sw dark" style="background:var(--marsh-800)"><span>800</span></div>
+    <div class="sw dark" style="background:var(--marsh-900)"><span>900</span></div>
+  </div>
+</body>
+</html>

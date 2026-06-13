@@ -1,0 +1,25 @@
+<!-- @dsCard group="Spacing" viewport="700x190" name="Elevation" subtitle="Warm-tinted, diffuse shadows — xs → xl" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--surface-canvas); padding: 30px 28px; }
+  .row { display: flex; gap: 26px; align-items: center; }
+  .item { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .box { width: 92px; height: 64px; background: var(--surface-raised); border-radius: var(--radius-lg); }
+  .tok { font-family: var(--font-data); font-size: 10px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-xs)"></div><span class="tok">xs</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-sm)"></div><span class="tok">sm</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-md)"></div><span class="tok">md</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-lg)"></div><span class="tok">lg</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-xl)"></div><span class="tok">xl</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-inset);background:var(--surface-sunken)"></div><span class="tok">inset</span></div>
+  </div>
+</body>
+</html>

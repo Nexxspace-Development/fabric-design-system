@@ -1,0 +1,210 @@
+/* Fabric — Nightfall (dark theme)
+ * Night, still grounded in nature: not a cold blue-black but warm dark earth —
+ * loam, bark and peat for surfaces, moonlight-on-linen for ink, and a luminous
+ * moonlit moss for the primary. Only the SEMANTIC layer changes; the base
+ * OKLCH scales stay put, so every component flips for free.
+ *
+ * Three scopes, by design:
+ *   1. @media (prefers-color-scheme: dark) :root   — follows the OS.
+ *   2. :root[data-theme="dark"]                    — force dark (toggle).
+ *   3. :root[data-theme="light"]                   — force light, even when the
+ *                                                    OS prefers dark (toggle back).
+ * The attribute selectors (specificity 0,2,0) always beat the media :root
+ * (0,1,0), so an explicit choice wins over the OS in either direction.
+ */
+
+/* ---- Dark values (shared by the OS media query and the explicit toggle) ---- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-canvas:  oklch(0.205 0.012 58);
+    --surface-card:    oklch(0.246 0.013 57);
+    --surface-raised:  oklch(0.288 0.014 56);
+    --surface-sunken:  oklch(0.172 0.010 58);
+    --surface-inverse: oklch(0.928 0.010 84);
+
+    --text-strong:    oklch(0.955 0.008 85);
+    --text-body:      oklch(0.882 0.008 82);
+    --text-muted:     oklch(0.712 0.012 76);
+    --text-faint:     oklch(0.566 0.013 70);
+    --text-on-color:  oklch(0.205 0.012 58);
+    --text-on-sage:   oklch(0.205 0.014 56);
+    --text-on-inverse: oklch(0.242 0.013 54);
+
+    --border-subtle:  oklch(0.305 0.012 58);
+    --border-default: oklch(0.368 0.013 58);
+    --border-strong:  oklch(0.452 0.014 58);
+
+    --primary:           var(--sage-400);
+    --primary-hover:     var(--sage-300);
+    --primary-press:     var(--sage-500);
+    --primary-soft:      oklch(0.318 0.034 147);
+    --primary-soft-hover: oklch(0.372 0.038 147);
+    --primary-soft-tx:   oklch(0.838 0.040 147);
+    --primary-ring:      var(--sage-500);
+
+    --accent-warm:      var(--terracotta-400);
+    --accent-warm-soft: oklch(0.342 0.052 45);
+    --accent-gold:      var(--ochre-400);
+    --accent-gold-soft: oklch(0.352 0.050 80);
+    --accent-cool:      var(--marsh-400);
+    --accent-cool-soft: oklch(0.330 0.034 244);
+
+    --success:      var(--sage-400);
+    --success-soft: oklch(0.318 0.034 147);
+    --warning:      var(--ochre-400);
+    --warning-soft: oklch(0.352 0.050 80);
+    --danger:       var(--rust-300);
+    --danger-hover: oklch(0.700 0.100 31);
+    --danger-soft:  oklch(0.330 0.072 30);
+    --info:         var(--marsh-400);
+    --info-soft:    oklch(0.330 0.034 244);
+
+    --on-primary-soft: oklch(0.838 0.040 147);
+    --on-warm-soft:    var(--terracotta-200);
+    --on-gold-soft:    var(--ochre-200);
+    --on-cool-soft:    var(--marsh-200);
+    --on-success-soft: var(--sage-200);
+    --on-warning-soft: var(--ochre-200);
+    --on-danger-soft:  var(--rust-300);
+    --on-info-soft:    var(--marsh-200);
+
+    --hover-wash:    oklch(0.318 0.013 58);
+    --control-track: oklch(0.368 0.013 58);
+    --control-thumb: oklch(0.860 0.010 82);
+
+    --texture-ink:        hsl(48 24% 82% / 0.09);
+    --texture-ink-strong: hsl(48 24% 82% / 0.17);
+
+    --focus-ring: var(--sage-400);
+    --shadow-color: 40 30% 2%;
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface-canvas:  oklch(0.205 0.012 58);
+  --surface-card:    oklch(0.246 0.013 57);
+  --surface-raised:  oklch(0.288 0.014 56);
+  --surface-sunken:  oklch(0.172 0.010 58);
+  --surface-inverse: oklch(0.928 0.010 84);
+
+  --text-strong:    oklch(0.955 0.008 85);
+  --text-body:      oklch(0.882 0.008 82);
+  --text-muted:     oklch(0.712 0.012 76);
+  --text-faint:     oklch(0.566 0.013 70);
+  --text-on-color:  oklch(0.205 0.012 58);
+  --text-on-sage:   oklch(0.205 0.014 56);
+  --text-on-inverse: oklch(0.242 0.013 54);
+
+  --border-subtle:  oklch(0.305 0.012 58);
+  --border-default: oklch(0.368 0.013 58);
+  --border-strong:  oklch(0.452 0.014 58);
+
+  --primary:           var(--sage-400);
+  --primary-hover:     var(--sage-300);
+  --primary-press:     var(--sage-500);
+  --primary-soft:      oklch(0.318 0.034 147);
+  --primary-soft-hover: oklch(0.372 0.038 147);
+  --primary-soft-tx:   oklch(0.838 0.040 147);
+  --primary-ring:      var(--sage-500);
+
+  --accent-warm:      var(--terracotta-400);
+  --accent-warm-soft: oklch(0.342 0.052 45);
+  --accent-gold:      var(--ochre-400);
+  --accent-gold-soft: oklch(0.352 0.050 80);
+  --accent-cool:      var(--marsh-400);
+  --accent-cool-soft: oklch(0.330 0.034 244);
+
+  --success:      var(--sage-400);
+  --success-soft: oklch(0.318 0.034 147);
+  --warning:      var(--ochre-400);
+  --warning-soft: oklch(0.352 0.050 80);
+  --danger:       var(--rust-300);
+  --danger-hover: oklch(0.700 0.100 31);
+  --danger-soft:  oklch(0.330 0.072 30);
+  --info:         var(--marsh-400);
+  --info-soft:    oklch(0.330 0.034 244);
+
+  --on-primary-soft: oklch(0.838 0.040 147);
+  --on-warm-soft:    var(--terracotta-200);
+  --on-gold-soft:    var(--ochre-200);
+  --on-cool-soft:    var(--marsh-200);
+  --on-success-soft: var(--sage-200);
+  --on-warning-soft: var(--ochre-200);
+  --on-danger-soft:  var(--rust-300);
+  --on-info-soft:    var(--marsh-200);
+
+  --hover-wash:    oklch(0.318 0.013 58);
+  --control-track: oklch(0.368 0.013 58);
+  --control-thumb: oklch(0.860 0.010 82);
+
+  --texture-ink:        hsl(48 24% 82% / 0.09);
+  --texture-ink-strong: hsl(48 24% 82% / 0.17);
+
+  --focus-ring: var(--sage-400);
+  --shadow-color: 40 30% 2%;
+}
+
+/* ---- Force light, overriding an OS dark preference (toggle back to day) ---- */
+:root[data-theme="light"] {
+  --surface-canvas:  var(--stone-100);
+  --surface-card:    var(--stone-50);
+  --surface-raised:  #fffdf8;
+  --surface-sunken:  var(--stone-150);
+  --surface-inverse: var(--stone-900);
+
+  --text-strong:    var(--stone-900);
+  --text-body:      var(--stone-800);
+  --text-muted:     var(--stone-600);
+  --text-faint:     var(--stone-500);
+  --text-on-color:  var(--stone-50);
+  --text-on-sage:   #fbfdf9;
+  --text-on-inverse: var(--stone-50);
+
+  --border-subtle:  var(--stone-200);
+  --border-default: var(--stone-300);
+  --border-strong:  var(--stone-400);
+
+  --primary:           var(--sage-600);
+  --primary-hover:     var(--sage-700);
+  --primary-press:     var(--sage-800);
+  --primary-soft:      var(--sage-100);
+  --primary-soft-hover: var(--sage-200);
+  --primary-soft-tx:   var(--sage-800);
+  --primary-ring:      var(--sage-400);
+
+  --accent-warm:      var(--terracotta-500);
+  --accent-warm-soft: var(--terracotta-100);
+  --accent-gold:      var(--ochre-500);
+  --accent-gold-soft: var(--ochre-100);
+  --accent-cool:      var(--marsh-500);
+  --accent-cool-soft: var(--marsh-100);
+
+  --success:      var(--sage-600);
+  --success-soft: var(--sage-100);
+  --warning:      var(--ochre-700);
+  --warning-soft: var(--ochre-100);
+  --danger:       var(--rust-500);
+  --danger-hover: var(--rust-600);
+  --danger-soft:  var(--rust-100);
+  --info:         var(--marsh-600);
+  --info-soft:    var(--marsh-100);
+
+  --on-primary-soft: var(--sage-800);
+  --on-warm-soft:    var(--terracotta-800);
+  --on-gold-soft:    var(--ochre-900);
+  --on-cool-soft:    var(--marsh-800);
+  --on-success-soft: var(--sage-800);
+  --on-warning-soft: var(--ochre-900);
+  --on-danger-soft:  var(--rust-700);
+  --on-info-soft:    var(--marsh-800);
+
+  --hover-wash:    var(--stone-150);
+  --control-track: var(--stone-300);
+  --control-thumb: var(--surface-raised);
+
+  --texture-ink:        hsl(56 16% 28% / 0.09);
+  --texture-ink-strong: hsl(56 16% 28% / 0.17);
+
+  --focus-ring: var(--sage-500);
+  --shadow-color: 60 22% 30%;
+}

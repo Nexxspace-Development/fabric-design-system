@@ -1,0 +1,40 @@
+<!-- @dsCard group="Colors" viewport="700x140" name="Status tones" subtitle="Soft-fill + solid pairs for feedback" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--surface-card); padding: 24px 28px; }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .item { display: flex; flex-direction: column; gap: 8px; }
+  .chip { height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; padding: 0 12px; font-family: var(--font-body); font-size: 13px; font-weight: 600; }
+  .solid { color: #fff; }
+  .tok { font-family: var(--font-data); font-size: 10px; color: var(--text-faint); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item">
+      <div class="chip" style="background:var(--success-soft); color:var(--sage-800)">Success</div>
+      <div class="chip solid" style="background:var(--success)">on track</div>
+      <span class="tok">--success</span>
+    </div>
+    <div class="item">
+      <div class="chip" style="background:var(--warning-soft); color:var(--ochre-900)">Warning</div>
+      <div class="chip solid" style="background:var(--warning)">at risk</div>
+      <span class="tok">--warning</span>
+    </div>
+    <div class="item">
+      <div class="chip" style="background:var(--danger-soft); color:var(--rust-700)">Danger</div>
+      <div class="chip solid" style="background:var(--danger)">blocked</div>
+      <span class="tok">--danger</span>
+    </div>
+    <div class="item">
+      <div class="chip" style="background:var(--info-soft); color:var(--marsh-800)">Info</div>
+      <div class="chip solid" style="background:var(--info)">syncing</div>
+      <span class="tok">--info</span>
+    </div>
+  </div>
+</body>
+</html>

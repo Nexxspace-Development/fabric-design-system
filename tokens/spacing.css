@@ -1,0 +1,68 @@
+/* Fabric — Spacing, radii, shadows, motion
+ * Soft and organic. Generous radii echo worn, natural edges; shadows are
+ * warm-tinted and diffuse, like light through a window onto cloth.
+ */
+:root {
+  /* ---- Spacing (4px base grid) ---- */
+  --space-0:   0;
+  --space-1:   0.25rem;  /* 4 */
+  --space-2:   0.5rem;   /* 8 */
+  --space-3:   0.75rem;  /* 12 */
+  --space-4:   1rem;     /* 16 */
+  --space-5:   1.5rem;   /* 24 */
+  --space-6:   2rem;     /* 32 */
+  --space-7:   2.5rem;   /* 40 */
+  --space-8:   3rem;     /* 48 */
+  --space-9:   4rem;     /* 64 */
+  --space-10:  5rem;     /* 80 */
+  --space-12:  6rem;     /* 96 */
+  --space-16:  8rem;     /* 128 */
+
+  /* ---- Radii (organic, soft) ---- */
+  --radius-xs:   3px;
+  --radius-sm:   6px;
+  --radius-md:   10px;   /* default control radius */
+  --radius-lg:   14px;
+  --radius-xl:   20px;   /* cards, panels */
+  --radius-2xl:  28px;   /* hero surfaces */
+  --radius-pill: 999px;  /* tags, chips, switches */
+
+  /* ---- Borders ---- */
+  --border-hairline: 1px;
+  --border-thin:     1.5px;
+  --border-thick:    2px;
+
+  /* ---- Shadows (warm-tinted, diffuse) ---- */
+  --shadow-color: 60 22% 30%;  /* H S L of warm bark, used at low alpha */
+  --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.06);
+  --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.05),
+               0 2px 6px hsl(var(--shadow-color) / 0.06);
+  --shadow-md: 0 2px 4px hsl(var(--shadow-color) / 0.05),
+               0 6px 16px hsl(var(--shadow-color) / 0.08);
+  --shadow-lg: 0 4px 8px hsl(var(--shadow-color) / 0.06),
+               0 16px 32px hsl(var(--shadow-color) / 0.10);
+  --shadow-xl: 0 8px 16px hsl(var(--shadow-color) / 0.08),
+               0 28px 56px hsl(var(--shadow-color) / 0.14);
+  /* Inset well for sunken surfaces and input tracks */
+  --shadow-inset: inset 0 1px 2px hsl(var(--shadow-color) / 0.08);
+
+  /* ---- Motion (calm, no bounce) ---- */
+  --ease-out:   cubic-bezier(0.22, 0.61, 0.36, 1);   /* @kind other */
+  --ease-in-out: cubic-bezier(0.45, 0, 0.25, 1);      /* @kind other */
+  --duration-fast:   120ms;   /* @kind other */
+  --duration-base:   200ms;   /* @kind other */
+  --duration-slow:   320ms;   /* @kind other */
+  --duration-slower: 480ms;   /* @kind other */
+
+  /* ---- Layering ---- */
+  --z-base:     0;     /* @kind other */
+  --z-sticky:   100;   /* @kind other */
+  --z-overlay:  200;   /* @kind other */
+  --z-popover:  300;   /* @kind other */
+  --z-toast:    400;   /* @kind other */
+
+  /* ---- Container widths ---- */
+  --width-prose:   42rem;   /* readable line length */
+  --width-content: 64rem;
+  --width-wide:    80rem;
+}

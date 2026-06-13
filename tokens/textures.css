@@ -1,0 +1,83 @@
+/* Fabric — Texture
+ * Fabric is cloth: its surfaces should feel woven and grained, not flat.
+ * These are tactile, barely-there surface treatments — felt more than seen —
+ * so the interface still recedes. All are built from gradients (no image
+ * assets) and use the theme-aware --texture-ink token, so they read on warm
+ * paper AND on Nightfall's dark earth.
+ *
+ * Use on large calm surfaces: canvases, heroes, empty states, dark bands,
+ * login/marketing panels. Avoid on dense UI (task rows, forms, tables) — keep
+ * working areas clean. Layer over any background-color; the weave sits behind
+ * content. Reach for one texture per surface; they are not meant to stack.
+ */
+
+/* Plain weave — a faint linen cross-hatch. The default Fabric surface tooth. */
+.fabric-weave {
+  background-image:
+    repeating-linear-gradient(90deg, var(--texture-ink) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(0deg,  var(--texture-ink) 0 1px, transparent 1px 7px);
+}
+
+/* Linen — a finer, denser weave for smaller or more tactile surfaces. */
+.fabric-linen {
+  background-image:
+    repeating-linear-gradient(90deg, var(--texture-ink) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(0deg,  var(--texture-ink) 0 1px, transparent 1px 5px);
+}
+
+/* Grain — the soft tooth of cold-press paper. Two offset speckle grids read
+   as organic fleck without the cost of a noise image. */
+.fabric-grain {
+  background-image:
+    radial-gradient(var(--texture-ink-strong) 0.5px, transparent 0.6px),
+    radial-gradient(var(--texture-ink) 0.5px, transparent 0.6px);
+  background-size: 4px 4px, 7px 7px;
+  background-position: 0 0, 2px 3px;
+}
+
+/* Ribbed — directional thread, like raw canvas or corduroy. For accent panels
+   and call-to-action bands. Defaults to horizontal ribs; add --ribbed-vertical. */
+.fabric-ribbed {
+  background-image:
+    repeating-linear-gradient(0deg, var(--texture-ink-strong) 0 1px, transparent 1px 6px);
+}
+.fabric-ribbed.fabric-ribbed--vertical {
+  background-image:
+    repeating-linear-gradient(90deg, var(--texture-ink-strong) 0 1px, transparent 1px 6px);
+}
+
+/* Felt — dense, matte wool: a fine speckle crossed with short diagonal fibers.
+   The cozy, warm tooth of autumn/winter surfaces. */
+.fabric-felt {
+  background-image:
+    radial-gradient(var(--texture-ink-strong) 0.5px, transparent 0.7px),
+    radial-gradient(var(--texture-ink) 0.5px, transparent 0.7px),
+    repeating-linear-gradient(45deg,  var(--texture-ink) 0 0.5px, transparent 0.5px 3px),
+    repeating-linear-gradient(-45deg, var(--texture-ink) 0 0.5px, transparent 0.5px 3px);
+  background-size: 3px 3px, 5px 5px, auto, auto;
+  background-position: 0 0, 1px 2px, 0 0, 0 0;
+}
+
+/* Frost — a fine crystalline crosshatch with a sparse glint. Winter surfaces. */
+.fabric-frost {
+  background-image:
+    repeating-linear-gradient(60deg,  var(--texture-ink) 0 0.5px, transparent 0.5px 7px),
+    repeating-linear-gradient(-60deg, var(--texture-ink) 0 0.5px, transparent 0.5px 7px),
+    radial-gradient(var(--texture-ink-strong) 0.5px, transparent 0.8px);
+  background-size: auto, auto, 11px 11px;
+}
+
+/* Running stitch — a dashed thread rule. A textile detail for dividers and
+   the tops/edges of sections. Uses the border tokens so it flips with theme. */
+.fabric-stitch {
+  border: 0;
+  height: 2px;
+  background-image:
+    repeating-linear-gradient(90deg, var(--border-default) 0 6px, transparent 6px 11px);
+}
+.fabric-stitch--vertical {
+  height: auto;
+  width: 2px;
+  background-image:
+    repeating-linear-gradient(0deg, var(--border-default) 0 6px, transparent 6px 11px);
+}

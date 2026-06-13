@@ -1,0 +1,117 @@
+<!-- @dsCard group="App" viewport="1280x800" name="Fabric — workspace" subtitle="Calm daily focus & tasks app" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fabric — Workspace</title>
+<link rel="stylesheet" href="../../styles.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--season-canvas); color: var(--text-body); transition: background var(--duration-slow) var(--ease-out); }
+  #root, .fa-shell { height: 100vh; }
+  .fa-shell { display: grid; grid-template-columns: 256px 1fr 324px; overflow: hidden; }
+
+  /* ---- Sidebar ---- */
+  .fa-side { background: var(--surface-card); border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column; padding: 22px 16px; gap: 6px; }
+  .fa-side__brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 18px; }
+  .fa-side__word { font-family: var(--font-display); font-size: 23px; font-weight: 500; color: var(--text-strong); letter-spacing: -0.01em; }
+  .fa-side__nav { display: flex; flex-direction: column; gap: 2px; }
+  .fa-navitem { display: flex; align-items: center; gap: 11px; width: 100%; border: 0; background: none; cursor: pointer;
+    font-family: var(--font-body); font-size: 14.5px; font-weight: 500; color: var(--text-muted);
+    padding: 9px 10px; border-radius: var(--radius-md); text-align: left;
+    transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out); }
+  .fa-navitem:hover { background: var(--hover-wash); color: var(--text-strong); }
+  .fa-navitem[data-active="true"] { background: var(--primary-soft); color: var(--primary-soft-tx); }
+  .fa-navitem__count { margin-left: auto; font-family: var(--font-data); font-size: 12px; color: var(--text-faint); }
+  .fa-navitem[data-active="true"] .fa-navitem__count { color: var(--sage-700); }
+  .fa-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; margin: 0 4px; }
+  .fa-side__section { margin-top: 18px; display: flex; flex-direction: column; gap: 2px; }
+  .fa-side__sectionlabel { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); padding: 4px 10px 8px; }
+  .fa-side__foot { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 12px 8px 2px; border-top: 1px solid var(--border-subtle); }  .fa-side__person { display: flex; flex-direction: column; line-height: 1.3; }
+  .fa-side__name { font-size: 13.5px; font-weight: 600; color: var(--text-strong); }
+  .fa-side__studio { font-size: 12px; color: var(--text-faint); }
+  .fa-side__cog { margin-left: auto; color: var(--text-faint); cursor: pointer; }
+
+  /* Season switcher */
+  .fa-side__season { margin-top: 16px; }
+  .fa-season { display: flex; gap: 4px; }
+  .fa-season__btn { flex: 1; height: 38px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid transparent; background: transparent; border-radius: var(--radius-md); cursor: pointer;
+    color: var(--season-accent);
+    transition: background var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out); }
+  .fa-season__btn:hover { background: var(--hover-wash); }
+  .fa-season__btn[data-active="true"] { background: var(--season-accent-soft);
+    border-color: color-mix(in oklab, var(--season-accent) 32%, transparent); }
+  .fa-season__btn:focus-visible { outline: var(--border-thick) solid var(--focus-ring); outline-offset: 2px; }
+
+  /* Seasonal accents in the focus rail */
+  .fa-intention__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  .fa-season-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--season-accent-soft);
+    color: var(--season-on-soft); font-family: var(--font-body); font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: var(--radius-pill); }
+  .fa-season-chip__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--season-accent); }
+  .fa-streak__icon { color: var(--season-accent); }
+
+  /* ---- Main ---- */
+  .fa-main { display: flex; flex-direction: column; overflow: hidden; }
+  .fa-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 30px 34px 20px; border-bottom: 1px solid var(--border-subtle); }
+  .fa-head__title { font-family: var(--font-display); font-size: 33px; font-weight: 500; color: var(--text-strong); margin: 0; line-height: 1; letter-spacing: -0.015em; }
+  .fa-head__sub { font-size: 14px; color: var(--text-muted); margin-top: 8px; display: inline-block; }
+  .fa-head__actions { display: flex; align-items: center; gap: 12px; }
+  .fa-list { flex: 1; overflow-y: auto; padding: 10px 34px 40px; display: flex; flex-direction: column; }
+  .fa-composer { display: flex; align-items: center; gap: 12px; padding: 14px 4px; border-bottom: 1px solid var(--border-subtle); }
+  .fa-composer__plus { color: var(--text-faint); }
+  .fa-composer__input { flex: 1; border: 0; background: none; font-family: var(--font-body); font-size: 15.5px; color: var(--text-body); }
+  .fa-composer__input::placeholder { color: var(--text-faint); }
+  .fa-composer__input:focus { outline: none; }
+  .fa-task { display: flex; align-items: center; gap: 14px; padding: 14px 4px; border-bottom: 1px solid var(--border-subtle); }
+  .fa-task__title { flex: 1; font-size: 15.5px; color: var(--text-body); transition: color var(--duration-base) var(--ease-out); }
+  .fa-task[data-done="true"] .fa-task__title { color: var(--text-faint); text-decoration: line-through; text-decoration-color: var(--stone-400); }
+  .fa-task__meta { display: flex; align-items: center; gap: 12px; }
+  .fa-task__est { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-data); font-size: 12px; color: var(--text-faint); }
+  .fa-empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 70px 0; color: var(--text-faint); }
+  .fa-empty p { font-family: var(--font-display); font-style: italic; font-size: 18px; margin: 0; }
+
+  /* ---- Focus rail ---- */
+  .fa-rail { background-color: var(--surface-card); border-left: 1px solid var(--border-subtle); padding: 22px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+  .fa-focus__eyebrow { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+  .fa-focus__task { font-family: var(--font-display); font-size: 19px; color: var(--text-strong); margin-top: 8px; line-height: 1.25; }
+  .fa-focus__clock { font-family: var(--font-data); font-size: 52px; font-weight: 500; color: var(--text-strong); letter-spacing: 0.02em; margin: 16px 0 14px; }
+  .fa-focus__track { height: 6px; background: var(--surface-sunken); border-radius: var(--radius-pill); overflow: hidden; box-shadow: var(--shadow-inset); }
+  .fa-focus__track span { display: block; height: 100%; background: var(--primary); border-radius: var(--radius-pill); transition: width 1s linear; }
+  .fa-focus__controls { display: flex; align-items: center; gap: 8px; margin-top: 18px; }
+  .fa-intention__text { font-family: var(--font-display); font-style: italic; font-size: 17px; line-height: 1.5; color: var(--text-body); margin: 10px 0 0; }
+  .fa-streak { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--text-muted); }
+  .fa-streak strong { color: var(--text-strong); }
+
+  /* ---- Login ---- */
+  .fa-login { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; background-color: var(--season-canvas); }
+  .fa-login__card { width: 384px; text-align: center; }
+  .fa-login__mark { margin: 0 auto 6px; display: block; }
+  .fa-login__title { font-family: var(--font-display); font-size: 30px; font-weight: 500; color: var(--text-strong); margin: 0 0 4px; }
+  .fa-login__sub { font-size: 15px; color: var(--text-muted); margin: 0 0 24px; }
+  .fa-login__form { display: flex; flex-direction: column; gap: 14px; text-align: left; }
+  .fa-login__foot { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="icons.jsx"></script>
+<script type="text/babel" src="data.jsx"></script>
+<script type="text/babel" src="Sidebar.jsx"></script>
+<script type="text/babel" src="TaskList.jsx"></script>
+<script type="text/babel" src="FocusRail.jsx"></script>
+<script type="text/babel" src="Login.jsx"></script>
+<script type="text/babel" src="App.jsx"></script>
+<script type="text/babel">
+  const { App } = window.FabricApp;
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

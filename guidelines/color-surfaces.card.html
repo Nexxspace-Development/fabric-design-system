@@ -1,0 +1,38 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Surfaces & ink" subtitle="Semantic paper tones and text hierarchy" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--surface-canvas); padding: 22px 26px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .surfaces { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .surf { height: 52px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); display: flex; align-items: center; padding: 0 12px; font-family: var(--font-data); font-size: 10px; color: var(--text-muted); }
+  .inverse { color: var(--stone-100); border-color: transparent; }
+  .ink { display: flex; flex-direction: column; gap: 7px; justify-content: center; }
+  .ink div { font-family: var(--font-body); }
+  .strong { color: var(--text-strong); font-size: 18px; font-weight: 600; }
+  .bodyc { color: var(--text-body); font-size: 15px; }
+  .muted { color: var(--text-muted); font-size: 14px; }
+  .faint { color: var(--text-faint); font-size: 13px; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="surfaces">
+      <div class="surf" style="background:var(--surface-canvas)">canvas</div>
+      <div class="surf" style="background:var(--surface-card)">card</div>
+      <div class="surf" style="background:var(--surface-raised)">raised</div>
+      <div class="surf" style="background:var(--surface-sunken)">sunken</div>
+      <div class="surf inverse" style="background:var(--surface-inverse); grid-column: 1 / -1;">inverse</div>
+    </div>
+    <div class="ink">
+      <div class="strong">Text strong — headings</div>
+      <div class="bodyc">Text body — default reading</div>
+      <div class="muted">Text muted — secondary & captions</div>
+      <div class="faint">Text faint — placeholders, disabled</div>
+    </div>
+  </div>
+</body>
+</html>
