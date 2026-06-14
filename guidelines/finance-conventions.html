@@ -1,0 +1,315 @@
+<!-- @dsCard group="Finance" viewport="900x4440" name="Finance conventions" subtitle="Written guideline — color axes, accounting figures, ledgers" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fabric — Finance conventions</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  :root { --doc-w: 50rem; }
+  body { margin: 0; background: var(--surface-canvas); color: var(--text-body); }
+
+  .doc { max-width: var(--doc-w); margin: 0 auto; padding: 72px 40px 120px; }
+
+  /* ---- masthead ---- */
+  .mast { border-bottom: var(--border-thin) solid var(--fin-rule-strong); padding-bottom: 26px; margin-bottom: 40px; }
+  .mast .kick { display: flex; align-items: center; gap: 9px; }
+  .mast .kick svg { width: 20px; height: 20px; }
+  .mast h1 { font-size: 46px; line-height: 1.04; margin: 18px 0 0; letter-spacing: -0.02em; }
+  .mast .lede { font-size: 18px; line-height: 1.55; color: var(--text-muted); margin: 16px 0 0; max-width: 38rem; }
+  .mast .meta { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.04em; color: var(--text-faint); margin-top: 22px; display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* ---- structure ---- */
+  section { margin-top: 56px; }
+  h2 { font-size: 30px; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .sec-no { font-family: var(--font-data); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: var(--season-accent, var(--primary)); }
+  h3 { font-size: 20px; margin: 34px 0 10px; color: var(--text-strong); }
+  p { font-size: 16px; line-height: 1.62; color: var(--text-body); max-width: 40rem; }
+  p .lead-in { font-weight: 600; color: var(--text-strong); }
+  strong { font-weight: 600; color: var(--text-strong); }
+  .tok { font-family: var(--font-data); font-size: 0.86em; color: var(--on-fin-loss-soft); background: var(--surface-sunken); padding: 1px 6px; border-radius: var(--radius-xs); }
+  a { color: var(--primary); }
+
+  ul { padding-left: 0; list-style: none; margin: 14px 0; max-width: 40rem; }
+  ul li { font-size: 16px; line-height: 1.55; color: var(--text-body); padding: 5px 0 5px 22px; position: relative; }
+  ul li::before { content: ""; position: absolute; left: 4px; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--season-accent, var(--primary)); }
+
+  /* ---- callout ---- */
+  .note { border-left: 3px solid var(--season-accent, var(--primary)); background: var(--surface-card); padding: 16px 20px; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin: 22px 0; box-shadow: var(--shadow-xs); }
+  .note p { margin: 0; font-size: 15px; }
+  .note .lbl { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 6px; }
+
+  /* ---- token table ---- */
+  .tk { width: 100%; border-collapse: collapse; margin: 18px 0; }
+  .tk th { font-family: var(--font-data); font-size: 9.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); text-align: left; padding: 0 14px 10px 0; border-bottom: var(--border-hairline) solid var(--border-subtle); }
+  .tk td { padding: 11px 14px 11px 0; border-bottom: var(--border-hairline) solid var(--border-subtle); font-size: 14px; vertical-align: middle; }
+  .tk tr:last-child td { border-bottom: none; }
+  .tk .swatch { width: 26px; height: 26px; border-radius: var(--radius-sm); border: var(--border-hairline) solid var(--border-subtle); }
+  .tk code { font-family: var(--font-data); font-size: 12.5px; color: var(--text-strong); }
+  .tk .desc { color: var(--text-muted); font-size: 13.5px; }
+
+  /* ---- two-axis figure ---- */
+  .axes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+  @media (max-width: 680px) { .axes { grid-template-columns: 1fr; } }
+  .axis-card { background: var(--surface-card); border: var(--border-hairline) solid var(--border-subtle); border-radius: var(--radius-lg); padding: 18px 20px; box-shadow: var(--shadow-xs); }
+  .axis-card .h { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); }
+  .axis-card .t { font-size: 17px; font-weight: 600; color: var(--text-strong); margin: 6px 0 3px; }
+  .axis-card .d { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+  .axis-card .ex { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-data); font-size: 12px; font-weight: 500; padding: 4px 11px; border-radius: var(--radius-pill); }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  /* ---- do / don't ---- */
+  .dd { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+  @media (max-width: 680px) { .dd { grid-template-columns: 1fr; } }
+  .dd .col { border-radius: var(--radius-lg); padding: 18px 20px; border: var(--border-hairline) solid var(--border-subtle); }
+  .dd .do { background: var(--fin-gain-soft); }
+  .dd .dont { background: var(--fin-loss-soft); }
+  .dd .col h4 { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px; display: flex; align-items: center; gap: 7px; }
+  .dd .do h4 { color: var(--on-fin-gain-soft); }
+  .dd .dont h4 { color: var(--on-fin-loss-soft); }
+  .dd ul { margin: 0; }
+  .dd li { font-size: 13.5px; padding: 4px 0 4px 18px; color: var(--text-body); }
+  .dd li::before { width: 5px; height: 5px; top: 11px; }
+  .dd .do li::before { background: var(--fin-gain); }
+  .dd .dont li::before { background: var(--fin-loss); }
+
+  /* ---- mini ledger demo ---- */
+  .demo { background: var(--surface-card); border: var(--border-hairline) solid var(--border-subtle); border-radius: var(--radius-lg); padding: 6px 22px 14px; box-shadow: var(--shadow-xs); margin: 20px 0; }
+  .demo table { width: 100%; border-collapse: collapse; }
+  .demo th { font-family: var(--font-data); font-size: 9.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); text-align: left; padding: 14px 0 10px; border-bottom: var(--border-thin) solid var(--fin-rule-strong); }
+  .demo th.r, .demo td.r { text-align: right; }
+  .demo td { padding: 10px 0; border-bottom: var(--border-hairline) solid var(--border-subtle); font-size: 13.5px; color: var(--text-strong); }
+  .demo td.num { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; color: var(--text-body); }
+  .demo tr.total td { border-top: var(--border-thin) solid var(--fin-rule-strong); border-bottom: none; padding-top: 12px; font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-weight: 600; color: var(--text-strong); }
+  .demo .cap { font-family: var(--font-data); font-size: 10px; color: var(--text-faint); letter-spacing: 0.02em; margin: 12px 2px 2px; }
+
+  /* ---- figure-format comparison ---- */
+  .fmt { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; margin: 20px 0; border: var(--border-hairline) solid var(--border-subtle); }
+  @media (max-width: 680px) { .fmt { grid-template-columns: 1fr; } }
+  .fmt .cell { background: var(--surface-card); padding: 16px 20px; }
+  .fmt .cell.bad { background: var(--surface-sunken); }
+  .fmt .cell .lbl { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+  .fmt .num-stack { display: flex; flex-direction: column; gap: 4px; }
+  .fmt .good-fig { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 19px; color: var(--text-strong); text-align: right; width: 9ch; }
+  .fmt .bad-fig { font-family: var(--font-display); font-size: 19px; color: var(--text-muted); text-align: right; width: 9ch; font-variant-numeric: oldstyle-nums proportional-nums; }
+
+  /* ---- footer ---- */
+  .foot { margin-top: 64px; padding-top: 22px; border-top: var(--border-hairline) solid var(--border-subtle); font-family: var(--font-data); font-size: 11px; color: var(--text-faint); letter-spacing: 0.02em; line-height: 1.7; }
+  .foot a { color: var(--text-muted); }
+
+  @media print {
+    body { background: #fff; }
+    .doc { padding: 0; max-width: none; }
+    .axis-card, .demo, .note, .dd .col, .fmt { box-shadow: none; break-inside: avoid; }
+    section { break-inside: avoid-page; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ===================== MASTHEAD ===================== -->
+  <header class="mast">
+    <span class="kick">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M24 3.5C35.5 12 40 23.5 24 44.5C8 23.5 12.5 12 24 3.5Z" fill="var(--primary)"></path>
+        <path d="M24 9V40" stroke="var(--text-on-sage)" stroke-width="1.6" stroke-linecap="round" opacity="0.82"></path>
+      </svg>
+      <span class="fabric-eyebrow">// Fabric for finance</span>
+    </span>
+    <h1>Money has its own grammar.</h1>
+    <p class="lede">Fabric is a calm, nature-derived system — but finance arrives with conventions older than any design system: red and green mean direction, numbers must line up, and a loss is not an error. This is how we adapt Fabric to honour them without losing its quiet.</p>
+    <div class="meta">
+      <span>Guideline · v0.5.0</span>
+      <span>Scope: US / EU · consumer-fintech</span>
+      <span>Layer: <span class="tok">tokens/finance.css</span></span>
+    </div>
+  </header>
+
+  <!-- ===================== 1. THE TWO AXES ===================== -->
+  <section>
+    <span class="sec-no">01 — PRINCIPLE</span>
+    <h2>Two axes of meaning, kept apart</h2>
+    <p>Fabric already gives green and red a job: sage is <strong>success</strong> (and the brand primary), rust is <strong>danger</strong>. That is an <strong>evaluative</strong> axis — good versus bad. Finance overloads the very same hues with a second, unrelated meaning: <strong>direction</strong> — a value went up or down. A column of losses is not eight errors; it is just an ordinary Tuesday.</p>
+    <p>The rule that holds the whole system together: <span class="lead-in">direction is never status.</span> We add a separate directional axis and forbid the two from borrowing each other's tokens.</p>
+
+    <div class="axes">
+      <div class="axis-card">
+        <span class="h">Evaluative — already in Fabric</span>
+        <div class="t">success / danger</div>
+        <div class="d">Did something succeed or fail? Reserved for outcomes and actions — a posted transfer, a declined card, a destructive delete.</div>
+        <div class="ex">
+          <span class="chip" style="background:var(--success-soft,var(--sage-100));color:var(--on-success-soft,var(--sage-700))"><span class="dot" style="background:var(--success,var(--sage-500))"></span>Completed</span>
+          <span class="chip" style="background:var(--danger-soft,var(--rust-100));color:var(--on-danger-soft,var(--rust-700))"><span class="dot" style="background:var(--danger,var(--rust-500))"></span>Declined</span>
+        </div>
+      </div>
+      <div class="axis-card">
+        <span class="h">Directional — the finance layer</span>
+        <div class="t">gain / loss / flat</div>
+        <div class="d">Did a number rise or fall? Reserved for signed quantities — P&amp;L, day change, returns. Neutral valence: a loss is expected, not an alarm.</div>
+        <div class="ex">
+          <span class="chip fin-pill" data-fin="gain">▲ +1.82%</span>
+          <span class="chip fin-pill" data-fin="loss">▼ −0.94%</span>
+          <span class="chip fin-pill" data-fin="flat">0.00%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <span class="lbl">The one rule that matters most</span>
+      <p>A negative number must <strong>never</strong> use <span class="tok">--danger</span>. <span class="tok">--fin-loss</span> is a visibly calmer, warmer red so that “negative” and “error” stay legibly different — even when they sit on the same screen.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 2. THE TOKENS ===================== -->
+  <section>
+    <span class="sec-no">02 — COLOR</span>
+    <h2>The directional tokens</h2>
+    <p>Defined in <span class="tok">tokens/finance.css</span> as a parallel axis. Chroma is nudged a hair above Fabric's muted status greens and reds so direction scans at a glance in a dense figure — while staying inside the earthen character. Each adapts to Nightfall and the light / dark toggles automatically.</p>
+
+    <table class="tk">
+      <thead>
+        <tr><th></th><th>Token</th><th>Role</th><th>Built from</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="swatch" style="background:var(--fin-gain)"></div></td><td><code>--fin-gain</code></td><td class="desc">Positive / up</td><td class="desc">sage lineage, lifted off <code>--success</code></td></tr>
+        <tr><td><div class="swatch" style="background:var(--fin-loss)"></div></td><td><code>--fin-loss</code></td><td class="desc">Negative / down</td><td class="desc">warm clay-red, calmer than <code>--danger</code></td></tr>
+        <tr><td><div class="swatch" style="background:var(--fin-flat)"></div></td><td><code>--fin-flat</code></td><td class="desc">Unchanged / zero</td><td class="desc">recedes to <code>--text-muted</code></td></tr>
+        <tr><td><div class="swatch" style="background:var(--fin-gain-soft)"></div></td><td><code>--fin-gain-soft</code></td><td class="desc">Gain pill / badge fill</td><td class="desc">pairs with <code>--on-fin-gain-soft</code></td></tr>
+        <tr><td><div class="swatch" style="background:var(--fin-loss-soft)"></div></td><td><code>--fin-loss-soft</code></td><td class="desc">Loss pill / badge fill</td><td class="desc">pairs with <code>--on-fin-loss-soft</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Binding color to data</h3>
+    <p>Drive direction straight off the sign of the value — never hand-assign colors. The helpers accept a class or a <span class="tok">data-fin</span> attribute, so a cell can be coloured from one expression:</p>
+    <ul>
+      <li><span class="tok">.fin-gain / .fin-loss / .fin-flat</span> — set text colour directly.</li>
+      <li><span class="tok">[data-fin="gain|loss|flat"]</span> — same, attribute-driven for <span class="tok">data-fin={v &gt; 0 ? 'gain' : v &lt; 0 ? 'loss' : 'flat'}</span>.</li>
+      <li><span class="tok">.fin-pill[data-fin]</span> — a soft directional badge; always reinforce it with a sign or glyph inside.</li>
+    </ul>
+
+    <div class="note">
+      <span class="lbl">Accessibility — colour is never the only channel</span>
+      <p>Roughly 1 in 12 men cannot reliably separate red from green, and finance is regulated for it. Every directional value carries a <strong>sign</strong> (<span class="tok">+ / −</span>) or a <strong>glyph</strong> (▲ / ▼) as well. Colour reinforces; it never carries the meaning alone.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 3. NUMBERS ===================== -->
+  <section>
+    <span class="sec-no">03 — TYPOGRAPHY</span>
+    <h2>Figures that line up</h2>
+    <p>Fabric already has the right bones: <strong>IBM Plex Mono</strong> is <span class="tok">--font-data</span>, and monospace buys column alignment for free. The care is in number <em>behaviour</em>, not font choice.</p>
+
+    <h3>Tabular, lining figures — always</h3>
+    <p>Numbers that share a column must share a width and a baseline. The <span class="tok">.fabric-figure</span> utility sets the mono data voice with <span class="tok">tabular-nums lining-nums</span>; <span class="tok">.fabric-figure-sans</span> does the same for numerals inside Hanken body text.</p>
+
+    <div class="fmt">
+      <div class="cell">
+        <span class="lbl"><span style="color:var(--fin-gain)">✓</span> Tabular lining — IBM Plex Mono</span>
+        <div class="num-stack">
+          <span class="good-fig">1,240.50</span>
+          <span class="good-fig">98.07</span>
+          <span class="good-fig">12,008.16</span>
+        </div>
+      </div>
+      <div class="cell bad">
+        <span class="lbl"><span style="color:var(--fin-loss)">✕</span> Old-style proportional — Newsreader</span>
+        <div class="num-stack">
+          <span class="bad-fig">1,240.50</span>
+          <span class="bad-fig">98.07</span>
+          <span class="bad-fig">12,008.16</span>
+        </div>
+      </div>
+    </div>
+    <p>The serif's old-style figures bob off the baseline and vary in width — lovely in a sentence, disqualifying in a ledger. <span class="lead-in">Never set financial data in Newsreader.</span> Keep display serif for headlines and quotes only.</p>
+
+    <h3>House number conventions</h3>
+    <ul>
+      <li><strong>Signed negatives</strong> — <span class="tok">−1,240.50</span> with a true minus (U+2212), not a hyphen. The sign is the primary cue. (Zero is unsigned.)</li>
+      <li><strong>Right-align</strong> every numeric column; decimals aligned, consistent decimal places per column.</li>
+      <li><strong>Currency symbol</strong> flush to the figure, column reading as a clean block.</li>
+      <li><strong>Thousands separators</strong> always on; <span class="tok">.fabric-figure-slashed</span> for a slashed zero in dense data.</li>
+    </ul>
+  </section>
+
+  <!-- ===================== 4. LEDGERS ===================== -->
+  <section>
+    <span class="sec-no">04 — LEDGERS &amp; TABLES</span>
+    <h2>Direction by column, totals by rule</h2>
+    <p>In a statement, the <em>structure</em> already encodes direction: debits sit under <strong>Money out</strong>, credits under <strong>Money in</strong>. So the ledger body stays neutral ink — colour would be noise. Reserve the directional axis for the one genuinely signed figure: the net.</p>
+
+    <div class="demo">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Description</th><th class="r">Money out</th><th class="r">Money in</th><th class="r">Balance</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>May 16</td><td>Payroll — ACME Corp</td><td class="num r"></td><td class="num r">3,200.00</td><td class="num r">8,140.18</td></tr>
+          <tr><td>May 18</td><td>Blue Bottle Coffee</td><td class="num r">18.75</td><td class="num r"></td><td class="num r">8,121.43</td></tr>
+          <tr><td>May 24</td><td>Zelle from J. Rivera</td><td class="num r"></td><td class="num r">220.00</td><td class="num r">8,341.43</td></tr>
+          <tr class="total"><td></td><td>Net this period</td><td class="num r">18.75</td><td class="num r">3,420.00</td><td class="num r" data-fin="gain">+3,401.25</td></tr>
+        </tbody>
+      </table>
+      <p class="cap">Neutral ink in the body · single rule above the total · the signed net is the one directional figure</p>
+    </div>
+
+    <ul>
+      <li><strong>Totals</strong> carry a single rule above (<span class="tok">.fabric-total-row</span>); a grand / closing total adds a double rule below (<span class="tok">.is-grand</span>, drawn from <span class="tok">--fin-rule-strong</span>).</li>
+      <li><strong>Running balances</strong> are computed, never hand-summed — so the closing figure always reconciles with the last row.</li>
+      <li><strong>Cash flow is not P&amp;L.</strong> A purchase or transfer is neutral; only true gains and losses take directional colour.</li>
+    </ul>
+  </section>
+
+  <!-- ===================== 5. DO / DON'T ===================== -->
+  <section>
+    <span class="sec-no">05 — IN PRACTICE</span>
+    <h2>Do &amp; don't</h2>
+    <div class="dd">
+      <div class="col do">
+        <h4><span style="color:var(--fin-gain)">▲</span> Do</h4>
+        <ul>
+          <li>Colour signed P&amp;L, day change and returns with <span class="tok">--fin-*</span>.</li>
+          <li>Pair every colour with a sign or ▲▼ glyph.</li>
+          <li>Set all data in IBM Plex Mono, tabular + lining.</li>
+          <li>Right-align numeric columns; rule your totals.</li>
+          <li>Keep status (Completed / Declined) on the evaluative axis.</li>
+        </ul>
+      </div>
+      <div class="col dont">
+        <h4><span style="color:var(--fin-loss)">▼</span> Don't</h4>
+        <ul>
+          <li>Render a negative number in <span class="tok">--danger</span>.</li>
+          <li>Lean on colour alone to signal direction.</li>
+          <li>Set figures in Newsreader (old-style serif numerals).</li>
+          <li>Colour neutral cash flow — a buy is not a loss.</li>
+          <li>Flip green=up for East-Asian locales without re-tokening.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 6. REFERENCE ===================== -->
+  <section>
+    <span class="sec-no">06 — REFERENCE</span>
+    <h2>Where this lives</h2>
+    <p>The whole layer is opt-in. Link it after <span class="tok">styles.css</span> and the tokens, utilities and helpers above are available — no JavaScript required.</p>
+    <ul>
+      <li><span class="tok">tokens/finance.css</span> — the directional axis + accounting figure utilities.</li>
+      <li><span class="tok">guidelines/finance-direction.card.html</span> — the specimen card in the Design System tab.</li>
+      <li><span class="tok">templates/portfolio</span> — a consumer-fintech dashboard (balance, P&amp;L, holdings).</li>
+      <li><span class="tok">templates/statement</span> — an accounting-grade monthly statement.</li>
+      <li><span class="tok">templates/transaction</span> — a single-transaction receipt (both axes, side by side).</li>
+    </ul>
+
+    <div class="foot">
+      Fabric design system · finance conventions · v0.5.0<br />
+      Made from nature. Adapted for the ledger.
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

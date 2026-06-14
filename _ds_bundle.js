@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":3,"namespace":"FabricDesignSystem_7bb975","components":[{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Tag","sourcePath":"components/feedback/Tag.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/feedback/Tooltip.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"IconButton","sourcePath":"components/forms/IconButton.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Avatar","sourcePath":"components/layout/Avatar.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"Divider","sourcePath":"components/layout/Divider.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"}],"sourceHashes":{"compare/compare.jsx":"d6299f1f4766","compare/design-canvas.jsx":"bd8746af6e58","components/feedback/Badge.jsx":"abf15ded0c4b","components/feedback/Tag.jsx":"16045bfb8d15","components/feedback/Toast.jsx":"af054ff1d5ee","components/feedback/Tooltip.jsx":"3bec66c079f8","components/forms/Button.jsx":"8104b2dbc290","components/forms/Checkbox.jsx":"c521aad389e8","components/forms/IconButton.jsx":"a6f1f6b0da4d","components/forms/Input.jsx":"2d707798cee9","components/forms/Select.jsx":"bbda88cbbeeb","components/forms/Switch.jsx":"b6610806aa07","components/forms/Textarea.jsx":"4a1eb2af57b5","components/layout/Avatar.jsx":"3c4c17a8cd1e","components/layout/Card.jsx":"304183f0850d","components/layout/Divider.jsx":"056b799da2e6","components/navigation/Tabs.jsx":"cbbbb0597470","ui_kits/app/App.jsx":"5bccb9494d89","ui_kits/app/FocusRail.jsx":"03dbaa91b35f","ui_kits/app/Login.jsx":"4f38c0bdcf49","ui_kits/app/Sidebar.jsx":"d51366a5c564","ui_kits/app/TaskList.jsx":"653ae710d335","ui_kits/app/data.jsx":"d1ca11835f5f","ui_kits/app/icons.jsx":"a9244e9a2b03","ui_kits/site/Site.jsx":"058f11485291","ui_kits/site/icons.jsx":"a9244e9a2b03"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":3,"namespace":"FabricDesignSystem_7bb975","components":[{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Tag","sourcePath":"components/feedback/Tag.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/feedback/Tooltip.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"IconButton","sourcePath":"components/forms/IconButton.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Avatar","sourcePath":"components/layout/Avatar.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"Divider","sourcePath":"components/layout/Divider.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"}],"sourceHashes":{"adapters/shadcn/tailwind.fabric.js":"bb791249e704","compare/compare.jsx":"d6299f1f4766","compare/design-canvas.jsx":"bd8746af6e58","components/feedback/Badge.jsx":"abf15ded0c4b","components/feedback/Tag.jsx":"16045bfb8d15","components/feedback/Toast.jsx":"af054ff1d5ee","components/feedback/Tooltip.jsx":"3bec66c079f8","components/forms/Button.jsx":"8104b2dbc290","components/forms/Checkbox.jsx":"c521aad389e8","components/forms/IconButton.jsx":"a6f1f6b0da4d","components/forms/Input.jsx":"2d707798cee9","components/forms/Select.jsx":"bbda88cbbeeb","components/forms/Switch.jsx":"b6610806aa07","components/forms/Textarea.jsx":"4a1eb2af57b5","components/layout/Avatar.jsx":"3c4c17a8cd1e","components/layout/Card.jsx":"304183f0850d","components/layout/Divider.jsx":"056b799da2e6","components/navigation/Tabs.jsx":"cbbbb0597470","ui_kits/app/App.jsx":"5bccb9494d89","ui_kits/app/FocusRail.jsx":"03dbaa91b35f","ui_kits/app/Login.jsx":"4f38c0bdcf49","ui_kits/app/Sidebar.jsx":"d51366a5c564","ui_kits/app/TaskList.jsx":"653ae710d335","ui_kits/app/data.jsx":"d1ca11835f5f","ui_kits/app/icons.jsx":"a9244e9a2b03","ui_kits/site/Site.jsx":"058f11485291","ui_kits/site/icons.jsx":"a9244e9a2b03"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -7,6 +7,96 @@ const __ds_ns = (window.FabricDesignSystem_7bb975 = window.FabricDesignSystem_7b
 const __ds_scope = {};
 
 (__ds_ns.__errors = __ds_ns.__errors || []);
+
+// adapters/shadcn/tailwind.fabric.js
+try { (() => {
+/* ============================================================
+ * Fabric × Tailwind — config snippets
+ * Wire Fabric's fonts, radii, shadows and the finance axis into Tailwind so
+ * utilities (font-display, shadow-md, text-fin-loss, …) resolve to Fabric.
+ * The color SLOTS (bg-background, text-primary, …) come from the bridge CSS;
+ * this file adds the pieces shadcn's default config doesn't cover.
+ * ============================================================ */
+
+/* ------------------------------------------------------------------
+ * TAILWIND v3 — extend your existing tailwind.config.{js,ts}
+ * ------------------------------------------------------------------ */
+module.exports = {
+  // ...your existing config (darkMode, content, the shadcn color mapping)...
+  theme: {
+    extend: {
+      fontFamily: {
+        // shadcn maps font-sans by default; add the Fabric trio:
+        display: ['Newsreader', 'Georgia', 'serif'],
+        // font-display → headlines
+        sans: ['Hanken Grotesk', 'system-ui', 'sans-serif'],
+        // body / UI
+        mono: ['IBM Plex Mono', 'ui-monospace', 'monospace'] // data / numerals
+      },
+      borderRadius: {
+        // shadcn already derives lg/md/sm from var(--radius); add the extras:
+        xl: '20px',
+        // cards, panels
+        '2xl': '28px' // hero surfaces
+      },
+      boxShadow: {
+        // Fabric's warm, diffuse shadows (mirror tokens/spacing.css)
+        xs: '0 1px 2px hsl(60 22% 30% / 0.06)',
+        sm: '0 1px 2px hsl(60 22% 30% / 0.05), 0 2px 6px hsl(60 22% 30% / 0.06)',
+        DEFAULT: '0 2px 4px hsl(60 22% 30% / 0.05), 0 6px 16px hsl(60 22% 30% / 0.08)',
+        md: '0 2px 4px hsl(60 22% 30% / 0.05), 0 6px 16px hsl(60 22% 30% / 0.08)',
+        lg: '0 4px 8px hsl(60 22% 30% / 0.06), 0 16px 32px hsl(60 22% 30% / 0.10)',
+        xl: '0 8px 16px hsl(60 22% 30% / 0.08), 0 28px 56px hsl(60 22% 30% / 0.14)'
+      },
+      colors: {
+        // The directional finance axis as Tailwind colors → text-fin-gain, bg-fin-loss-soft
+        // (these read the CSS vars from tokens/finance.css, so they flip in Nightfall)
+        'fin-gain': 'var(--fin-gain)',
+        'fin-loss': 'var(--fin-loss)',
+        'fin-flat': 'var(--fin-flat)',
+        'fin-gain-soft': 'var(--fin-gain-soft)',
+        'fin-loss-soft': 'var(--fin-loss-soft)'
+      },
+      fontVariantNumeric: {
+        // pair with .tabular-nums for ledgers; lining is on via the figure utility
+      }
+    }
+  }
+};
+
+/* ------------------------------------------------------------------
+ * TAILWIND v4 — CSS-first, add to your globals.css (no JS config needed)
+ * ------------------------------------------------------------------
+ *
+ *   @import "tailwindcss";
+ *   @import "../fabric/styles.css";
+ *   @import "../fabric/tokens/finance.css";
+ *   @import "./fabric-shadcn.css";
+ *
+ *   @theme inline {
+ *     --font-display: var(--font-serif);
+ *     --font-sans:    var(--font-sans);
+ *     --font-mono:    var(--font-mono);
+ *
+ *     --radius-xl:  20px;
+ *     --radius-2xl: 28px;
+ *
+ *     --shadow-xs: 0 1px 2px hsl(60 22% 30% / 0.06);
+ *     --shadow-sm: 0 1px 2px hsl(60 22% 30% / 0.05), 0 2px 6px hsl(60 22% 30% / 0.06);
+ *     --shadow-md: 0 2px 4px hsl(60 22% 30% / 0.05), 0 6px 16px hsl(60 22% 30% / 0.08);
+ *     --shadow-lg: 0 4px 8px hsl(60 22% 30% / 0.06), 0 16px 32px hsl(60 22% 30% / 0.10);
+ *     --shadow-xl: 0 8px 16px hsl(60 22% 30% / 0.08), 0 28px 56px hsl(60 22% 30% / 0.14);
+ *
+ *     --color-fin-gain:      var(--fin-gain);
+ *     --color-fin-loss:      var(--fin-loss);
+ *     --color-fin-flat:      var(--fin-flat);
+ *     --color-fin-gain-soft: var(--fin-gain-soft);
+ *     --color-fin-loss-soft: var(--fin-loss-soft);
+ *   }
+ *
+ * Then: <span class="font-mono tabular-nums text-fin-loss">−$48.17</span>
+ */
+})(); } catch (e) { __ds_ns.__errors.push({ path: "adapters/shadcn/tailwind.fabric.js", error: String((e && e.message) || e) }); }
 
 // compare/compare.jsx
 try { (() => {

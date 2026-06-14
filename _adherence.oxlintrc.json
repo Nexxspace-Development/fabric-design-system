@@ -16,6 +16,7 @@
         "patterns": [
           {
             "group": [
+              "adapters/shadcn/**",
               "compare/**",
               "components/feedback/**",
               "components/forms/**",
@@ -239,6 +240,14 @@
       "--duration-slower",
       "--ease-in-out",
       "--ease-out",
+      "--fin-flat",
+      "--fin-flat-soft",
+      "--fin-gain",
+      "--fin-gain-soft",
+      "--fin-loss",
+      "--fin-loss-soft",
+      "--fin-rule",
+      "--fin-rule-strong",
       "--focus-ring",
       "--font-body",
       "--font-data",
@@ -275,6 +284,9 @@
       "--ochre-900",
       "--on-cool-soft",
       "--on-danger-soft",
+      "--on-fin-flat-soft",
+      "--on-fin-gain-soft",
+      "--on-fin-loss-soft",
       "--on-gold-soft",
       "--on-info-soft",
       "--on-primary-soft",
@@ -587,7 +599,18 @@
       "--season-accent": "color",
       "--season-accent-soft": "color",
       "--season-on-soft": "color",
-      "--season-canvas": "color"
+      "--season-canvas": "color",
+      "--fin-gain": "color",
+      "--fin-gain-soft": "color",
+      "--on-fin-gain-soft": "color",
+      "--fin-loss": "color",
+      "--fin-loss-soft": "color",
+      "--on-fin-loss-soft": "color",
+      "--fin-flat": "color",
+      "--fin-flat-soft": "color",
+      "--on-fin-flat-soft": "color",
+      "--fin-rule": "color",
+      "--fin-rule-strong": "color"
     },
     "fontFamilies": [
       "Hanken Grotesk",

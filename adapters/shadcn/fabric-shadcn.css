@@ -1,0 +1,110 @@
+/* ============================================================
+ * Fabric → shadcn/ui token bridge — modern (Tailwind v4 / recent shadcn)
+ * ------------------------------------------------------------
+ * Maps shadcn's CSS-variable contract onto Fabric's semantic tokens, so your
+ * existing shadcn components render in Fabric's voice WITHOUT being rewritten.
+ *
+ * Use this file when your shadcn variables hold raw color values and are
+ * referenced as `var(--primary)` (Tailwind v4 / CSS-first, or any setup not
+ * wrapping vars in `hsl(...)`). If your config uses `hsl(var(--primary))`,
+ * use fabric-shadcn-hsl.css instead (or switch the config to raw vars).
+ *
+ * LOAD ORDER (critical):
+ *   1. fabric/styles.css          ← defines --surface-*, --primary, etc.
+ *   2. fabric/tokens/finance.css  ← optional: directional axis + figures
+ *   3. THIS FILE
+ *   4. your app / shadcn styles
+ *
+ * DARK MODE — pick one:
+ *   • Recommended: drive theming with the `data-theme` attribute (next-themes
+ *     `attribute="data-theme"`). Fabric's Nightfall scope (`[data-theme="dark"]`)
+ *     re-resolves every token below for free — nothing else to do.
+ *   • Class-based (`.dark`): the `.dark` block at the bottom re-points the slots
+ *     to Fabric's dark values so a `.dark` toggle works too.
+ * ============================================================ */
+
+:root {
+  /* ---- core surfaces & ink ---- */
+  --background:            var(--surface-canvas);
+  --foreground:            var(--text-body);
+  --card:                  var(--surface-card);
+  --card-foreground:       var(--text-strong);
+  --popover:               var(--surface-raised);
+  --popover-foreground:    var(--text-strong);
+
+  /* ---- primary (sage) ---- */
+  --primary:               var(--primary);          /* sage-600 in daylight */
+  --primary-foreground:    var(--text-on-sage);
+
+  /* ---- secondary / muted (warm stone wells) ---- */
+  --secondary:             var(--surface-sunken);
+  --secondary-foreground:  var(--text-strong);
+  --muted:                 var(--surface-sunken);
+  --muted-foreground:      var(--text-muted);
+
+  /* ---- accent (warm terracotta tint) ---- */
+  --accent:                var(--accent-warm-soft);
+  --accent-foreground:     var(--on-warm-soft);
+
+  /* ---- destructive (rust — never alarming) ---- */
+  --destructive:           var(--danger);
+  --destructive-foreground: var(--text-on-color);
+
+  /* ---- lines & focus ---- */
+  --border:                var(--border-default);
+  --input:                 var(--border-default);
+  --ring:                  var(--focus-ring);
+
+  /* ---- radius (shadcn derives sm/md/lg from this base) ---- */
+  --radius:                var(--radius-md);         /* 10px */
+
+  /* ---- chart palette (Fabric's accent families) ---- */
+  --chart-1: var(--sage-500);
+  --chart-2: var(--marsh-500);
+  --chart-3: var(--ochre-500);
+  --chart-4: var(--terracotta-500);
+  --chart-5: var(--stone-500);
+
+  /* ---- sidebar slots (shadcn 0.8+) ---- */
+  --sidebar:                  var(--surface-card);
+  --sidebar-foreground:       var(--text-body);
+  --sidebar-primary:          var(--primary);
+  --sidebar-primary-foreground: var(--text-on-sage);
+  --sidebar-accent:           var(--surface-sunken);
+  --sidebar-accent-foreground: var(--text-strong);
+  --sidebar-border:           var(--border-subtle);
+  --sidebar-ring:             var(--focus-ring);
+}
+
+/* ------------------------------------------------------------
+ * Class-based dark toggle support (`.dark`).
+ * Skip this entirely if you theme with `data-theme` — Fabric's own Nightfall
+ * scope already flips every token the slots above point to.
+ * These re-point the shadcn slots to Fabric's Nightfall values directly.
+ * ------------------------------------------------------------ */
+.dark {
+  --background:            oklch(0.205 0.012 58);
+  --foreground:            oklch(0.882 0.008 82);
+  --card:                  oklch(0.246 0.013 57);
+  --card-foreground:       oklch(0.955 0.008 85);
+  --popover:               oklch(0.288 0.014 56);
+  --popover-foreground:    oklch(0.955 0.008 85);
+  --primary:               var(--sage-400);
+  --primary-foreground:    oklch(0.205 0.014 56);
+  --secondary:             oklch(0.172 0.010 58);
+  --secondary-foreground:  oklch(0.955 0.008 85);
+  --muted:                 oklch(0.172 0.010 58);
+  --muted-foreground:      oklch(0.712 0.012 76);
+  --accent:                oklch(0.342 0.052 45);
+  --accent-foreground:     var(--terracotta-200);
+  --destructive:           var(--rust-300);
+  --destructive-foreground: oklch(0.205 0.012 58);
+  --border:                oklch(0.368 0.013 58);
+  --input:                 oklch(0.368 0.013 58);
+  --ring:                  var(--sage-400);
+  --sidebar:                  oklch(0.246 0.013 57);
+  --sidebar-foreground:       oklch(0.882 0.008 82);
+  --sidebar-accent:           oklch(0.172 0.010 58);
+  --sidebar-accent-foreground: oklch(0.955 0.008 85);
+  --sidebar-border:           oklch(0.305 0.012 58);
+}

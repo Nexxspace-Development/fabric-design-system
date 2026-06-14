@@ -1,0 +1,144 @@
+/* Fabric — Finance extension
+ * An OPT-IN layer for financial applications. Two jobs:
+ *
+ *   1. A directional color axis (gain / loss / flat) that is SEPARATE from the
+ *      evaluative status axis (success / danger). In a ledger, red means
+ *      "negative", not "error" — so a column of losses must never borrow
+ *      --danger and cry wolf. These tokens sit beside, not on top of, status.
+ *
+ *   2. Accounting-grade number formatting utilities — tabular, lining figures
+ *      so digits lock into columns, set in the IBM Plex Mono data voice.
+ *
+ * House conventions baked in here (US / EU, consumer-fintech):
+ *   • green = up / gain,  red = down / loss   (not locale-flipped)
+ *   • SIGNED negatives  (−1,240.50)  — the sign is the primary cue; color and
+ *     a glyph are redundant reinforcement, never the only channel.
+ *   • chroma nudged a hair above Fabric's status greens/reds so direction
+ *     scans at a glance, while staying inside Fabric's earthen character.
+ *
+ * Load AFTER styles.css:  <link rel="stylesheet" href="tokens/finance.css">
+ */
+
+/* ======================================================================
+ * Directional axis — daylight
+ * ====================================================================== */
+:root {
+  /* Gain — sage lineage, lifted off --success (0.044c) so it doesn't read as
+     "task complete" and doesn't collide with the sage --primary button. */
+  --fin-gain:        oklch(0.558 0.082 152);
+  --fin-gain-soft:   oklch(0.930 0.034 150);
+  --on-fin-gain-soft: oklch(0.392 0.060 150);
+
+  /* Loss — warm clay-red, deliberately calmer and a touch warmer than
+     --danger (rust 0.130c @ 30°) so "negative" is visibly NOT "error". */
+  --fin-loss:        oklch(0.572 0.112 31);
+  --fin-loss-soft:   oklch(0.928 0.036 33);
+  --on-fin-loss-soft: oklch(0.452 0.104 30);
+
+  /* Flat / unchanged / zero — recedes to muted ink. */
+  --fin-flat:        var(--text-muted);
+  --fin-flat-soft:   var(--surface-sunken);
+  --on-fin-flat-soft: var(--text-muted);
+
+  /* Hairline for ledger rules + the double rule under grand totals. */
+  --fin-rule:        var(--border-default);
+  --fin-rule-strong: var(--border-strong);
+}
+
+/* ======================================================================
+ * Directional axis — Nightfall (dark). Lift luminance so gain/loss glow on
+ * warm dark earth; soft fills become low-chroma dark tints. Mirrors the two
+ * dark scopes in tokens/dark.css (OS media + explicit toggle).
+ * ====================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fin-gain:        oklch(0.762 0.090 152);
+    --fin-gain-soft:   oklch(0.330 0.046 150);
+    --on-fin-gain-soft: oklch(0.842 0.060 150);
+
+    --fin-loss:        oklch(0.732 0.108 33);
+    --fin-loss-soft:   oklch(0.338 0.066 32);
+    --on-fin-loss-soft: oklch(0.812 0.090 32);
+
+    --fin-rule:        var(--border-default);
+    --fin-rule-strong: var(--border-strong);
+  }
+}
+:root[data-theme="dark"] {
+  --fin-gain:        oklch(0.762 0.090 152);
+  --fin-gain-soft:   oklch(0.330 0.046 150);
+  --on-fin-gain-soft: oklch(0.842 0.060 150);
+
+  --fin-loss:        oklch(0.732 0.108 33);
+  --fin-loss-soft:   oklch(0.338 0.066 32);
+  --on-fin-loss-soft: oklch(0.812 0.090 32);
+}
+/* Force-light toggle, even under an OS dark preference. */
+:root[data-theme="light"] {
+  --fin-gain:        oklch(0.558 0.082 152);
+  --fin-gain-soft:   oklch(0.930 0.034 150);
+  --on-fin-gain-soft: oklch(0.392 0.060 150);
+
+  --fin-loss:        oklch(0.572 0.112 31);
+  --fin-loss-soft:   oklch(0.928 0.036 33);
+  --on-fin-loss-soft: oklch(0.452 0.104 30);
+}
+
+/* ======================================================================
+ * Number formatting — accounting-grade figures
+ * ====================================================================== */
+
+/* The figure voice: mono, tabular + lining so digits align in columns and
+   sit on a single baseline. Use on any cell, stat, or balance. */
+.fabric-figure {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: 0;
+}
+
+/* Same column-locking for numerals set in the Hanken body voice (e.g. inline
+   stats in prose) — keeps proportional text but tabular digits. */
+.fabric-figure-sans {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* Optional: slashed zero for dense data where 0 / O must not be confused. */
+.fabric-figure-slashed { font-variant-numeric: tabular-nums lining-nums slashed-zero; }
+
+/* Numeric table columns read as a clean right-aligned block. */
+.fabric-num-col { text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+
+/* Grand-total rule: single hairline above, double rule below — accounting. */
+.fabric-total-row { border-top: var(--border-thin) solid var(--fin-rule-strong); }
+.fabric-total-row.is-grand {
+  border-top: var(--border-thin) solid var(--fin-rule-strong);
+  box-shadow: inset 0 -3px 0 -2px var(--fin-rule-strong);
+}
+
+/* ======================================================================
+ * Directional color helpers — class- and data-attribute driven so app teams
+ * can bind straight off a sign:  data-fin={v > 0 ? 'gain' : v < 0 ? 'loss' : 'flat'}
+ * ====================================================================== */
+.fin-gain, [data-fin="gain"] { color: var(--fin-gain); }
+.fin-loss, [data-fin="loss"] { color: var(--fin-loss); }
+.fin-flat, [data-fin="flat"] { color: var(--fin-flat); }
+
+/* Soft directional badge / pill (e.g. a +2.4% chip). Color is reinforced by
+   the sign you put inside it — never ship a bare colored chip with no glyph. */
+.fin-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.15em 0.5em;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+}
+.fin-pill[data-fin="gain"] { background: var(--fin-gain-soft); color: var(--on-fin-gain-soft); }
+.fin-pill[data-fin="loss"] { background: var(--fin-loss-soft); color: var(--on-fin-loss-soft); }
+.fin-pill[data-fin="flat"] { background: var(--fin-flat-soft); color: var(--on-fin-flat-soft); }

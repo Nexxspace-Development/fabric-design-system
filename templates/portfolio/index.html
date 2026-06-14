@@ -1,0 +1,332 @@
+<!-- @template name="Invest — portfolio" description="Consumer-fintech portfolio dashboard — balance, P&L, holdings & activity on the finance extension" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Invest — portfolio</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="./ds-base.js"></script>
+<style>
+  body { margin: 0; background: var(--surface-canvas); }
+  .iv-app { min-height: 100vh; }
+
+  /* ---- top bar ---- */
+  .iv-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px; border-bottom: var(--border-hairline) solid var(--border-subtle);
+    background: var(--surface-card);
+  }
+  .iv-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-strong); }
+  .iv-brand svg { width: 26px; height: 26px; display: block; }
+  .iv-top-right { display: flex; align-items: center; gap: 14px; }
+
+  /* ---- layout ---- */
+  .iv-wrap { max-width: 1120px; margin: 0 auto; padding: 32px; }
+  .iv-cols { display: grid; grid-template-columns: 1.55fr 1fr; gap: 22px; margin-top: 22px; align-items: start; }
+  @media (max-width: 900px) { .iv-cols { grid-template-columns: 1fr; } }
+
+  /* ---- hero balance ---- */
+  .iv-hero-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .iv-balance {
+    font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums;
+    font-size: 52px; font-weight: 500; letter-spacing: -0.02em; color: var(--text-strong);
+    line-height: 1; margin: 6px 0 0;
+  }
+  .iv-change { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+  .iv-change .amt {
+    font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums;
+    font-size: 15px; font-weight: 500;
+  }
+  .iv-change .since { font-size: 12px; color: var(--text-faint); }
+
+  /* timeframe segmented */
+  .iv-tf { display: inline-flex; gap: 2px; background: var(--surface-sunken); border-radius: var(--radius-pill); padding: 3px; }
+  .iv-tf button {
+    border: none; background: transparent; cursor: pointer;
+    font-family: var(--font-data); font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--text-muted); padding: 6px 13px; border-radius: var(--radius-pill);
+    transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  }
+  .iv-tf button[aria-pressed="true"] { background: var(--surface-raised); color: var(--text-strong); box-shadow: var(--shadow-xs); }
+
+  /* sparkline */
+  .iv-spark { display: flex; align-items: stretch; gap: 3px; height: 96px; margin-top: 24px; }
+  .iv-bar { flex: 1; display: flex; flex-direction: column; }
+  .iv-bar .up, .iv-bar .dn { flex: 1; display: flex; }
+  .iv-bar .up { align-items: flex-end; }
+  .iv-bar .dn { align-items: flex-start; }
+  .iv-bar i { display: block; width: 100%; border-radius: 2px; }
+  .iv-axis { display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--font-data); font-size: 10px; color: var(--text-faint); letter-spacing: 0.04em; }
+
+  /* ---- section heads ---- */
+  .iv-sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; gap: 16px; }
+  .iv-sec-head h3 { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-strong); margin: 0; }
+  .iv-sec-head a { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.04em; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+
+  /* ---- holdings table ---- */
+  .iv-tbl { width: 100%; border-collapse: collapse; }
+  .iv-tbl th {
+    font-family: var(--font-data); font-size: 9.5px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-faint); text-align: left;
+    padding: 0 0 10px; border-bottom: var(--border-hairline) solid var(--border-subtle);
+  }
+  .iv-tbl th.r, .iv-tbl td.r { text-align: right; }
+  .iv-tbl td { padding: 13px 0; border-bottom: var(--border-hairline) solid var(--border-subtle); vertical-align: middle; }
+  .iv-tbl tr:last-child td { border-bottom: none; }
+  .iv-asset { display: flex; align-items: center; gap: 12px; }
+  .iv-glyph {
+    width: 34px; height: 34px; border-radius: var(--radius-md); flex: none;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-data); font-size: 12px; font-weight: 500; color: var(--text-on-color);
+  }
+  .iv-tick { font-weight: 600; color: var(--text-strong); font-size: 14px; }
+  .iv-name { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
+  .iv-num { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 13.5px; color: var(--text-body); }
+  .iv-alloc { width: 64px; }
+  .iv-alloc .track { height: 5px; border-radius: var(--radius-pill); background: var(--surface-sunken); overflow: hidden; }
+  .iv-alloc .fill { height: 100%; border-radius: var(--radius-pill); background: var(--primary); }
+  .iv-alloc .pct { font-family: var(--font-data); font-size: 10px; color: var(--text-faint); margin-top: 4px; text-align: right; }
+
+  /* ---- side cards ---- */
+  .iv-side { display: flex; flex-direction: column; gap: 22px; }
+  .iv-accts { display: flex; flex-direction: column; gap: 12px; }
+  .iv-acct { display: flex; align-items: center; gap: 12px; }
+  .iv-acct .ico { width: 36px; height: 36px; border-radius: var(--radius-md); flex: none; display: flex; align-items: center; justify-content: center; background: var(--surface-sunken); color: var(--text-muted); }
+  .iv-acct .meta { flex: 1; }
+  .iv-acct .meta .nm { font-size: 13.5px; font-weight: 600; color: var(--text-strong); }
+  .iv-acct .meta .sub { font-size: 11px; color: var(--text-muted); font-family: var(--font-data); }
+  .iv-acct .bal { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 14px; color: var(--text-body); }
+
+  /* ---- activity ---- */
+  .iv-act { display: flex; flex-direction: column; }
+  .iv-act-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: var(--border-hairline) solid var(--border-subtle); }
+  .iv-act-row:last-child { border-bottom: none; }
+  .iv-act .ico { width: 32px; height: 32px; border-radius: var(--radius-pill); flex: none; display: flex; align-items: center; justify-content: center; background: var(--surface-sunken); color: var(--text-muted); }
+  .iv-act .meta { flex: 1; }
+  .iv-act .meta .nm { font-size: 13px; font-weight: 600; color: var(--text-strong); }
+  .iv-act .meta .dt { font-size: 11px; color: var(--text-faint); font-family: var(--font-data); }
+  .iv-act .amt { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 13.5px; color: var(--text-body); white-space: nowrap; }
+  .iv-act-note { font-family: var(--font-data); font-size: 10px; color: var(--text-faint); line-height: 1.5; margin: 14px 2px 0; letter-spacing: 0.01em; }
+
+  .iv-stat-row { display: flex; gap: 28px; margin-top: 18px; }
+  .iv-stat .k { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); }
+  .iv-stat .v { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 17px; color: var(--text-strong); margin-top: 3px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+(function boot() {
+  if (!window.FabricDesignSystem_7bb975 || !document.getElementById('root')) { return setTimeout(boot, 30); }
+  const NS = window.FabricDesignSystem_7bb975 || {};
+  const Card = NS.Card || ((p) => React.createElement('div', p, p.children));
+  const Button = NS.Button || ((p) => React.createElement('button', p, p.children));
+  const Avatar = NS.Avatar || ((p) => React.createElement('span', p));
+  const IconButton = NS.IconButton || ((p) => React.createElement('button', { onClick: p.onClick, 'aria-label': p.label }, p.children));
+  const Divider = NS.Divider || (() => React.createElement('hr'));
+
+  // ---- formatting helpers (accounting-grade) ----
+  const fmt = (n, dp = 2) => Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  // Signed money: leading minus glyph (− U+2212), our house convention. Zero is unsigned.
+  const signed = (n, dp = 2) => (n === 0 ? '' : n < 0 ? '\u2212' : '+') + '$' + fmt(n, dp);
+  const signedPct = (n) => (n < 0 ? '\u2212' : '+') + fmt(Math.abs(n), 2) + '%';
+  const dir = (n) => (n > 0 ? 'gain' : n < 0 ? 'loss' : 'flat');
+
+  // ---- data ----
+  const TIMEFRAMES = ['1D', '1W', '1M', '1Y', 'All'];
+  // daily returns driving the sparkline (most recent right)
+  const SERIES = [0.4, 0.9, -0.3, 0.6, 1.1, -0.7, -1.2, 0.5, 0.8, 1.4, 0.3, -0.5,
+                  -0.9, 0.7, 1.0, 1.6, 0.4, -0.4, 0.9, 1.2, -0.6, 0.5, 1.1, 0.8,
+                  -0.3, 0.6, 1.3, 0.7, -0.5, 0.9, 1.5, 1.82];
+  const MAXV = Math.max(...SERIES.map(Math.abs));
+
+  const HOLDINGS = [
+    { tick: 'VTSAX', name: 'Total Stock Market', value: 21940.18, day: 312.40, alloc: 45, c: 'var(--sage-500)' },
+    { tick: 'VTIAX', name: 'International Markets', value: 9602.55, day: -48.17, alloc: 20, c: 'var(--marsh-500)' },
+    { tick: 'VBTLX', name: 'Total Bond Index', value: 8415.00, day: 0.00, alloc: 17, c: 'var(--ochre-600)' },
+    { tick: 'QQQM', name: 'Nasdaq-100 ETF', value: 5099.99, day: 188.62, alloc: 11, c: 'var(--terracotta-500)' },
+    { tick: 'CASH', name: 'Settlement Fund', value: 3152.62, day: -12.88, alloc: 7, c: 'var(--stone-500)' },
+  ];
+
+  const ACCOUNTS = [
+    { nm: 'Brokerage', sub: '••4821', bal: 48210.74, ico: 'M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6' },
+    { nm: 'Cash Reserve', sub: 'APY 4.30%', bal: 12480.55, ico: 'M3 7h18v10H3zM3 11h18' },
+    { nm: 'Roth IRA', sub: '••0917', bal: 31204.10, ico: 'M12 3l9 4-9 4-9-4 9-4zM3 12l9 4 9-4M3 17l9 4 9-4' },
+  ];
+
+  const ACTIVITY = [
+    { nm: 'Recurring deposit', dt: 'Jun 13', amt: 1000.00, credit: true, ico: 'M12 5v14M5 12h14' },
+    { nm: 'Dividend — VTSAX', dt: 'Jun 11', amt: 42.18, credit: true, ico: 'M12 5v14M5 12h14' },
+    { nm: 'Buy — QQQM ×8', dt: 'Jun 10', amt: 2000.00, credit: false, ico: 'M5 12h14' },
+    { nm: 'Buy — VTIAX ×14', dt: 'Jun 6', amt: 1500.00, credit: false, ico: 'M5 12h14' },
+  ];
+
+  function Sparkline() {
+    return (
+      <div>
+        <div className="iv-spark" role="img" aria-label="32-session daily return sparkline">
+          {SERIES.map((v, i) => {
+            const h = Math.max(6, (Math.abs(v) / MAXV) * 100);
+            const col = v >= 0 ? 'var(--fin-gain)' : 'var(--fin-loss)';
+            const last = i === SERIES.length - 1;
+            return (
+              <div className="iv-bar" key={i}>
+                <div className="up">{v >= 0 && <i style={{ height: h + '%', background: col, opacity: last ? 1 : 0.82 }} />}</div>
+                <div className="dn">{v < 0 && <i style={{ height: h + '%', background: col, opacity: 0.82 }} />}</div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="iv-axis"><span>30 days ago</span><span>Today</span></div>
+      </div>
+    );
+  }
+
+  function App() {
+    const [tf, setTf] = React.useState('1M');
+    const [dark, setDark] = React.useState(false);
+
+    React.useEffect(() => {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    }, [dark]);
+
+    const dayChange = 862.40, dayPct = 1.82;
+
+    return (
+      <div className="iv-app">
+        <header className="iv-top">
+          <span className="iv-brand">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M24 3.5C35.5 12 40 23.5 24 44.5C8 23.5 12.5 12 24 3.5Z" fill="var(--primary)"></path>
+              <path d="M24 9V40" stroke="var(--text-on-sage)" strokeWidth="1.6" strokeLinecap="round" opacity="0.82"></path>
+            </svg>
+            Fabric Invest
+          </span>
+          <div className="iv-top-right">
+            <IconButton variant="ghost" size="sm" label="Toggle theme" onClick={() => setDark(d => !d)}>
+              {dark ? '\u2600' : '\u263E'}
+            </IconButton>
+            <Button variant="soft" size="sm">Transfer</Button>
+            <Avatar name="Maya Okonkwo" size="sm" ring />
+          </div>
+        </header>
+
+        <main className="iv-wrap">
+          {/* ---- balance hero ---- */}
+          <Card elevation="raised" padding="lg">
+            <div className="iv-hero-head">
+              <div>
+                <span className="fabric-eyebrow">// Portfolio value</span>
+                <div className="iv-balance">$48,210.74</div>
+                <div className="iv-change">
+                  <span className="amt" data-fin={dir(dayChange)}>{signed(dayChange)}</span>
+                  <span className="iv-pill fin-pill" data-fin={dir(dayPct)}>{dayPct >= 0 ? '\u25B2' : '\u25BC'} {signedPct(dayPct)}</span>
+                  <span className="since">today</span>
+                </div>
+              </div>
+              <div className="iv-tf" role="group" aria-label="Timeframe">
+                {TIMEFRAMES.map(t => (
+                  <button key={t} aria-pressed={tf === t} onClick={() => setTf(t)}>{t}</button>
+                ))}
+              </div>
+            </div>
+            <Sparkline />
+          </Card>
+
+          <div className="iv-cols">
+            {/* ---- holdings ---- */}
+            <Card elevation="raised" padding="lg">
+              <div className="iv-sec-head">
+                <h3>Holdings</h3>
+                <a>View all</a>
+              </div>
+              <table className="iv-tbl">
+                <thead>
+                  <tr>
+                    <th>Asset</th>
+                    <th className="r">Market value</th>
+                    <th className="r">Day</th>
+                    <th className="r">Allocation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {HOLDINGS.map(h => (
+                    <tr key={h.tick}>
+                      <td>
+                        <div className="iv-asset">
+                          <span className="iv-glyph" style={{ background: h.c }}>{h.tick.slice(0, 2)}</span>
+                          <span>
+                            <div className="iv-tick">{h.tick}</div>
+                            <div className="iv-name">{h.name}</div>
+                          </span>
+                        </div>
+                      </td>
+                      <td className="r"><span className="iv-num">${fmt(h.value)}</span></td>
+                      <td className="r"><span className="iv-num" data-fin={dir(h.day)}>{signed(h.day)}</span></td>
+                      <td className="r">
+                        <div className="iv-alloc">
+                          <div className="track"><div className="fill" style={{ width: h.alloc + '%' }} /></div>
+                          <div className="pct">{h.alloc}%</div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Card>
+
+            {/* ---- side: accounts + activity ---- */}
+            <div className="iv-side">
+              <Card elevation="raised" padding="lg">
+                <div className="iv-sec-head"><h3>Accounts</h3></div>
+                <div className="iv-accts">
+                  {ACCOUNTS.map(a => (
+                    <div className="iv-acct" key={a.nm}>
+                      <span className="ico">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={a.ico} /></svg>
+                      </span>
+                      <span className="meta">
+                        <div className="nm">{a.nm}</div>
+                        <div className="sub">{a.sub}</div>
+                      </span>
+                      <span className="bal">${fmt(a.bal)}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card elevation="raised" padding="lg">
+                <div className="iv-sec-head"><h3>Activity</h3><a>History</a></div>
+                <div className="iv-act">
+                  {ACTIVITY.map((t, i) => (
+                    <div className="iv-act-row" key={i}>
+                      <span className="ico">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={t.ico} /></svg>
+                      </span>
+                      <span className="meta">
+                        <div className="nm">{t.nm}</div>
+                        <div className="dt">{t.dt}</div>
+                      </span>
+                      <span className="amt" style={t.credit ? { color: 'var(--fin-gain)' } : null}>
+                        {t.credit ? '+' : '\u2212'}${fmt(t.amt)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <p className="iv-act-note">Cash flow isn't P&amp;L — only credits carry directional color; a buy is neutral, not a loss.</p>
+              </Card>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+})();
+</script>
+</body>
+</html>

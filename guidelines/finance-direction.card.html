@@ -1,0 +1,136 @@
+<!-- @dsCard group="Finance" viewport="780x460" name="Finance — directional axis" subtitle="Gain/loss ≠ success/danger · signed tabular figures" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../tokens/finance.css" />
+<style>
+  body {
+    margin: 0;
+    background: var(--surface-card);
+    padding: 26px 30px;
+    font-family: var(--font-body);
+    color: var(--text-body);
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 30px; align-items: start; }
+  .eyebrow {
+    font-family: var(--font-data); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted);
+    margin: 0 0 14px;
+  }
+
+  /* ---- left: the axis ---- */
+  .axis { display: flex; flex-direction: column; gap: 10px; }
+  .swatch {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border-radius: var(--radius-md);
+    background: var(--surface-sunken);
+  }
+  .dot { width: 30px; height: 30px; border-radius: var(--radius-sm); flex: none; }
+  .swatch .lbl { font-size: 13px; font-weight: 600; color: var(--text-strong); }
+  .swatch .tok { font-family: var(--font-data); font-size: 10px; color: var(--text-faint); margin-left: auto; }
+
+  .note {
+    margin-top: 16px; padding: 12px 14px; border-radius: var(--radius-md);
+    background: var(--fin-loss-soft); border: var(--border-hairline) solid transparent;
+    font-size: 12px; line-height: 1.5; color: var(--on-fin-loss-soft);
+  }
+  .note b { font-weight: 700; }
+
+  /* ---- right: consumer-fintech holdings ---- */
+  .panel {
+    background: var(--surface-raised); border: var(--border-hairline) solid var(--border-subtle);
+    border-radius: var(--radius-xl); padding: 18px 20px 8px; box-shadow: var(--shadow-sm);
+  }
+  .bal-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px; }
+  .bal {
+    font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums;
+    font-size: 30px; font-weight: 500; color: var(--text-strong); letter-spacing: -0.01em;
+  }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th {
+    font-family: var(--font-data); font-size: 9.5px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint);
+    text-align: left; padding: 0 0 8px; border-bottom: var(--border-hairline) solid var(--border-subtle);
+  }
+  th.r { text-align: right; }
+  td { padding: 9px 0; border-bottom: var(--border-hairline) solid var(--border-subtle); font-size: 13px; }
+  .tick { font-weight: 600; color: var(--text-strong); }
+  .name { font-size: 11px; color: var(--text-muted); }
+  td.num {
+    text-align: right; font-family: var(--font-data);
+    font-variant-numeric: tabular-nums lining-nums; font-size: 13px; color: var(--text-body);
+  }
+  tr:last-child td { border-bottom: none; }
+  .caption { font-family: var(--font-data); font-size: 10px; color: var(--text-faint); margin: 14px 2px 0; letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <!-- LEFT: the directional axis, set apart from status -->
+    <div>
+      <p class="eyebrow">// Directional axis</p>
+      <div class="axis">
+        <div class="swatch">
+          <span class="dot" style="background:var(--fin-gain)"></span>
+          <span class="lbl">Gain</span>
+          <span class="tok">--fin-gain</span>
+        </div>
+        <div class="swatch">
+          <span class="dot" style="background:var(--fin-loss)"></span>
+          <span class="lbl">Loss</span>
+          <span class="tok">--fin-loss</span>
+        </div>
+        <div class="swatch">
+          <span class="dot" style="background:var(--fin-flat)"></span>
+          <span class="lbl">Flat</span>
+          <span class="tok">--fin-flat</span>
+        </div>
+      </div>
+      <p class="note">Direction is <b>not</b> status. A losing position uses
+        <b>--fin-loss</b>, never <b>--danger</b> — red here means “negative”,
+        not “error”. Sign is the primary cue; color reinforces.</p>
+    </div>
+
+    <!-- RIGHT: signed, tabular figures in context -->
+    <div>
+      <p class="eyebrow">// Holdings</p>
+      <div class="panel">
+        <div class="bal-row">
+          <span class="bal">$48,210.74</span>
+          <span class="fin-pill" data-fin="gain">▲ +1.82%</span>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Asset</th><th class="r">Value</th><th class="r">Day</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="tick">VTSAX</div><div class="name">Total Market</div></td>
+              <td class="num">21,940.18</td>
+              <td class="num" data-fin="gain">+312.40</td>
+            </tr>
+            <tr>
+              <td><div class="tick">VBTLX</div><div class="name">Bond Index</div></td>
+              <td class="num">9,602.55</td>
+              <td class="num" data-fin="loss">−48.17</td>
+            </tr>
+            <tr>
+              <td><div class="tick">VTIAX</div><div class="name">Intl. Markets</div></td>
+              <td class="num">8,415.00</td>
+              <td class="num" data-fin="flat">0.00</td>
+            </tr>
+            <tr>
+              <td><div class="tick">SETTLE</div><div class="name">Cash</div></td>
+              <td class="num">8,253.01</td>
+              <td class="num" data-fin="loss">−12.88</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption">IBM Plex Mono · tabular + lining · signed · right-aligned</p>
+    </div>
+  </div>
+</body>
+</html>

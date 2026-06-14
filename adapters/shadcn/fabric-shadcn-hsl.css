@@ -1,0 +1,72 @@
+/* ============================================================
+ * Fabric → shadcn/ui token bridge — legacy (Tailwind v3 / HSL-triplet shadcn)
+ * ------------------------------------------------------------
+ * For the classic shadcn setup where variables hold bare HSL channel triplets
+ * (e.g. `--primary: 142 11% 40%`) and the Tailwind config wraps them as
+ * `hsl(var(--primary))`. Fabric's tokens are OKLCH, which CANNOT live inside an
+ * `hsl(...)` wrapper — so this file ships Fabric's palette pre-converted to HSL
+ * triplets that drop straight into that contract.
+ *
+ * (Conversions are exact OKLCH→sRGB→HSL of Fabric v0.5.0 tokens. They are a
+ * sRGB-gamut approximation of the OKLCH source; for the truest color, move to
+ * Tailwind v4 + fabric-shadcn.css and keep the OKLCH values.)
+ *
+ * LOAD ORDER:
+ *   1. fabric/styles.css   ← still load it, for fonts / spacing / Fabric components
+ *   2. THIS FILE           ← overrides the shadcn color slots
+ *   3. your app / shadcn styles
+ *
+ * Your existing `tailwind.config` mapping (hsl(var(--background)) etc.) is
+ * unchanged — only the variable VALUES below change.
+ * ============================================================ */
+
+:root {
+  --background:             38 28% 94%;
+  --foreground:             24 14% 19%;
+  --card:                   39 37% 97%;
+  --card-foreground:        23 17% 12%;
+  --popover:                43 100% 99%;
+  --popover-foreground:     23 17% 12%;
+  --primary:                120 11% 40%;
+  --primary-foreground:     90 50% 98%;
+  --secondary:              38 22% 91%;
+  --secondary-foreground:   23 17% 12%;
+  --muted:                  38 22% 91%;
+  --muted-foreground:       27 8% 38%;
+  --accent:                 20 67% 90%;
+  --accent-foreground:      15 38% 28%;
+  --destructive:            8 45% 51%;
+  --destructive-foreground: 39 37% 97%;
+  --border:                 36 13% 80%;
+  --input:                  36 13% 80%;
+  --ring:                   120 10% 50%;
+  --radius:                 10px;
+
+  --chart-1: 145 11% 41%;   /* sage  */
+  --chart-2: 245 17% 48%;   /* marsh */
+  --chart-3: 78 35% 54%;    /* ochre */
+  --chart-4: 43 50% 47%;    /* terracotta */
+  --chart-5: 66 6% 47%;     /* stone */
+}
+
+.dark {
+  --background:             25 21% 9%;
+  --foreground:             38 10% 84%;
+  --card:                   25 17% 13%;
+  --card-foreground:        40 25% 93%;
+  --popover:                24 14% 17%;
+  --popover-foreground:     40 25% 93%;
+  --primary:                122 12% 60%;
+  --primary-foreground:     24 25% 9%;
+  --secondary:              25 25% 6%;
+  --secondary-foreground:   40 25% 93%;
+  --muted:                  25 25% 6%;
+  --muted-foreground:       35 7% 63%;
+  --accent:                 19 41% 22%;
+  --accent-foreground:      19 57% 82%;
+  --destructive:            9 62% 73%;
+  --destructive-foreground: 25 21% 9%;
+  --border:                 25 10% 25%;
+  --input:                  25 10% 25%;
+  --ring:                   122 12% 60%;
+}

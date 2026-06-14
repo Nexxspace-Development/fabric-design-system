@@ -1,0 +1,271 @@
+<!-- @template name="Account statement" description="Accounting-grade monthly statement — columnar money-out/in, running balance, total rules" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Account statement</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="./ds-base.js"></script>
+<style>
+  body { margin: 0; background: var(--surface-canvas); }
+  .st-app { min-height: 100vh; }
+
+  /* ---- top bar ---- */
+  .st-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px; border-bottom: var(--border-hairline) solid var(--border-subtle);
+    background: var(--surface-card);
+  }
+  .st-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-strong); }
+  .st-brand svg { width: 26px; height: 26px; display: block; }
+  .st-top-right { display: flex; align-items: center; gap: 12px; }
+
+  .st-wrap { max-width: 940px; margin: 0 auto; padding: 32px; }
+
+  /* ---- statement header ---- */
+  .st-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+  .st-acct .nm { font-family: var(--font-display); font-size: 27px; font-weight: 500; color: var(--text-strong); margin: 4px 0 0; }
+  .st-acct .meta { font-family: var(--font-data); font-size: 12px; color: var(--text-muted); margin-top: 6px; letter-spacing: 0.02em; }
+  .st-period { display: flex; align-items: center; gap: 12px; }
+  .st-period .label { font-family: var(--font-data); font-size: 13px; font-weight: 500; color: var(--text-strong); letter-spacing: 0.02em; min-width: 96px; text-align: center; }
+
+  /* ---- summary band ---- */
+  .st-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 26px; }
+  @media (max-width: 720px) { .st-summary { grid-template-columns: repeat(2, 1fr); } }
+  .st-stat { background: var(--surface-card); padding: 16px 18px; }
+  .st-stat .k { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); }
+  .st-stat .v { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 22px; font-weight: 500; color: var(--text-strong); margin-top: 7px; letter-spacing: -0.01em; }
+  .st-stat .d { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 11.5px; margin-top: 5px; }
+
+  /* ---- filter row ---- */
+  .st-filter { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 6px; flex-wrap: wrap; }
+  .st-tabs { display: inline-flex; gap: 2px; background: var(--surface-sunken); border-radius: var(--radius-pill); padding: 3px; }
+  .st-tabs button {
+    border: none; background: transparent; cursor: pointer;
+    font-family: var(--font-data); font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-pill);
+    transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  }
+  .st-tabs button[aria-pressed="true"] { background: var(--surface-raised); color: var(--text-strong); box-shadow: var(--shadow-xs); }
+  .st-count { font-family: var(--font-data); font-size: 11px; color: var(--text-faint); letter-spacing: 0.04em; }
+
+  /* ---- ledger table ---- */
+  .st-tbl { width: 100%; border-collapse: collapse; }
+  .st-tbl thead th {
+    font-family: var(--font-data); font-size: 9.5px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-faint);
+    padding: 0 0 12px; border-bottom: var(--border-thin) solid var(--fin-rule-strong); text-align: left;
+  }
+  .st-tbl th.r, .st-tbl td.r { text-align: right; }
+  .st-tbl td { padding: 13px 0; border-bottom: var(--border-hairline) solid var(--border-subtle); vertical-align: baseline; }
+  .st-tbl td.num { font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 13.5px; color: var(--text-body); white-space: nowrap; }
+  .st-tbl td.bal { color: var(--text-strong); font-weight: 500; }
+  .st-date { font-family: var(--font-data); font-size: 12px; color: var(--text-muted); white-space: nowrap; padding-right: 18px !important; }
+  .st-desc .d { font-size: 13.5px; font-weight: 600; color: var(--text-strong); }
+  .st-cat { display: inline-block; font-family: var(--font-data); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-top: 3px; padding: 1px 7px; border: var(--border-hairline) solid var(--border-default); border-radius: var(--radius-pill); }
+  .st-th-out, .st-th-in { width: 118px; }
+  .st-th-bal { width: 124px; }
+
+  /* opening / total / closing rows */
+  .st-rule td { color: var(--text-muted); font-family: var(--font-data); }
+  tr.st-opening td { padding-top: 16px; }
+  tr.st-opening .st-desc .d { font-weight: 500; color: var(--text-muted); }
+  tr.st-totals td { padding: 14px 0; border-top: var(--border-thin) solid var(--fin-rule-strong); border-bottom: none; font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; }
+  tr.st-totals .lbl { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+  tr.st-totals .num { font-size: 13.5px; font-weight: 600; color: var(--text-strong); }
+  tr.st-closing td { padding: 14px 0 4px; }
+  tr.st-closing .lbl { font-family: var(--font-display); font-size: 17px; color: var(--text-strong); }
+  tr.st-closing .num {
+    font-family: var(--font-data); font-variant-numeric: tabular-nums lining-nums; font-size: 19px; font-weight: 600; color: var(--text-strong);
+    border-top: var(--border-thin) solid var(--fin-rule-strong);
+    box-shadow: inset 0 -4px 0 -2px var(--fin-rule-strong); padding-bottom: 8px;
+  }
+
+  .st-foot { font-family: var(--font-data); font-size: 10.5px; color: var(--text-faint); line-height: 1.6; margin-top: 22px; letter-spacing: 0.01em; }
+  .st-foot b { color: var(--text-muted); font-weight: 500; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+(function boot() {
+  if (!window.FabricDesignSystem_7bb975 || !document.getElementById('root')) { return setTimeout(boot, 30); }
+  const NS = window.FabricDesignSystem_7bb975 || {};
+  const Card = NS.Card || ((p) => React.createElement('div', p, p.children));
+  const Button = NS.Button || ((p) => React.createElement('button', p, p.children));
+  const IconButton = NS.IconButton || ((p) => React.createElement('button', { onClick: p.onClick, 'aria-label': p.label }, p.children));
+
+  // ---- formatting ----
+  const fmt = (n, dp = 2) => n.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  const money = (n) => '$' + fmt(n);
+  const signedMoney = (n) => (n === 0 ? '' : n < 0 ? '\u2212' : '+') + '$' + fmt(Math.abs(n));
+
+  // ---- data: a May 2026 checking statement ----
+  const OPENING = 4820.55;
+  const TXNS = [
+    { date: 'May 2',  desc: 'Payroll — ACME Corp',       cat: 'Income',    in: 3200.00 },
+    { date: 'May 3',  desc: 'Birch Property Mgmt',        cat: 'Housing',   out: 1650.00 },
+    { date: 'May 5',  desc: 'Whole Foods Market',         cat: 'Groceries', out: 142.38 },
+    { date: 'May 8',  desc: 'Transfer to Savings',        cat: 'Transfer',  out: 500.00 },
+    { date: 'May 11', desc: 'Refund — Patagonia',         cat: 'Shopping',  in: 89.90 },
+    { date: 'May 14', desc: 'Pacific Gas & Electric',     cat: 'Utilities', out: 96.22 },
+    { date: 'May 16', desc: 'Payroll — ACME Corp',        cat: 'Income',    in: 3200.00 },
+    { date: 'May 18', desc: 'Blue Bottle Coffee',         cat: 'Dining',    out: 18.75 },
+    { date: 'May 21', desc: 'Verizon Wireless',           cat: 'Utilities', out: 80.00 },
+    { date: 'May 24', desc: 'Zelle from J. Rivera',       cat: 'Transfer',  in: 220.00 },
+    { date: 'May 27', desc: "Trader Joe's",               cat: 'Groceries', out: 73.41 },
+    { date: 'May 29', desc: 'Interest paid',              cat: 'Interest',  in: 4.12 },
+    { date: 'May 30', desc: 'Amazon.com',                 cat: 'Shopping',  out: 156.04 },
+  ];
+
+  // running balance + totals (data-driven, never hand-summed)
+  let bal = OPENING;
+  const rows = TXNS.map(t => {
+    bal += (t.in || 0) - (t.out || 0);
+    return { ...t, balance: bal };
+  });
+  const totalIn  = TXNS.reduce((s, t) => s + (t.in || 0), 0);
+  const totalOut = TXNS.reduce((s, t) => s + (t.out || 0), 0);
+  const closing  = OPENING + totalIn - totalOut;
+  const net      = totalIn - totalOut;
+
+  const FILTERS = [['all', 'All'], ['in', 'Money in'], ['out', 'Money out']];
+
+  function App() {
+    const [filter, setFilter] = React.useState('all');
+    const [dark, setDark] = React.useState(false);
+    React.useEffect(() => { document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light'); }, [dark]);
+
+    const visible = rows.filter(r => filter === 'all' || (filter === 'in' ? r.in : r.out));
+
+    return (
+      <div className="st-app">
+        <header className="st-top">
+          <span className="st-brand">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M24 3.5C35.5 12 40 23.5 24 44.5C8 23.5 12.5 12 24 3.5Z" fill="var(--primary)"></path>
+              <path d="M24 9V40" stroke="var(--text-on-sage)" strokeWidth="1.6" strokeLinecap="round" opacity="0.82"></path>
+            </svg>
+            Fabric Invest
+          </span>
+          <div className="st-top-right">
+            <IconButton variant="ghost" size="sm" label="Toggle theme" onClick={() => setDark(d => !d)}>{dark ? '\u2600' : '\u263E'}</IconButton>
+            <Button variant="soft" size="sm">Download PDF</Button>
+          </div>
+        </header>
+
+        <main className="st-wrap">
+          <Card elevation="raised" padding="lg">
+            {/* statement header */}
+            <div className="st-head">
+              <div className="st-acct">
+                <span className="fabric-eyebrow">// Account statement</span>
+                <div className="nm">Everyday Checking</div>
+                <div className="meta">•••• 4821 · Routing ••• 0142 · USD</div>
+              </div>
+              <div className="st-period">
+                <IconButton variant="outline" size="sm" label="Previous period">{'\u2039'}</IconButton>
+                <span className="label">May 2026</span>
+                <IconButton variant="outline" size="sm" label="Next period">{'\u203A'}</IconButton>
+              </div>
+            </div>
+
+            {/* summary band */}
+            <div className="st-summary">
+              <div className="st-stat">
+                <div className="k">Opening balance</div>
+                <div className="v">{money(OPENING)}</div>
+                <div className="d" style={{ color: 'var(--text-faint)' }}>May 1, 2026</div>
+              </div>
+              <div className="st-stat">
+                <div className="k">Money in</div>
+                <div className="v">{money(totalIn)}</div>
+                <div className="d" style={{ color: 'var(--text-faint)' }}>{TXNS.filter(t => t.in).length} credits</div>
+              </div>
+              <div className="st-stat">
+                <div className="k">Money out</div>
+                <div className="v">{money(totalOut)}</div>
+                <div className="d" style={{ color: 'var(--text-faint)' }}>{TXNS.filter(t => t.out).length} debits</div>
+              </div>
+              <div className="st-stat">
+                <div className="k">Closing balance</div>
+                <div className="v">{money(closing)}</div>
+                <div className="d" data-fin={net > 0 ? 'gain' : net < 0 ? 'loss' : 'flat'}>{signedMoney(net)} net</div>
+              </div>
+            </div>
+
+            {/* filter */}
+            <div className="st-filter">
+              <div className="st-tabs" role="group" aria-label="Filter transactions">
+                {FILTERS.map(([v, l]) => (
+                  <button key={v} aria-pressed={filter === v} onClick={() => setFilter(v)}>{l}</button>
+                ))}
+              </div>
+              <span className="st-count">{visible.length} of {rows.length} transactions</span>
+            </div>
+
+            {/* ledger */}
+            <table className="st-tbl">
+              <thead>
+                <tr>
+                  <th className="st-th-date">Date</th>
+                  <th>Description</th>
+                  <th className="r st-th-out">Money out</th>
+                  <th className="r st-th-in">Money in</th>
+                  <th className="r st-th-bal">Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="st-opening">
+                  <td className="st-date">May 1</td>
+                  <td className="st-desc"><span className="d">Opening balance</span></td>
+                  <td className="r num"></td>
+                  <td className="r num"></td>
+                  <td className="r num bal">{fmt(OPENING)}</td>
+                </tr>
+                {visible.map((r, i) => (
+                  <tr key={i}>
+                    <td className="st-date">{r.date}</td>
+                    <td className="st-desc">
+                      <div className="d">{r.desc}</div>
+                      <span className="st-cat">{r.cat}</span>
+                    </td>
+                    <td className="r num">{r.out ? fmt(r.out) : ''}</td>
+                    <td className="r num">{r.in ? fmt(r.in) : ''}</td>
+                    <td className="r num bal">{fmt(r.balance)}</td>
+                  </tr>
+                ))}
+                <tr className="st-totals">
+                  <td></td>
+                  <td className="lbl">Totals this period</td>
+                  <td className="r num">{fmt(totalOut)}</td>
+                  <td className="r num">{fmt(totalIn)}</td>
+                  <td></td>
+                </tr>
+                <tr className="st-closing">
+                  <td></td>
+                  <td className="lbl">Closing balance</td>
+                  <td></td>
+                  <td></td>
+                  <td className="r num">{fmt(closing)}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p className="st-foot">
+              All amounts in <b>USD</b>. Direction is shown by column — debits under <b>Money out</b>, credits under <b>Money in</b> — so the ledger stays neutral ink; cash flow isn't profit &amp; loss. The signed <b>net</b> above is the one genuine directional figure, drawn from the finance axis. Totals carry a single rule; the closing balance, a double rule.
+            </p>
+          </Card>
+        </main>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+})();
+</script>
+</body>
+</html>
