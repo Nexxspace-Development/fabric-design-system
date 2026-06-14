@@ -1,10 +1,87 @@
 # Fabric — Design System
 
-**Fabric** is a design system that embraces nature and human characteristics. Its materials resemble things found in — or made from — nature: linen, lichen, clay, dried grass, the grain of old paper. The palette is deliberately **muted** so the interface recedes and the user can feel calm and stay focused on their work.
+> **Calm tools for focused work.** · *Made from nature.*
+
+![status](https://img.shields.io/badge/status-living-5b6f54)
+![components](https://img.shields.io/badge/components-15-5b6f54)
+![themes](https://img.shields.io/badge/themes-light%20%2B%20Nightfall-3d4a36)
+![seasons](https://img.shields.io/badge/seasons-4-a8632f)
+![tokens](https://img.shields.io/badge/tokens-301-8a8170)
+
+**Fabric** is a design system that embraces nature and human characteristics. Its materials resemble things found in — or made from — nature: linen, lichen, clay, dried grass, the grain of old paper. The palette is deliberately **muted** so the interface recedes and the user can feel calm and stay focused. Three humanist typefaces, a soft organic shape language, a warm-earth dark theme (**Nightfall**), and an optional **seasons** layer that turns the year through accent + texture.
 
 The flagship product, also called Fabric, is a quiet daily workspace for doing one thing at a time.
 
-> **Tagline:** *Calm tools for focused work.* · **Motto:** *Made from nature.*
+<p align="center">
+  <img src="assets/screenshots/site-hero.png" alt="Fabric marketing site — Calm tools for focused work" width="100%" />
+</p>
+<p align="center">
+  <img src="assets/screenshots/app-autumn.png" alt="Fabric workspace app, Autumn season" width="100%" />
+</p>
+
+---
+
+## Quick start
+
+Link the single stylesheet, then (for the React components) load the compiled bundle after React UMD:
+
+```html
+<!-- 1. Tokens, fonts, base — the one file consumers link -->
+<link rel="stylesheet" href="styles.css" />
+
+<!-- 2. React UMD (only if you use the components) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+
+<!-- 3. The compiled component bundle -->
+<script src="_ds_bundle.js"></script>
+<script>
+  const { Button, Card, Tag, Tabs } = window.FabricDesignSystem_7bb975;
+  // …render with React
+</script>
+```
+
+Plain HTML/CSS works with **no JavaScript** — every token and the `.fabric-*` texture/eyebrow utilities come from `styles.css` alone:
+
+```html
+<span class="fabric-eyebrow">// made from nature</span>
+<button style="background: var(--primary); color: var(--text-on-sage);
+               border-radius: var(--radius-md); padding: 10px 16px; border: 0;">
+  Begin in the quiet
+</button>
+```
+
+**Theme & season** are attributes on `<html>` (both optional, both compose):
+
+```html
+<html data-theme="dark" data-season="autumn">
+```
+
+`data-theme` → `light` / `dark` (defaults to the OS via `prefers-color-scheme`).
+`data-season` → `spring` / `summer` / `autumn` / `winter` (defaults to spring).
+
+---
+
+## What's inside
+
+```
+fabric-design-system/
+├── styles.css            # single entry — @imports every token + base file
+├── tokens/               # colors · typography · spacing · textures · dark · seasons · fonts · base
+├── components/           # React primitives — forms · feedback · layout · navigation
+├── ui_kits/              # full product recreations — app (workspace) · site (landing)
+├── guidelines/           # foundation specimen cards (the Design System tab)
+├── templates/            # copy-to-start pages (Fabric page)
+├── assets/               # leaf mark · screenshots
+├── compare/              # side-by-side option explorations
+├── SKILL.md              # Agent Skill manifest (use Fabric from Claude Code)
+├── CHANGELOG.md
+└── README.md             # you are here
+```
+
+> **Generated — do not hand-edit:** `_ds_bundle.js`, `_ds_manifest.json`, `_adherence.oxlintrc.json`. A compiler rebuilds these from the source files above; edit the sources and they regenerate.
+
+---
 
 ## Sources
 This system was authored from a written brand brief — **no codebase, Figma, or existing assets were provided.** All visual decisions (type pairing, color, motifs, the leaf mark) are original, made to fit the brief. If you have brand assets (real logo, fonts, photography, product screens), share them and we'll replace the originals here and flag what changed.
@@ -44,7 +121,7 @@ How Fabric writes.
 
 **Texture.** Fabric is cloth, so its surfaces are *woven and grained, not flat* — but the texture is felt more than seen, so the interface still recedes. A small family of gradient-built, theme-aware utilities (no image assets) keyed to the flipping `--texture-ink` token: `.fabric-weave` (default linen cross-hatch), `.fabric-linen` (finer/denser), `.fabric-grain` (cold-press paper tooth), `.fabric-ribbed` (directional thread, for accent/CTA panels), `.fabric-felt` (dense matte wool), `.fabric-frost` (crystalline crosshatch), and `.fabric-stitch` (a dashed running-stitch thread, also a `Divider variant="stitch"`). Rules of use: **one texture per surface** (never stack), reserve them for large calm areas (canvases, heroes, empty states, dark bands, marketing/login panels) and keep dense working UI (task rows, forms, tables) clean. Because `--texture-ink` flips with theme, textures read on warm paper and on Nightfall's dark earth; for an *always-dark* surface, override `--texture-ink` locally to a light fleck so the grain still shows. **Intensity** is set to the "Linen" weight (`--texture-ink` alpha ≈ 0.09) — clearly tactile up close, still quiet under text; dial `--texture-ink` / `--texture-ink-strong` globally or per-surface to go softer ("Whisper", ≈0.05) or louder ("Canvas", ≈0.14). See `tokens/textures.css` and the **Texture** card in the Brand group.
 
-**Seasons.** A gentle seasonal layer, *orthogonal* to light/dark — set `data-season="spring|summer|autumn|winter"` on `<html>` for the whole product, or on any single element to season just one banner/section. A season does **not** repaint the UI; it rotates two things only: a **seasonal accent** (drawn from Fabric's existing families — spring→sage, summer→ochre, autumn→terracotta, winter→marsh) exposed as `--season-accent` / `--season-accent-soft` / `--season-on-soft`, and a **signature texture** you apply to surfaces (spring→`.fabric-weave`, summer→`.fabric-ribbed`, autumn→`.fabric-felt`, winter→`.fabric-frost`). The soft fill and accent-text are derived with `color-mix` against the current surface/ink, so a season composes with Nightfall (light *and* dark) with no per-theme duplication. Seasons are a whisper — use them for soft highlights, dots, borders, banners, illustration tints; keep the sage primary and neutral core constant so the product stays recognizably Fabric year-round. See `tokens/seasons.css` and the **Seasons** card in the Brand group.
+**Seasons.** A gentle seasonal layer, *orthogonal* to light/dark — set `data-season="spring|summer|autumn|winter"` on `<html>` for the whole product, or on any single element to season just one banner/section. A season does **not** repaint the UI; it rotates three things only: a **seasonal accent** (drawn from Fabric's existing families — spring→sage, summer→ochre, autumn→terracotta, winter→marsh) exposed as `--season-accent` / `--season-accent-soft` / `--season-on-soft`; a **signature texture** you apply to surfaces (spring→`.fabric-weave`, summer→`.fabric-ribbed`, autumn→`.fabric-felt`, winter→`.fabric-frost`); and a **canvas whisper** (`--season-canvas`) — the page background with a ~5–6% breath of the season's accent mixed in, warm in autumn, cool in winter. All are derived with `color-mix` against the current surface/ink, so a season composes with Nightfall (light *and* dark) with no per-theme duplication. Seasons are a whisper — keep the sage primary and neutral core constant so the product stays recognizably Fabric year-round. See `tokens/seasons.css` and the **Seasons** card in the Brand group.
 
 **Shadows.** Warm-tinted (bark hue at low alpha), soft and diffuse — `xs`→`xl` plus an `inset` well for sunken tracks. Never hard or neutral-gray. Cards combine a hairline border with a small shadow.
 
@@ -88,7 +165,7 @@ How Fabric writes.
 - `base.css` — element defaults, `.fabric-eyebrow`, reduced-motion.
 - `textures.css` — surface texture utilities (`.fabric-weave/-linen/-grain/-ribbed/-felt/-frost/-stitch`).
 - `dark.css` — **Nightfall** dark-theme semantic overrides (`prefers-color-scheme` + `[data-theme]`).
-- `seasons.css` — seasonal accent + signature-texture layer (`[data-season]`), composes with light/dark.
+- `seasons.css` — seasonal accent + signature-texture + canvas-whisper layer (`[data-season]`), composes with light/dark.
 
 **Components** (`components/`, namespace `window.FabricDesignSystem_7bb975`)
 - `forms/` — **Button, IconButton, Input, Textarea, Select, Checkbox, Switch**
@@ -98,16 +175,24 @@ How Fabric writes.
 - Each has `<Name>.jsx`, `<Name>.d.ts`, `<Name>.prompt.md`; each directory has a `*.card.html` specimen.
 
 **UI kits** (`ui_kits/`)
-- `app/` — **Fabric workspace** (login → today/later/done, lists, focus timer). See `app/README.md`.
+- `app/` — **Fabric workspace** (login → today/later/done, lists, focus timer, theme + season switchers). See `app/README.md`.
 - `site/` — **Fabric landing page** (hero, features, philosophy band, CTA, footer). See `site/README.md`.
 
 **Foundation specimens** (`guidelines/`) — the `*.card.html` files behind the Design System tab (Type, Colors, Spacing, Brand).
 
+**Templates** (`templates/`) — `page/` is a copy-to-start Fabric page.
+
 **Brand** (`assets/`)
-- `fabric-mark.svg` — the leaf mark.
+- `fabric-mark.svg` — the leaf mark. · `screenshots/` — README imagery.
 
 **Other**
 - `SKILL.md` — Agent-Skill manifest for using Fabric in Claude Code.
+- `CHANGELOG.md` — version history.
 
 ### Generated (do not edit)
 `_ds_bundle.js`, `_ds_manifest.json`, `_adherence.oxlintrc.json`.
+
+---
+
+## License
+Proprietary — © 2026 Nexxspace Development. All rights reserved. *(Replace this section with your preferred license, e.g. MIT, if you intend to open-source it.)*
