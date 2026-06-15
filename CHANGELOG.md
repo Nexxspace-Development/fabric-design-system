@@ -16,7 +16,7 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 - **One-click sharing via GitHub Pages.** Ships `.github/workflows/pages.yml`
   (push-to-`main` deploy) plus setup steps in the catalog’s “How to use” panel
   and the README, so reviewers can open the catalog at a URL — no clone, no
-  terminal.
+  terminal.\n### Docs\n- Reframed the README and app-kit README to describe the workspace app and\n  marketing site as **reference implementations** that exercise the system,\n  rather than a \u201cflagship product\u201d \u2014 Fabric is the design system; the kits in\n  `ui_kits/` are demos that prove it out.
 
 ## [0.6.0] — 2026-06-14
 ### Added

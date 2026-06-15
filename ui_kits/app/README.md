@@ -1,6 +1,6 @@
 # Fabric — Workspace (App UI kit)
 
-A calm daily workspace for focused work: lists, a quiet task surface, and a focus timer. The flagship Fabric product. Recreated to demonstrate the design system in a real product context.
+A calm daily workspace for focused work: lists, a quiet task surface, and a focus timer. A reference implementation built to exercise the design system in a real product context.
 
 ## Run
 Open `index.html`. It boots on the **login** screen ("Enter your studio") and lands on the **Today** view. Try:

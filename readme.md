@@ -10,13 +10,15 @@
 
 **Fabric** is a design system that embraces nature and human characteristics. Its materials resemble things found in — or made from — nature: linen, lichen, clay, dried grass, the grain of old paper. The palette is deliberately **muted** so the interface recedes and the user can feel calm and stay focused. Three humanist typefaces, a soft organic shape language, a warm-earth dark theme (**Nightfall**), and an optional **seasons** layer that turns the year through accent + texture.
 
-The flagship product, also called Fabric, is a quiet daily workspace for doing one thing at a time.
+The system ships with a **reference app and marketing site** that exercise every
+token and component — a quiet daily workspace for doing one thing at a time, built
+to prove the system out and show it in use.
 
 <p align="center">
-  <img src="assets/screenshots/site-hero.png" alt="Fabric marketing site — Calm tools for focused work" width="100%" />
+  <img src="assets/screenshots/site-hero.png" alt="Fabric reference marketing site — Calm tools for focused work" width="100%" />
 </p>
 <p align="center">
-  <img src="assets/screenshots/app-autumn.png" alt="Fabric workspace app, Autumn season" width="100%" />
+  <img src="assets/screenshots/app-autumn.png" alt="Fabric reference workspace app, Autumn season" width="100%" />
 </p>
 
 ---
