@@ -29,7 +29,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     border-radius: var(--radius-md);
     padding: 0 var(--space-3); height: 40px;
     transition: border-color var(--duration-fast) var(--ease-out),
-                box-shadow var(--duration-fast) var(--ease-out);
+                /* Focus ring blooms outward — settle gives a whisper of give */
+                box-shadow var(--duration-base) var(--ease-settle);
   }
   .fab-input::placeholder { color: var(--text-faint); }
   .fab-input:hover:not(:disabled):not(:focus) { border-color: var(--border-strong); }

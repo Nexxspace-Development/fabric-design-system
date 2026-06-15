@@ -22,6 +22,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   .fab-badge--warning { background: var(--warning-soft); color: var(--on-warning-soft); }
   .fab-badge--danger  { background: var(--danger-soft); color: var(--on-danger-soft); }
   .fab-badge--solid   { background: var(--primary); color: var(--text-on-sage); }
+  /* Season-aware badge: cross-fades with the season turn via @property */
+  .fab-badge--season  { background: var(--season-accent-soft); color: var(--season-on-soft); border-color: var(--season-accent-soft); }
   `;
   document.head.appendChild(el);
 }

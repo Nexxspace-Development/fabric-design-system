@@ -10,9 +10,10 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     border: var(--border-hairline) solid var(--border-subtle);
     border-radius: var(--radius-xl);
     color: var(--text-body);
-    transition: box-shadow var(--duration-base) var(--ease-out),
+    /* Hover lift settles with linen ease; other props stay snappy */
+    transition: box-shadow var(--duration-slow) var(--ease-settle),
                 border-color var(--duration-base) var(--ease-out),
-                transform var(--duration-base) var(--ease-out);
+                transform var(--duration-slow) var(--ease-settle);
   }
   .fab-card--flat { box-shadow: none; }
   .fab-card--raised { box-shadow: var(--shadow-sm); }

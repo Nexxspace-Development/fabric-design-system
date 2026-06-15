@@ -17,6 +17,12 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   .fab-tag--selectable { cursor: pointer; }
   .fab-tag--selectable:hover { border-color: var(--border-strong); }
   .fab-tag[data-selected="true"] { background: var(--primary-soft); border-color: var(--sage-300); color: var(--primary-soft-tx); }
+  /* Seasonal variant: picks up the current season accent, drifts on season turn */
+  .fab-tag[data-seasonal="true"] {
+    background: var(--season-accent-soft);
+    border-color: color-mix(in oklab, var(--season-accent) 22%, var(--surface-card));
+    color: var(--season-on-soft);
+  }
   .fab-tag__remove {
     display: inline-flex; border: 0; background: transparent; cursor: pointer;
     color: var(--text-faint); padding: 0; margin-right: -2px; border-radius: var(--radius-pill);
@@ -28,11 +34,12 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   document.head.appendChild(el);
 }
 
-export function Tag({ color, selectable = false, selected = false, onRemove, className = '', children, ...rest }) {
+export function Tag({ color, selectable = false, selected = false, seasonal = false, onRemove, className = '', children, ...rest }) {
   return (
     <span
       className={['fab-tag', selectable ? 'fab-tag--selectable' : '', className].filter(Boolean).join(' ')}
       data-selected={selected}
+      data-seasonal={seasonal}
       {...rest}
     >
       {color && <span className="fab-tag__dot" style={{ background: color }} />}

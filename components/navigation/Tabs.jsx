@@ -16,7 +16,10 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   .fab-tabs--line .fab-tab::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
     background: var(--primary); border-radius: 2px 2px 0 0;
-    opacity: 0; transform: scaleX(0.5); transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
+    opacity: 0; transform: scaleX(0.5);
+    /* Bar snaps in: fast fade, then spring-expand with settle */
+    transition: opacity var(--duration-fast) var(--ease-out),
+                transform var(--duration-slow) var(--ease-settle);
   }
   .fab-tabs--line .fab-tab:hover { color: var(--text-body); }
   .fab-tabs--line .fab-tab[data-active="true"] { color: var(--text-strong); }

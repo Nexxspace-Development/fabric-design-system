@@ -5,6 +5,13 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   const el = document.createElement('style');
   el.id = STYLE_ID;
   el.textContent = `
+  @keyframes fab-toast-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0)    scale(1); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fab-toast { animation: fab-toast-in var(--duration-slow) var(--ease-settle) both; }
+  }
   .fab-toast {
     display: flex; align-items: flex-start; gap: var(--space-3);
     background: var(--surface-raised); color: var(--text-body);

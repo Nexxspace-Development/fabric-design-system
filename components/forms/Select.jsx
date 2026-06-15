@@ -25,7 +25,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     padding: 0 calc(var(--space-5) + 4px) 0 var(--space-3); height: 40px;
     cursor: pointer;
     transition: border-color var(--duration-fast) var(--ease-out),
-                box-shadow var(--duration-fast) var(--ease-out);
+                /* Focus ring blooms outward — settle gives a whisper of give */
+                box-shadow var(--duration-base) var(--ease-settle);
   }
   .fab-select:hover:not(:disabled):not(:focus) { border-color: var(--border-strong); }
   .fab-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }

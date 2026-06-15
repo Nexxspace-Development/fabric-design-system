@@ -1,0 +1,186 @@
+<!-- @dsCard group="Motion" viewport="700x340" name="Material personalities" subtitle="Four named easings — Settle · Press · Flutter · Drift — each mapped to a physical Fabric material" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; }
+  body { background: var(--surface-canvas); padding: 24px; font-family: var(--font-sans); }
+
+  .head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+  .eyebrow { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--primary); }
+  .card-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-strong); }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .cell { background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+
+  .stage {
+    flex: 1; min-height: 162px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative;
+  }
+  .stage[data-hint]::after {
+    content: attr(data-hint);
+    position: absolute; bottom: 10px; left: 0; right: 0; text-align: center;
+    font-family: var(--font-data); font-size: 9px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-faint); opacity: 0.55;
+  }
+
+  .lbl { padding: 10px 12px; border-top: 1px solid var(--border-subtle); background: var(--surface-sunken); }
+  .mat  { font-family: var(--font-data); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+  .pname { font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--text-strong); margin: 3px 0 5px; }
+  .tok { display: inline-block; font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); background: var(--surface-canvas); padding: 2px 6px; border-radius: 4px; }
+
+  /* ── Settle (Linen) ── */
+  .settle-card {
+    width: 90px; height: 56px; padding: 10px 12px;
+    background: var(--surface-raised); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .bar { height: 5px; border-radius: 999px; background: var(--text-faint); opacity: 0.3; }
+  @keyframes settle-in {
+    from { opacity: 0; transform: translateY(-14px) scale(0.93); }
+    to   { opacity: 1; transform: translateY(0)     scale(1); }
+  }
+  .settle-card.play { animation: settle-in 380ms var(--ease-settle, cubic-bezier(0.34,1.06,0.64,1)) both; }
+
+  /* ── Press (Clay) ── */
+  .press-pill {
+    width: 80px; height: 38px;
+    background: var(--primary); color: var(--text-on-sage);
+    border: none; border-radius: var(--radius-pill);
+    font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+    transform-origin: center bottom;
+    transition: transform 300ms var(--ease-settle, cubic-bezier(0.34,1.06,0.64,1)),
+                background 120ms var(--ease-out);
+  }
+  .press-pill:hover { background: var(--primary-hover); }
+  .press-pill.pressing {
+    transform: scale(0.90) translateY(2px);
+    background: var(--primary-press, var(--primary));
+    transition: transform 60ms var(--ease-press, cubic-bezier(0.25,0.46,0.45,0.94)),
+                background 60ms var(--ease-out);
+  }
+
+  /* ── Flutter (Dried grass) ── */
+  .flutter-track {
+    width: 52px; height: 28px; border-radius: var(--radius-pill);
+    background: var(--control-track); box-shadow: var(--shadow-inset);
+    position: relative; cursor: pointer;
+    transition: background var(--duration-base) var(--ease-out);
+  }
+  .flutter-track.on { background: var(--primary); }
+  .flutter-thumb {
+    position: absolute; top: 4px; left: 4px; width: 20px; height: 20px;
+    border-radius: var(--radius-pill); background: var(--control-thumb); box-shadow: var(--shadow-sm);
+    transition: transform 300ms var(--ease-flutter, cubic-bezier(0.34,1.32,0.64,1));
+  }
+  .flutter-track.on .flutter-thumb { transform: translateX(24px); }
+
+  /* ── Drift (Lichen) ── */
+  @keyframes breathe {
+    0%, 100% { transform: scale(1);    opacity: 0.45; }
+    50%      { transform: scale(1.14); opacity: 1; }
+  }
+  .drift-orb {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--primary);
+    animation: breathe var(--duration-ambient, 7200ms) var(--ease-drift, cubic-bezier(0.45,0.05,0.55,0.95)) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .settle-card.play { animation: none; opacity: 1; }
+    .press-pill, .press-pill.pressing { transition: background 120ms ease; transform: none !important; }
+    .flutter-thumb { transition: transform 120ms ease; }
+    .drift-orb { animation: none; opacity: 0.7; }
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <span class="eyebrow">Motion · Easings</span>
+  <span class="card-title">Material personalities</span>
+</div>
+<div class="grid">
+
+  <div class="cell">
+    <div class="stage" id="settle-stage" data-hint="click to replay">
+      <div class="settle-card" id="settle-demo">
+        <div class="bar" style="width:65%"></div>
+        <div class="bar" style="width:82%"></div>
+        <div class="bar" style="width:48%"></div>
+      </div>
+    </div>
+    <div class="lbl">
+      <div class="mat">Linen</div>
+      <div class="pname">Settle</div>
+      <span class="tok">--ease-settle</span>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="stage" style="cursor:default" data-hint="hold">
+      <button class="press-pill" id="press-demo">Press</button>
+    </div>
+    <div class="lbl">
+      <div class="mat">Clay</div>
+      <div class="pname">Press</div>
+      <span class="tok">--ease-press</span>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="stage" style="cursor:default" data-hint="click to toggle">
+      <div class="flutter-track" id="flutter-demo">
+        <div class="flutter-thumb"></div>
+      </div>
+    </div>
+    <div class="lbl">
+      <div class="mat">Dried grass</div>
+      <div class="pname">Flutter</div>
+      <span class="tok">--ease-flutter</span>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="stage" style="cursor:default">
+      <div class="drift-orb"></div>
+    </div>
+    <div class="lbl">
+      <div class="mat">Lichen</div>
+      <div class="pname">Drift</div>
+      <span class="tok">--ease-drift</span>
+    </div>
+  </div>
+
+</div>
+<script>
+  // Settle: auto-plays on load, click to replay
+  var settle = document.getElementById('settle-demo');
+  function replaySettle() {
+    settle.classList.remove('play');
+    void settle.offsetWidth;
+    settle.classList.add('play');
+  }
+  document.getElementById('settle-stage').addEventListener('click', replaySettle);
+  setTimeout(replaySettle, 150);
+
+  // Press: clay down, linen release
+  var press = document.getElementById('press-demo');
+  function dn() { press.classList.add('pressing'); }
+  function up() { press.classList.remove('pressing'); }
+  press.addEventListener('mousedown', dn);
+  press.addEventListener('touchstart', dn, { passive: true });
+  document.addEventListener('mouseup', up);
+  document.addEventListener('touchend', up, { passive: true });
+
+  // Flutter: click to toggle; auto-demos once after load
+  var flutter = document.getElementById('flutter-demo');
+  flutter.addEventListener('click', function() { flutter.classList.toggle('on'); });
+  setTimeout(function() { flutter.classList.add('on'); }, 700);
+  setTimeout(function() { flutter.classList.remove('on'); }, 1400);
+</script>
+</body>
+</html>

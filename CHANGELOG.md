@@ -4,6 +4,73 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.7.2] — 2026-06-15
+### Added
+- **`guidelines/motion-components.card.html`** — a new Motion group card that
+  shows every upgraded Fabric component side-by-side, live and interactive:
+  Button (clay/linen), Toast (settle entrance), Checkbox + Switch (flutter),
+  Tooltip (directional settle), Input (focus bloom), Tabs (spring indicator),
+  Badge + Tag (season turn), Card (settle lift). Viewport 700×500.
+- **`Badge tone="season"`** — a new opt-in tone that uses `--season-accent-soft`
+  / `--season-on-soft`; cross-fades automatically when the season turns.
+- **`Tag seasonal` prop** — same pattern for Tag; `data-seasonal="true"` picks
+  up the season accent tokens.
+### Changed
+- **`@property` season tokens** in `tokens/seasons.css`: `--season-accent` and
+  `--season-canvas` are now registered as typed `<color>` properties. A `:root`
+  transition (`480 ms --ease-drift`) means any element using these variables
+  — including derived `color-mix()` chains — automatically cross-fades when
+  `data-season` changes. No JS animation needed.
+- **Select** — focus-ring `box-shadow` now blooms with `--ease-settle` at
+  `--duration-base`, matching the Input upgrade from v0.7.1.
+- **Catalog (`index.html`)** — removed the JS crossfade overlay; `@property`
+  handles the season turn natively and more smoothly.
+
+## [0.7.1] — 2026-06-15
+### Changed
+- **Checkbox** — checkmark SVG now springs into place with `--ease-flutter`
+  (300 ms, scale 0.5 → 1) instead of a flat linear fade — feels like a physical
+  snap.
+- **IconButton** — bidirectional clay/linen treatment, matching Button: press-down
+  uses `--ease-press` (70 ms), release uses `--ease-settle` (320 ms). Scale
+  increased from 0.93 → 0.88 for a more grounded feel.
+- **Tooltip** — directional settle entrance: each placement has a 5 px offset in
+  the hidden state so the tooltip slides in from its anchor (top rises, bottom
+  drops, etc.) using `--ease-settle`. Exit snaps away in 90–110 ms so it never
+  lingers.
+- **Input** — focus-ring `box-shadow` now blooms outward with `--ease-settle`
+  (`--duration-base`) instead of appearing instantly.
+- **Tabs** — line-variant `::after` indicator now spring-expands (`scaleX` 0.5 → 1)
+  with `--ease-settle` at `--duration-slow`; opacity stays on fast `--ease-out`
+  so the bar fades in cleanly before settling.
+- **Card** (interactive) — hover lift transitions use `--ease-settle` so the card
+  rises with a whisper of give rather than a flat deceleration.
+- **Catalog** (`index.html`) — season toggle now crossfades the page background
+  over 480 ms (`--ease-drift`), so a season change feels like an event rather
+  than a hard cut.
+
+## [0.7.0] — 2026-06-15
+### Added
+- **Motion system — material personalities.** Five new tokens in
+  `tokens/spacing.css`:
+  - `--ease-settle` (linen — cloth draping, whisper of give)
+  - `--ease-flutter` (dried grass — light spring, snappy release)
+  - `--ease-press` (clay — weighted arrival, firm and damped)
+  - `--ease-drift` (lichen — barely-there, ambient loops only)
+  - `--duration-ambient` 7 200 ms — breathing / idle loops
+- **Three motion specimen cards** (`guidelines/motion-*.card.html`), now in
+  their own **Motion** group in the catalog:
+  - *Material personalities* — interactive demos of all four named easings
+  - *Relational — Breeze stagger* — items sweep in sequentially, 60 ms apart
+  - *Ambient — Breathing* — the 7.2 s drift loop with ripple + annotation
+- **Component upgrades** wired to the new personalities:
+  - **Button** — press-down uses `--ease-press` (70 ms clay weight-in);
+    release back to rest uses `--ease-settle` (320 ms linen, micro-overshoot)
+  - **Switch** thumb — now uses `--ease-flutter` (300 ms spring) so it snaps
+    into position with visible, lightweight give
+  - **Toast** — entrance animation added: slides up 10 px + fades in using
+    `--ease-settle`, gated on `prefers-reduced-motion: no-preference`
+
 ## [0.6.1] — 2026-06-14
 ### Changed
 - **Catalog works without a local server.** `index.html` now carries an embedded
@@ -133,6 +200,9 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.7.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.2
+[0.7.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.1
+[0.7.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.0
 [0.6.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.6.1
 [0.6.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.6.0
 [0.5.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.5.0

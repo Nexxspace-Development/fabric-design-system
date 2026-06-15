@@ -17,7 +17,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
     border-radius: var(--radius-pill); background: var(--control-thumb);
     box-shadow: var(--shadow-sm);
-    transition: transform var(--duration-base) var(--ease-out);
+    /* Flutter (dried grass): springs past target and settles — snappy and alive */
+    transition: transform var(--duration-slow) var(--ease-flutter);
   }
   .fab-switch input:checked + .fab-switch__track { background: var(--primary); }
   .fab-switch input:checked + .fab-switch__track .fab-switch__thumb { transform: translateX(16px); }

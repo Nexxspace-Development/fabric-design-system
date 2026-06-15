@@ -12,13 +12,25 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     font-family: var(--font-body); font-size: var(--text-xs); font-weight: var(--weight-medium);
     line-height: 1.4; padding: 6px 9px; border-radius: var(--radius-sm);
     box-shadow: var(--shadow-md); white-space: nowrap; max-width: 240px;
-    opacity: 0; transform: scale(0.96); transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+    opacity: 0;
+    transform: scale(0.95) translate(var(--_dx, 0px), var(--_dy, 0px));
+    /* Appear: settle in from anchor direction */
+    transition: opacity 120ms var(--ease-out),
+                transform 260ms var(--ease-settle);
   }
-  .fab-tip[data-open="true"] .fab-tip__bubble { opacity: 1; transform: scale(1); }
-  .fab-tip__bubble--top    { bottom: calc(100% + 7px); left: 50%; transform-origin: bottom center; translate: -50% 0; }
-  .fab-tip__bubble--bottom { top: calc(100% + 7px); left: 50%; transform-origin: top center; translate: -50% 0; }
-  .fab-tip__bubble--left   { right: calc(100% + 7px); top: 50%; transform-origin: right center; translate: 0 -50%; }
-  .fab-tip__bubble--right  { left: calc(100% + 7px); top: 50%; transform-origin: left center; translate: 0 -50%; }
+  .fab-tip[data-open="true"] .fab-tip__bubble {
+    opacity: 1; transform: scale(1) translate(0, 0);
+  }
+  /* Exit: snap away so it doesn't linger */
+  .fab-tip:not([data-open="true"]) .fab-tip__bubble {
+    transition: opacity 90ms var(--ease-out),
+                transform 110ms var(--ease-out);
+  }
+  /* Directional offsets: tooltip slides in from its anchor point */
+  .fab-tip__bubble--top    { bottom: calc(100% + 7px); left: 50%; transform-origin: bottom center; translate: -50% 0; --_dy: 5px; }
+  .fab-tip__bubble--bottom { top: calc(100% + 7px); left: 50%; transform-origin: top center; translate: -50% 0; --_dy: -5px; }
+  .fab-tip__bubble--left   { right: calc(100% + 7px); top: 50%; transform-origin: right center; translate: 0 -50%; --_dx: 5px; }
+  .fab-tip__bubble--right  { left: calc(100% + 7px); top: 50%; transform-origin: left center; translate: 0 -50%; --_dx: -5px; }
   `;
   document.head.appendChild(el);
 }

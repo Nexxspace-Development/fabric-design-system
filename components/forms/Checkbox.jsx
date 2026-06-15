@@ -17,7 +17,10 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   }
   .fab-check__box svg { width: 13px; height: 13px; stroke: var(--text-on-sage); stroke-width: 3;
     fill: none; stroke-linecap: round; stroke-linejoin: round;
-    opacity: 0; transform: scale(0.6); transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out); }
+    opacity: 0; transform: scale(0.5);
+    /* Spring pop — flutter easing so the checkmark snaps into place */
+    transition: opacity var(--duration-fast) var(--ease-out),
+                transform var(--duration-slow) var(--ease-flutter); }
   .fab-check input { position: absolute; opacity: 0; width: 0; height: 0; }
   .fab-check input:checked + .fab-check__box { background: var(--primary); border-color: var(--primary); }
   .fab-check input:checked + .fab-check__box svg { opacity: 1; transform: scale(1); }

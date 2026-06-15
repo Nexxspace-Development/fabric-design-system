@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":3,"namespace":"FabricDesignSystem_7bb975","components":[{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Tag","sourcePath":"components/feedback/Tag.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/feedback/Tooltip.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"IconButton","sourcePath":"components/forms/IconButton.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Avatar","sourcePath":"components/layout/Avatar.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"Divider","sourcePath":"components/layout/Divider.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"}],"sourceHashes":{"adapters/shadcn/tailwind.fabric.js":"bb791249e704","compare/compare.jsx":"d6299f1f4766","compare/design-canvas.jsx":"bd8746af6e58","components/feedback/Badge.jsx":"abf15ded0c4b","components/feedback/Tag.jsx":"16045bfb8d15","components/feedback/Toast.jsx":"af054ff1d5ee","components/feedback/Tooltip.jsx":"3bec66c079f8","components/forms/Button.jsx":"8104b2dbc290","components/forms/Checkbox.jsx":"c521aad389e8","components/forms/IconButton.jsx":"a6f1f6b0da4d","components/forms/Input.jsx":"2d707798cee9","components/forms/Select.jsx":"bbda88cbbeeb","components/forms/Switch.jsx":"b6610806aa07","components/forms/Textarea.jsx":"4a1eb2af57b5","components/layout/Avatar.jsx":"3c4c17a8cd1e","components/layout/Card.jsx":"304183f0850d","components/layout/Divider.jsx":"056b799da2e6","components/navigation/Tabs.jsx":"cbbbb0597470","ui_kits/app/App.jsx":"5bccb9494d89","ui_kits/app/FocusRail.jsx":"03dbaa91b35f","ui_kits/app/Login.jsx":"4f38c0bdcf49","ui_kits/app/Sidebar.jsx":"d51366a5c564","ui_kits/app/TaskList.jsx":"653ae710d335","ui_kits/app/data.jsx":"d1ca11835f5f","ui_kits/app/icons.jsx":"a9244e9a2b03","ui_kits/site/Site.jsx":"058f11485291","ui_kits/site/icons.jsx":"a9244e9a2b03"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":3,"namespace":"FabricDesignSystem_7bb975","components":[{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Tag","sourcePath":"components/feedback/Tag.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/feedback/Tooltip.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"IconButton","sourcePath":"components/forms/IconButton.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Avatar","sourcePath":"components/layout/Avatar.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"Divider","sourcePath":"components/layout/Divider.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"}],"sourceHashes":{"adapters/shadcn/tailwind.fabric.js":"bb791249e704","compare/compare.jsx":"d6299f1f4766","compare/design-canvas.jsx":"bd8746af6e58","components/feedback/Badge.jsx":"54d350c0a4ed","components/feedback/Tag.jsx":"f89f8aaaa844","components/feedback/Toast.jsx":"d223f07667ab","components/feedback/Tooltip.jsx":"2182ccee551f","components/forms/Button.jsx":"fed507c87f59","components/forms/Checkbox.jsx":"32495e0c9d5f","components/forms/IconButton.jsx":"4740530c149c","components/forms/Input.jsx":"9008436823dd","components/forms/Select.jsx":"e70d795c07a7","components/forms/Switch.jsx":"4ea303fbf982","components/forms/Textarea.jsx":"4a1eb2af57b5","components/layout/Avatar.jsx":"3c4c17a8cd1e","components/layout/Card.jsx":"20b0bb310028","components/layout/Divider.jsx":"056b799da2e6","components/navigation/Tabs.jsx":"286bd20d0ab9","ui_kits/app/App.jsx":"5bccb9494d89","ui_kits/app/FocusRail.jsx":"03dbaa91b35f","ui_kits/app/Login.jsx":"4f38c0bdcf49","ui_kits/app/Sidebar.jsx":"d51366a5c564","ui_kits/app/TaskList.jsx":"653ae710d335","ui_kits/app/data.jsx":"d1ca11835f5f","ui_kits/app/icons.jsx":"a9244e9a2b03","ui_kits/site/Site.jsx":"058f11485291","ui_kits/site/icons.jsx":"a9244e9a2b03"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -1940,6 +1940,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   .fab-badge--warning { background: var(--warning-soft); color: var(--on-warning-soft); }
   .fab-badge--danger  { background: var(--danger-soft); color: var(--on-danger-soft); }
   .fab-badge--solid   { background: var(--primary); color: var(--text-on-sage); }
+  /* Season-aware badge: cross-fades with the season turn via @property */
+  .fab-badge--season  { background: var(--season-accent-soft); color: var(--season-on-soft); border-color: var(--season-accent-soft); }
   `;
   document.head.appendChild(el);
 }
@@ -1979,6 +1981,12 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   .fab-tag--selectable { cursor: pointer; }
   .fab-tag--selectable:hover { border-color: var(--border-strong); }
   .fab-tag[data-selected="true"] { background: var(--primary-soft); border-color: var(--sage-300); color: var(--primary-soft-tx); }
+  /* Seasonal variant: picks up the current season accent, drifts on season turn */
+  .fab-tag[data-seasonal="true"] {
+    background: var(--season-accent-soft);
+    border-color: color-mix(in oklab, var(--season-accent) 22%, var(--surface-card));
+    color: var(--season-on-soft);
+  }
   .fab-tag__remove {
     display: inline-flex; border: 0; background: transparent; cursor: pointer;
     color: var(--text-faint); padding: 0; margin-right: -2px; border-radius: var(--radius-pill);
@@ -1993,6 +2001,7 @@ function Tag({
   color,
   selectable = false,
   selected = false,
+  seasonal = false,
   onRemove,
   className = '',
   children,
@@ -2000,7 +2009,8 @@ function Tag({
 }) {
   return /*#__PURE__*/React.createElement("span", _extends({
     className: ['fab-tag', selectable ? 'fab-tag--selectable' : '', className].filter(Boolean).join(' '),
-    "data-selected": selected
+    "data-selected": selected,
+    "data-seasonal": seasonal
   }, rest), color && /*#__PURE__*/React.createElement("span", {
     className: "fab-tag__dot",
     style: {
@@ -2036,6 +2046,13 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   const el = document.createElement('style');
   el.id = STYLE_ID;
   el.textContent = `
+  @keyframes fab-toast-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0)    scale(1); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fab-toast { animation: fab-toast-in var(--duration-slow) var(--ease-settle) both; }
+  }
   .fab-toast {
     display: flex; align-items: flex-start; gap: var(--space-3);
     background: var(--surface-raised); color: var(--text-body);
@@ -2138,13 +2155,25 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     font-family: var(--font-body); font-size: var(--text-xs); font-weight: var(--weight-medium);
     line-height: 1.4; padding: 6px 9px; border-radius: var(--radius-sm);
     box-shadow: var(--shadow-md); white-space: nowrap; max-width: 240px;
-    opacity: 0; transform: scale(0.96); transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+    opacity: 0;
+    transform: scale(0.95) translate(var(--_dx, 0px), var(--_dy, 0px));
+    /* Appear: settle in from anchor direction */
+    transition: opacity 120ms var(--ease-out),
+                transform 260ms var(--ease-settle);
   }
-  .fab-tip[data-open="true"] .fab-tip__bubble { opacity: 1; transform: scale(1); }
-  .fab-tip__bubble--top    { bottom: calc(100% + 7px); left: 50%; transform-origin: bottom center; translate: -50% 0; }
-  .fab-tip__bubble--bottom { top: calc(100% + 7px); left: 50%; transform-origin: top center; translate: -50% 0; }
-  .fab-tip__bubble--left   { right: calc(100% + 7px); top: 50%; transform-origin: right center; translate: 0 -50%; }
-  .fab-tip__bubble--right  { left: calc(100% + 7px); top: 50%; transform-origin: left center; translate: 0 -50%; }
+  .fab-tip[data-open="true"] .fab-tip__bubble {
+    opacity: 1; transform: scale(1) translate(0, 0);
+  }
+  /* Exit: snap away so it doesn't linger */
+  .fab-tip:not([data-open="true"]) .fab-tip__bubble {
+    transition: opacity 90ms var(--ease-out),
+                transform 110ms var(--ease-out);
+  }
+  /* Directional offsets: tooltip slides in from its anchor point */
+  .fab-tip__bubble--top    { bottom: calc(100% + 7px); left: 50%; transform-origin: bottom center; translate: -50% 0; --_dy: 5px; }
+  .fab-tip__bubble--bottom { top: calc(100% + 7px); left: 50%; transform-origin: top center; translate: -50% 0; --_dy: -5px; }
+  .fab-tip__bubble--left   { right: calc(100% + 7px); top: 50%; transform-origin: right center; translate: 0 -50%; --_dx: 5px; }
+  .fab-tip__bubble--right  { left: calc(100% + 7px); top: 50%; transform-origin: left center; translate: 0 -50%; --_dx: -5px; }
   `;
   document.head.appendChild(el);
 }
@@ -2202,13 +2231,21 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     background: var(--_bg); color: var(--_fg);
     border-radius: var(--radius-md);
     cursor: pointer; user-select: none;
+    /* Release uses --ease-settle (linen): micro-overshoot back to rest */
     transition: background var(--duration-fast) var(--ease-out),
                 border-color var(--duration-fast) var(--ease-out),
-                transform var(--duration-fast) var(--ease-out),
+                transform var(--duration-slow) var(--ease-settle),
                 box-shadow var(--duration-fast) var(--ease-out);
   }
   .fab-btn:focus-visible { outline: var(--border-thick) solid var(--focus-ring); outline-offset: 2px; }
-  .fab-btn:active { transform: translateY(0.5px) scale(0.992); }
+  .fab-btn:active {
+    transform: translateY(1px) scale(0.978);
+    /* Press uses --ease-press (clay): weighted, fast, no bounce */
+    transition: background 70ms var(--ease-out),
+                border-color 70ms var(--ease-out),
+                transform 70ms var(--ease-press),
+                box-shadow 70ms var(--ease-out);
+  }
   .fab-btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
 
   /* sizes */
@@ -2275,7 +2312,10 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   }
   .fab-check__box svg { width: 13px; height: 13px; stroke: var(--text-on-sage); stroke-width: 3;
     fill: none; stroke-linecap: round; stroke-linejoin: round;
-    opacity: 0; transform: scale(0.6); transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out); }
+    opacity: 0; transform: scale(0.5);
+    /* Spring pop — flutter easing so the checkmark snaps into place */
+    transition: opacity var(--duration-fast) var(--ease-out),
+                transform var(--duration-slow) var(--ease-flutter); }
   .fab-check input { position: absolute; opacity: 0; width: 0; height: 0; }
   .fab-check input:checked + .fab-check__box { background: var(--primary); border-color: var(--primary); }
   .fab-check input:checked + .fab-check__box svg { opacity: 1; transform: scale(1); }
@@ -2330,13 +2370,21 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     border: var(--border-thin) solid transparent;
     background: transparent; color: var(--text-body);
     border-radius: var(--radius-md); cursor: pointer;
+    /* Release: --ease-settle (linen) */
     transition: background var(--duration-fast) var(--ease-out),
                 color var(--duration-fast) var(--ease-out),
                 border-color var(--duration-fast) var(--ease-out),
-                transform var(--duration-fast) var(--ease-out);
+                transform var(--duration-slow) var(--ease-settle);
   }
   .fab-iconbtn:focus-visible { outline: var(--border-thick) solid var(--focus-ring); outline-offset: 2px; }
-  .fab-iconbtn:active { transform: scale(0.93); }
+  .fab-iconbtn:active {
+    transform: scale(0.88);
+    /* Press: --ease-press (clay) */
+    transition: background 70ms var(--ease-out),
+                color 70ms var(--ease-out),
+                border-color 70ms var(--ease-out),
+                transform 70ms var(--ease-press);
+  }
   .fab-iconbtn[disabled] { opacity: 0.4; cursor: not-allowed; transform: none; }
   .fab-iconbtn--sm { width: 32px; height: 32px; }
   .fab-iconbtn--md { width: 40px; height: 40px; }
@@ -2399,7 +2447,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     border-radius: var(--radius-md);
     padding: 0 var(--space-3); height: 40px;
     transition: border-color var(--duration-fast) var(--ease-out),
-                box-shadow var(--duration-fast) var(--ease-out);
+                /* Focus ring blooms outward — settle gives a whisper of give */
+                box-shadow var(--duration-base) var(--ease-settle);
   }
   .fab-input::placeholder { color: var(--text-faint); }
   .fab-input:hover:not(:disabled):not(:focus) { border-color: var(--border-strong); }
@@ -2481,7 +2530,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     padding: 0 calc(var(--space-5) + 4px) 0 var(--space-3); height: 40px;
     cursor: pointer;
     transition: border-color var(--duration-fast) var(--ease-out),
-                box-shadow var(--duration-fast) var(--ease-out);
+                /* Focus ring blooms outward — settle gives a whisper of give */
+                box-shadow var(--duration-base) var(--ease-settle);
   }
   .fab-select:hover:not(:disabled):not(:focus) { border-color: var(--border-strong); }
   .fab-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
@@ -2546,7 +2596,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
     border-radius: var(--radius-pill); background: var(--control-thumb);
     box-shadow: var(--shadow-sm);
-    transition: transform var(--duration-base) var(--ease-out);
+    /* Flutter (dried grass): springs past target and settles — snappy and alive */
+    transition: transform var(--duration-slow) var(--ease-flutter);
   }
   .fab-switch input:checked + .fab-switch__track { background: var(--primary); }
   .fab-switch input:checked + .fab-switch__track .fab-switch__thumb { transform: translateX(16px); }
@@ -2717,9 +2768,10 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     border: var(--border-hairline) solid var(--border-subtle);
     border-radius: var(--radius-xl);
     color: var(--text-body);
-    transition: box-shadow var(--duration-base) var(--ease-out),
+    /* Hover lift settles with linen ease; other props stay snappy */
+    transition: box-shadow var(--duration-slow) var(--ease-settle),
                 border-color var(--duration-base) var(--ease-out),
-                transform var(--duration-base) var(--ease-out);
+                transform var(--duration-slow) var(--ease-settle);
   }
   .fab-card--flat { box-shadow: none; }
   .fab-card--raised { box-shadow: var(--shadow-sm); }
@@ -2823,7 +2875,10 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
   .fab-tabs--line .fab-tab::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
     background: var(--primary); border-radius: 2px 2px 0 0;
-    opacity: 0; transform: scaleX(0.5); transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
+    opacity: 0; transform: scaleX(0.5);
+    /* Bar snaps in: fast fade, then spring-expand with settle */
+    transition: opacity var(--duration-fast) var(--ease-out),
+                transform var(--duration-slow) var(--ease-settle);
   }
   .fab-tabs--line .fab-tab:hover { color: var(--text-body); }
   .fab-tabs--line .fab-tab[data-active="true"] { color: var(--text-strong); }

@@ -10,13 +10,21 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     border: var(--border-thin) solid transparent;
     background: transparent; color: var(--text-body);
     border-radius: var(--radius-md); cursor: pointer;
+    /* Release: --ease-settle (linen) */
     transition: background var(--duration-fast) var(--ease-out),
                 color var(--duration-fast) var(--ease-out),
                 border-color var(--duration-fast) var(--ease-out),
-                transform var(--duration-fast) var(--ease-out);
+                transform var(--duration-slow) var(--ease-settle);
   }
   .fab-iconbtn:focus-visible { outline: var(--border-thick) solid var(--focus-ring); outline-offset: 2px; }
-  .fab-iconbtn:active { transform: scale(0.93); }
+  .fab-iconbtn:active {
+    transform: scale(0.88);
+    /* Press: --ease-press (clay) */
+    transition: background 70ms var(--ease-out),
+                color 70ms var(--ease-out),
+                border-color 70ms var(--ease-out),
+                transform 70ms var(--ease-press);
+  }
   .fab-iconbtn[disabled] { opacity: 0.4; cursor: not-allowed; transform: none; }
   .fab-iconbtn--sm { width: 32px; height: 32px; }
   .fab-iconbtn--md { width: 40px; height: 40px; }

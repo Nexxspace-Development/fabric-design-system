@@ -19,13 +19,21 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     background: var(--_bg); color: var(--_fg);
     border-radius: var(--radius-md);
     cursor: pointer; user-select: none;
+    /* Release uses --ease-settle (linen): micro-overshoot back to rest */
     transition: background var(--duration-fast) var(--ease-out),
                 border-color var(--duration-fast) var(--ease-out),
-                transform var(--duration-fast) var(--ease-out),
+                transform var(--duration-slow) var(--ease-settle),
                 box-shadow var(--duration-fast) var(--ease-out);
   }
   .fab-btn:focus-visible { outline: var(--border-thick) solid var(--focus-ring); outline-offset: 2px; }
-  .fab-btn:active { transform: translateY(0.5px) scale(0.992); }
+  .fab-btn:active {
+    transform: translateY(1px) scale(0.978);
+    /* Press uses --ease-press (clay): weighted, fast, no bounce */
+    transition: background 70ms var(--ease-out),
+                border-color 70ms var(--ease-out),
+                transform 70ms var(--ease-press),
+                box-shadow 70ms var(--ease-out);
+  }
   .fab-btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
 
   /* sizes */

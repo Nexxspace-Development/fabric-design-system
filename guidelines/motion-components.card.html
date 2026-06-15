@@ -1,0 +1,147 @@
+<!-- @dsCard group="Motion" viewport="700x500" name="Motion in components" subtitle="Every Fabric component wired to its material personality — press, hover, focus, appear, season" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../styles.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; background: var(--surface-canvas); padding: 24px; }
+  .head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+  .ey  { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--season-accent); }
+  .ttl { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-strong); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+  .sec  { display: flex; flex-direction: column; gap: 8px; }
+  .lbl  { font-family: var(--font-data); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); display: flex; gap: 5px; align-items: center; }
+  .tok  { font-family: var(--font-mono); font-size: 8.5px; background: var(--surface-sunken); padding: 1px 5px; border-radius: 4px; color: var(--text-faint); letter-spacing: 0; text-transform: none; }
+  .row  { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .toast-zone { min-height: 52px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+</style>
+</head>
+<body>
+<div class="head">
+  <span class="ey">Motion · Components</span>
+  <span class="ttl">All personalities, live</span>
+</div>
+<div id="root"></div>
+<script type="text/babel">
+  const {
+    Button, Checkbox, Switch,
+    Input, Toast, Tooltip, Badge, Tag, Tabs, Card
+  } = window.FabricDesignSystem_7bb975;
+
+  function Demo() {
+    const [chk, setChk]         = React.useState(false);
+    const [sw, setSw]           = React.useState(false);
+    const [toastKey, setTKey]   = React.useState(0);
+    const [showToast, setShow]  = React.useState(false);
+    const [tab, setTab]         = React.useState('focus');
+
+    const fireToast = () => {
+      setShow(false);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        setTKey(k => k + 1);
+        setShow(true);
+      }));
+    };
+    React.useEffect(() => {
+      if (showToast) {
+        const t = setTimeout(() => setShow(false), 3000);
+        return () => clearTimeout(t);
+      }
+    }, [showToast, toastKey]);
+
+    return (
+      <div className="grid">
+
+        <div className="sec">
+          <div className="lbl">Clay press · Linen release <span className="tok">Button</span></div>
+          <div className="row">
+            <Button variant="primary" size="sm">Save</Button>
+            <Button variant="secondary" size="sm">Cancel</Button>
+            <Button variant="ghost" size="sm">Skip</Button>
+          </div>
+        </div>
+
+        <div className="sec">
+          <div className="lbl">Settle entrance <span className="tok">Toast</span></div>
+          <div className="toast-zone">
+            <Button variant="soft" size="sm" onClick={fireToast}>Show toast</Button>
+            {showToast && (
+              <Toast key={toastKey} tone="success" title="Changes saved" onClose={() => setShow(false)}>
+                Tucked away safely.
+              </Toast>
+            )}
+          </div>
+        </div>
+
+        <div className="sec">
+          <div className="lbl">Flutter spring <span className="tok">Checkbox · Switch</span></div>
+          <div className="row">
+            <Checkbox label="Done" checked={chk} onChange={e => setChk(e.target.checked)} />
+            <Switch label="Focus mode" checked={sw} onChange={e => setSw(e.target.checked)} />
+          </div>
+        </div>
+
+        <div className="sec">
+          <div className="lbl">Directional settle <span className="tok">Tooltip</span></div>
+          <div className="row">
+            <Tooltip label="Rises from anchor" placement="top">
+              <Button variant="secondary" size="sm">↑ top</Button>
+            </Tooltip>
+            <Tooltip label="Slides right" placement="right">
+              <Button variant="secondary" size="sm">right →</Button>
+            </Tooltip>
+            <Tooltip label="Drops down" placement="bottom">
+              <Button variant="secondary" size="sm">↓ btm</Button>
+            </Tooltip>
+          </div>
+        </div>
+
+        <div className="sec">
+          <div className="lbl">Settle focus bloom <span className="tok">Input</span></div>
+          <Input placeholder="Click to focus" />
+        </div>
+
+        <div className="sec">
+          <div className="lbl">Spring indicator <span className="tok">Tabs</span></div>
+          <Tabs
+            variant="line"
+            value={tab}
+            onChange={setTab}
+            items={[
+              { label: 'Focus', value: 'focus' },
+              { label: 'Rest', value: 'rest' },
+              { label: 'Review', value: 'review' },
+            ]}
+          />
+        </div>
+
+        <div className="sec">
+          <div className="lbl">Season turn <span className="tok">Badge · tone="season"</span></div>
+          <div className="row">
+            <Badge tone="season">In season</Badge>
+            <Tag seasonal>Seasonal tag</Tag>
+            <Badge tone="primary">Primary</Badge>
+          </div>
+        </div>
+
+        <div className="sec">
+          <div className="lbl">Settle lift <span className="tok">Card</span></div>
+          <Card elevation="raised" interactive padding="sm">
+            <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Hover to feel the settle</div>
+          </Card>
+        </div>
+
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

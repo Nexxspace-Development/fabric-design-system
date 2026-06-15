@@ -24,6 +24,30 @@
  * it adapts to Nightfall for free and stays a true whisper.
  */
 
+/* Register accent + canvas as typed <color> values so they can transition.
+ * This makes a season change a smooth 480 ms drift rather than a hard cut:
+ * any element using var(--season-accent) or var(--season-canvas) — including
+ * those derived via color-mix() — automatically cross-fades when data-season
+ * changes on the element or an ancestor.
+ * Supported: Chrome 111+, Firefox 121+, Safari 15.4+.               */
+@property --season-accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: oklch(0.612 0.047 145); /* sage-500 — spring default */
+}
+@property --season-canvas {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: oklch(0.956 0.009 130); /* spring canvas whisper */
+}
+
+/* Drift transition — only fires when the above registered properties change */
+:root {
+  transition:
+    --season-accent var(--duration-slower) var(--ease-drift),
+    --season-canvas var(--duration-slower) var(--ease-drift);
+}
+
 :root,
 [data-season="spring"] {
   --season-accent:      var(--sage-500);
