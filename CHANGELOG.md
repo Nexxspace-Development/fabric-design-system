@@ -4,6 +4,35 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.6.1] — 2026-06-14
+### Changed
+- **Catalog works without a local server.** `index.html` now carries an embedded
+  snapshot of the manifest, so double-clicking the file renders every tile
+  straight off disk — no terminal needed. When served over HTTP it still fetches
+  the live `_ds_manifest.json` and auto-syncs; the embedded copy is the fallback.
+  Added an honest `file://` note explaining the Theme/Season toggles can’t reach
+  into previews when opened directly (each tile follows the OS appearance there).
+### Added
+- **One-click sharing via GitHub Pages.** Ships `.github/workflows/pages.yml`
+  (push-to-`main` deploy) plus setup steps in the catalog’s “How to use” panel
+  and the README, so reviewers can open the catalog at a URL — no clone, no
+  terminal.
+
+## [0.6.0] — 2026-06-14
+### Added
+- **Visual catalog** (`index.html` at the repo root) — a single, self-contained
+  browse page so anyone who clones the repo can review the system the way the
+  design tooling shows it, no special environment needed. It reads
+  `_ds_manifest.json` at runtime (so it stays in sync on every rebuild) and
+  renders every foundation card, component, UI kit and template as a live,
+  auto-scaled `<iframe>` tile, grouped (Type · Colors · Spacing · Components ·
+  Brand · Finance · App · Website · Templates). Header **Theme** (Auto / Light /
+  Nightfall) and **Season** toggles propagate into every preview at once;
+  each tile has an **Open** link to the full file. Includes a built-in
+  "How to use" panel (clone → serve locally → browse → adopt) and a friendly
+  `file://` banner telling reviewers to serve over HTTP. Built entirely from
+  Fabric's own tokens — the catalog dogfoods the system.
+
 ## [0.5.0] — 2026-06-14
 ### Added
 - **Finance extension** (`tokens/finance.css`) — an opt-in layer for financial
@@ -104,6 +133,8 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.6.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.6.1
+[0.6.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.6.0
 [0.5.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.5.0
 [0.4.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.4.0
 [0.3.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.3.0

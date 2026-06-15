@@ -21,6 +21,39 @@ The flagship product, also called Fabric, is a quiet daily workspace for doing o
 
 ---
 
+## Browse it visually
+
+After cloning, you can review the whole system in one page — no special tooling.
+The repo root ships an **`index.html` visual catalog** that renders every foundation
+card, component, UI kit and template as a live, grouped preview, with Theme
+(Auto / Light / Nightfall) and Season toggles.
+
+Three ways to open it, easiest first:
+
+1. **Double-click `index.html`.** It carries an embedded snapshot of the catalog,
+   so every tile renders straight off disk — no terminal. (Browsers won’t let a
+   file-opened page retint the previews from the toggle; each tile follows your
+   OS light/dark setting. The page chrome still toggles.)
+2. **Share a link via GitHub Pages.** A deploy workflow ships in
+   `.github/workflows/pages.yml`. One-time: **Settings → Pages → Source: GitHub
+   Actions**. Every push then publishes to
+   `https://nexxspace-development.github.io/fabric-design-system/` — reviewers
+   open it in one click, toggles drive every preview, and it auto-syncs.
+3. **Serve locally** for the full live experience from a clone:
+
+   ```bash
+   git clone https://github.com/Nexxspace-Development/fabric-design-system.git
+   cd fabric-design-system
+   python3 -m http.server 8000      # or: npx serve .
+   # then open http://localhost:8000/
+   ```
+
+Served over HTTP (2 or 3) the catalog re-reads `_ds_manifest.json` live, so it
+stays in sync as the system grows. The catalog’s own “How to use” panel repeats
+these steps for anyone you share it with.
+
+---
+
 ## Quick start
 
 Link the single stylesheet, then (for the React components) load the compiled bundle after React UMD:
@@ -66,6 +99,8 @@ Plain HTML/CSS works with **no JavaScript** — every token and the `.fabric-*` 
 
 ```
 fabric-design-system/
+├── index.html            # ← visual catalog: browse every card + template (double-click, or serve)
+├── .github/workflows/    # GitHub Pages deploy workflow for the catalog
 ├── styles.css            # single entry — @imports every token + base file
 ├── tokens/               # colors · typography · spacing · textures · dark · seasons · fonts · base
 ├── components/           # React primitives — forms · feedback · layout · navigation

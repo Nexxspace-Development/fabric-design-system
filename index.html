@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fabric — visual catalog</title>
+<link rel="icon" href="assets/fabric-mark.svg" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* ───────── Catalog shell — built from Fabric's own tokens ───────── */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--surface-canvas);
+    color: var(--text-default);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .cat-header {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    padding: 16px 32px;
+    background: color-mix(in srgb, var(--surface-canvas) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .cat-brand { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+  .cat-brand img { width: 30px; height: 30px; display: block; }
+  .cat-brand .wm { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-strong); letter-spacing: -0.01em; }
+  .cat-brand .sub { font-family: var(--font-data); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); }
+
+  .cat-controls { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .ctl { display: flex; align-items: center; gap: 8px; }
+  .ctl > label { font-family: var(--font-data); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+  .seg { display: inline-flex; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 3px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; cursor: pointer;
+    font-family: var(--font-sans); font-size: 13px; color: var(--text-muted);
+    padding: 5px 12px; border-radius: var(--radius-pill); transition: all 140ms var(--ease-out, ease);
+  }
+  .seg button:hover { color: var(--text-default); }
+  .seg button[aria-pressed="true"] { background: var(--surface-card); color: var(--text-strong); box-shadow: var(--shadow-xs); }
+
+  /* Page width */
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px 96px; }
+
+  /* Intro + how-to */
+  .intro { padding: 44px 0 8px; }
+  .intro .eyebrow { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--primary); }
+  .intro h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 52px); font-weight: 500; line-height: 1.04; letter-spacing: -0.025em; color: var(--text-strong); margin: 12px 0 0; }
+  .intro p.lead { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 56ch; margin: 18px 0 0; }
+
+  details.howto {
+    margin: 32px 0 8px; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg, 20px);
+    background: var(--surface-card); box-shadow: var(--shadow-xs); overflow: hidden;
+  }
+  details.howto > summary {
+    list-style: none; cursor: pointer; padding: 18px 24px;
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-display); font-size: 19px; font-weight: 500; color: var(--text-strong);
+  }
+  details.howto > summary::-webkit-details-marker { display: none; }
+  details.howto > summary .chev { margin-left: auto; color: var(--text-faint); transition: transform 180ms var(--ease-out, ease); font-family: var(--font-data); font-size: 13px; }
+  details.howto[open] > summary .chev { transform: rotate(90deg); }
+  .howto-body { padding: 4px 24px 26px; border-top: 1px solid var(--border-subtle); }
+  .howto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-top: 22px; }
+  .howto-grid h3 { font-family: var(--font-display); font-size: 17px; font-weight: 500; color: var(--text-strong); margin: 0 0 10px; }
+  .howto-grid p, .howto-grid li { font-size: 14.5px; line-height: 1.6; color: var(--text-muted); }
+  .howto-grid ol, .howto-grid ul { margin: 0; padding-left: 18px; }
+  .howto-grid li { margin: 6px 0; }
+  .howto-grid li::marker { color: var(--text-faint); }
+  pre.cmd {
+    margin: 12px 0 0; padding: 14px 16px; border-radius: var(--radius-md, 10px);
+    background: var(--surface-inverse, var(--stone-900)); color: var(--text-on-inverse, #f4f1e8);
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.7; overflow-x: auto;
+  }
+  pre.cmd .c { color: color-mix(in srgb, var(--text-on-inverse, #f4f1e8) 50%, transparent); }
+  code.inl { font-family: var(--font-mono); font-size: 0.88em; background: var(--surface-sunken); padding: 1px 6px; border-radius: 6px; color: var(--text-default); }
+
+  /* Group sections */
+  .group { margin-top: 56px; scroll-margin-top: 88px; }
+  .group-head { display: flex; align-items: baseline; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle); }
+  .group-head h2 { font-family: var(--font-display); font-size: 27px; font-weight: 500; color: var(--text-strong); margin: 0; letter-spacing: -0.01em; }
+  .group-head .count { font-family: var(--font-data); font-size: 12px; letter-spacing: 0.1em; color: var(--text-faint); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; margin-top: 24px; }
+
+  .tile { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg, 20px); background: var(--surface-card); box-shadow: var(--shadow-xs); overflow: hidden; }
+  .tile.wide { grid-column: 1 / -1; }
+  .tile .stage { position: relative; background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); overflow: hidden; }
+  .tile .stage iframe { border: 0; display: block; transform-origin: top left; background: transparent; }
+  .tile .meta { padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; }
+  .tile .meta .txt { min-width: 0; }
+  .tile .meta .name { font-family: var(--font-display); font-size: 17px; font-weight: 500; color: var(--text-strong); margin: 0; line-height: 1.2; }
+  .tile .meta .desc { font-size: 13.5px; line-height: 1.5; color: var(--text-muted); margin: 4px 0 0; }
+  .tile .meta .vp { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.08em; color: var(--text-faint); margin-top: 6px; }
+  .tile .open {
+    margin-left: auto; flex-shrink: 0; text-decoration: none;
+    font-family: var(--font-data); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--primary); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill);
+    padding: 6px 12px; transition: all 140ms ease; white-space: nowrap;
+  }
+  .tile .open:hover { background: var(--primary-soft, var(--surface-sunken)); border-color: var(--primary); }
+
+  .tpl-badge { display: inline-block; font-family: var(--font-data); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-on-sage, #fff); background: var(--primary); border-radius: var(--radius-pill); padding: 3px 9px; margin-bottom: 8px; }
+
+  /* Error / file:// banner */
+  .banner { margin: 32px 0; padding: 22px 24px; border: 1px solid var(--danger, #a8632f); border-radius: var(--radius-lg, 20px); background: color-mix(in srgb, var(--danger, #a8632f) 8%, var(--surface-card)); }
+  .banner h3 { font-family: var(--font-display); font-size: 19px; font-weight: 500; color: var(--text-strong); margin: 0 0 8px; }
+  .banner p { font-size: 14.5px; line-height: 1.6; color: var(--text-muted); margin: 0; }
+
+  .note { margin: 28px 0 4px; padding: 14px 18px; border: 1px solid var(--border-subtle); border-left: 3px solid var(--primary); border-radius: var(--radius-md, 10px); background: var(--surface-sunken); font-size: 13.5px; line-height: 1.6; color: var(--text-muted); }
+  .note strong { color: var(--text-strong); font-weight: 600; }
+  .note em { font-style: italic; color: var(--text-default); }
+
+  footer.cat-foot { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-faint); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  footer.cat-foot a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <header class="cat-header">
+    <div class="cat-brand">
+      <img src="assets/fabric-mark.svg" alt="Fabric" />
+      <div>
+        <div class="wm">Fabric</div>
+        <div class="sub">visual catalog</div>
+      </div>
+    </div>
+    <div class="cat-controls">
+      <div class="ctl">
+        <label>Theme</label>
+        <div class="seg" id="theme-seg">
+          <button data-theme-val="auto" aria-pressed="true">Auto</button>
+          <button data-theme-val="light" aria-pressed="false">Light</button>
+          <button data-theme-val="dark" aria-pressed="false">Nightfall</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label>Season</label>
+        <div class="seg" id="season-seg">
+          <button data-season-val="none" aria-pressed="true">None</button>
+          <button data-season-val="spring" aria-pressed="false">Spring</button>
+          <button data-season-val="summer" aria-pressed="false">Summer</button>
+          <button data-season-val="autumn" aria-pressed="false">Autumn</button>
+          <button data-season-val="winter" aria-pressed="false">Winter</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="intro">
+      <div class="eyebrow">// made from nature</div>
+      <h1>The whole system, on one page.</h1>
+      <p class="lead">Every foundation specimen, component, UI kit and template in Fabric — rendered live, grouped the way the design tooling shows them. Flip the theme and season above and watch every preview turn at once.</p>
+    </section>
+
+    <details class="howto" open>
+      <summary>How to use this catalog <span class="chev">›</span></summary>
+      <div class="howto-body">
+        <div class="howto-grid">
+          <div>
+            <h3>1 · Get the files</h3>
+            <p>Clone the repository, then move into it:</p>
+            <pre class="cmd"><span class="c"># clone &amp; enter</span>
+git clone https://github.com/Nexxspace-Development/fabric-design-system.git
+cd fabric-design-system</pre>
+          </div>
+          <div>
+            <h3>2 · Open it — two easy ways</h3>
+            <p><strong>Just double-click <code class="inl">index.html</code>.</strong> It ships with an embedded
+            snapshot of the catalog, so every tile renders straight off disk — no terminal needed.</p>
+            <p style="margin-top:12px;">Want the Theme / Season toggles to drive the previews too (not just this page)?
+            Open it over a link or a tiny local server instead:</p>
+            <pre class="cmd"><span class="c"># Python (built in on most machines)</span>
+python3 -m http.server 8000
+
+<span class="c"># or Node</span>
+npx serve .</pre>
+            <p style="margin-top:12px;">Then visit <code class="inl">http://localhost:8000/</code>. Served this way the
+            catalog also re-reads the live manifest, so it auto-syncs as the system grows.</p>
+          </div>
+          <div>
+            <h3>3 · Or just share a link</h3>
+            <p>This repo is set up to publish itself with <strong>GitHub Pages</strong>, so reviewers can
+            open the catalog in one click — no clone, no terminal:</p>
+            <ol>
+              <li>On GitHub: <strong>Settings → Pages</strong>.</li>
+              <li>Under <strong>Build and deployment</strong>, set <strong>Source</strong> to <em>GitHub Actions</em>.</li>
+              <li>Push to <code class="inl">main</code> — the bundled workflow deploys automatically to <code class="inl">https://nexxspace-development.github.io/fabric-design-system/</code></li>
+            </ol>
+            <p style="margin-top:10px;">Served over real HTTP, the toggles drive every preview and the catalog auto-syncs.</p>
+          </div>
+          <div>
+            <h3>4 · Use Fabric in your project</h3>
+            <p>Link the single stylesheet; load the bundle after React only if you need the components:</p>
+            <pre class="cmd"><span class="c">&lt;!-- tokens + fonts + base --&gt;</span>
+&lt;link rel="stylesheet" href="styles.css"&gt;
+
+<span class="c">&lt;!-- components (optional) --&gt;</span>
+&lt;script src="_ds_bundle.js"&gt;&lt;/script&gt;</pre>
+            <p style="margin-top:12px;">Full spec, tokens and conventions live in <code class="inl">README.md</code>.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <div id="catalog"></div>
+
+    <!-- Embedded manifest snapshot: lets the catalog render on double-click (file://),
+         and acts as a fallback if the live fetch fails. Refreshed when the system changes. -->
+    <script type="application/json" id="fabric-manifest">{"cards":[{"name":"Fabric — workspace","group":"App","subtitle":"Calm daily focus & tasks app","viewport":"1280x800","path":"ui_kits/app/index.html"},{"name":"Logo & mark","group":"Brand","subtitle":"The Fabric leaf mark and wordmark lockup","viewport":"700x220","path":"guidelines/brand-logo.card.html"},{"name":"Seasons","group":"Brand","subtitle":"A seasonal accent + signature texture, composing with light/dark","viewport":"700x250","path":"guidelines/brand-seasons.card.html"},{"name":"Texture & motifs","group":"Brand","subtitle":"Woven paper texture and the mono eyebrow","viewport":"700x200","path":"guidelines/brand-texture.card.html"},{"name":"Texture","group":"Brand","subtitle":"Woven, grained, felted & stitched surface treatments","viewport":"700x330","path":"guidelines/brand-textures.card.html"},{"name":"Marsh — cool accent","group":"Colors","subtitle":"Still water & overcast sky. Info, links.","viewport":"700x150","path":"guidelines/color-marsh.card.html"},{"name":"Nightfall — dark theme","group":"Colors","subtitle":"Warm night earth: loam surfaces, moonlit ink, luminous moss","viewport":"700x210","path":"guidelines/color-nightfall.card.html"},{"name":"Ochre — gold accent","group":"Colors","subtitle":"Dried grass & honey. Warnings, highlights.","viewport":"700x150","path":"guidelines/color-ochre.card.html"},{"name":"Rust — danger","group":"Colors","subtitle":"Muted, never alarming. Destructive actions.","viewport":"700x150","path":"guidelines/color-rust.card.html"},{"name":"Sage — primary","group":"Colors","subtitle":"Muted moss. The Fabric primary.","viewport":"700x150","path":"guidelines/color-sage.card.html"},{"name":"Status tones","group":"Colors","subtitle":"Soft-fill + solid pairs for feedback","viewport":"700x140","path":"guidelines/color-status.card.html"},{"name":"Stone — neutral","group":"Colors","subtitle":"Warm linen → bark. The backbone neutral.","viewport":"700x150","path":"guidelines/color-stone.card.html"},{"name":"Surfaces & ink","group":"Colors","subtitle":"Semantic paper tones and text hierarchy","viewport":"700x190","path":"guidelines/color-surfaces.card.html"},{"name":"Terracotta — warm accent","group":"Colors","subtitle":"Fired clay & rust. Warm emphasis.","viewport":"700x150","path":"guidelines/color-terracotta.card.html"},{"name":"Feedback","group":"Components","subtitle":"Badge, Tag, Tooltip, Toast","viewport":"700x440","path":"components/feedback/feedback.card.html"},{"name":"Forms","group":"Components","subtitle":"Buttons, inputs, select, checkbox, switch","viewport":"700x540","path":"components/forms/forms.card.html"},{"name":"Layout","group":"Components","subtitle":"Card, Avatar, Divider","viewport":"700x300","path":"components/layout/layout.card.html"},{"name":"Navigation","group":"Components","subtitle":"Tabs — underline & segmented","viewport":"700x180","path":"components/navigation/navigation.card.html"},{"name":"Finance conventions","group":"Finance","subtitle":"Written guideline — color axes, accounting figures, ledgers","viewport":"900x4440","path":"guidelines/finance-conventions.html"},{"name":"Finance — directional axis","group":"Finance","subtitle":"Gain/loss ≠ success/danger · signed tabular figures","viewport":"780x460","path":"guidelines/finance-direction.card.html"},{"name":"Elevation","group":"Spacing","subtitle":"Warm-tinted, diffuse shadows — xs → xl","viewport":"700x190","path":"guidelines/spacing-elevation.card.html"},{"name":"Radii","group":"Spacing","subtitle":"Soft, organic corners — xs → pill","viewport":"700x170","path":"guidelines/spacing-radii.card.html"},{"name":"Spacing scale","group":"Spacing","subtitle":"4px base grid, 1 → 16","viewport":"700x190","path":"guidelines/spacing-scale.card.html"},{"name":"Body — Hanken Grotesk","group":"Type","subtitle":"Warm humanist sans for UI & reading","viewport":"700x250","path":"guidelines/type-body.card.html"},{"name":"Display — Newsreader","group":"Type","subtitle":"Humanist serif for headlines, hero & quotes","viewport":"700x230","path":"guidelines/type-display.card.html"},{"name":"Data — IBM Plex Mono","group":"Type","subtitle":"Eyebrows, numerals, code & labels","viewport":"700x180","path":"guidelines/type-mono.card.html"},{"name":"Type scale","group":"Type","subtitle":"Minor-third scale, 11 → 76px","viewport":"700x300","path":"guidelines/type-scale.card.html"},{"name":"Fabric — landing","group":"Website","subtitle":"Marketing site hero & sections","viewport":"1280x760","path":"ui_kits/site/index.html"}],"templates":[{"name":"Account statement","description":"Accounting-grade monthly statement — columnar money-out/in, running balance, total rules","entryPath":"templates/statement/index.html"},{"name":"Fabric page","description":"Calm starter page — nav, hero, and a content card, on warm paper","entryPath":"templates/page/index.html"},{"name":"Invest — portfolio","description":"Consumer-fintech portfolio dashboard — balance, P&L, holdings & activity on the finance extension","entryPath":"templates/portfolio/index.html"},{"name":"Transaction detail","description":"Single-transaction receipt — status badge, directional amount, fee breakdown with total rules","entryPath":"templates/transaction/index.html"}]}</script>
+
+    <footer class="cat-foot">
+      <span>Fabric — calm tools for focused work. · Reads <code class="inl">_ds_manifest.json</code>, so it stays in sync on every rebuild.</span>
+      <span><a href="README.md">README</a> · <a href="CHANGELOG.md">Changelog</a></span>
+    </footer>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  var GROUP_ORDER = ["Type", "Colors", "Spacing", "Components", "Brand", "Finance", "App", "Website"];
+  // viewport width at/above which a tile spans the full row
+  var WIDE_AT = 1000;
+
+  var state = { theme: "auto", season: "none" };
+  var frames = []; // { el, vw, vh, stage }
+
+  function parseVp(vp) {
+    var m = /^(\d+)\s*[x×]\s*(\d+)$/i.exec((vp || "").trim());
+    if (!m) return { w: 700, h: 220 };
+    return { w: parseInt(m[1], 10), h: parseInt(m[2], 10) };
+  }
+
+  function applyToDoc(doc) {
+    if (!doc || !doc.documentElement) return;
+    var el = doc.documentElement;
+    if (state.theme === "auto") el.removeAttribute("data-theme");
+    else el.setAttribute("data-theme", state.theme);
+    if (state.season === "none") el.removeAttribute("data-season");
+    else el.setAttribute("data-season", state.season);
+  }
+
+  function themeAllFrames() {
+    // the catalog page itself
+    applyToDoc(document);
+    frames.forEach(function (f) {
+      try { applyToDoc(f.el.contentDocument); } catch (e) { /* cross-origin: ignore */ }
+    });
+  }
+
+  function fitFrame(f) {
+    var avail = f.stage.clientWidth;
+    if (!avail) return;
+    var scale = avail / f.vw;
+    // cap scale so small specimens don't blow up past life-size
+    if (scale > 1) scale = 1;
+    f.el.style.width = f.vw + "px";
+    f.el.style.height = f.vh + "px";
+    f.el.style.transform = "scale(" + scale + ")";
+    f.stage.style.height = Math.round(f.vh * scale) + "px";
+  }
+
+  function fitAll() { frames.forEach(fitFrame); }
+
+  function makeTile(item, opts) {
+    opts = opts || {};
+    var vp = parseVp(item.viewport || opts.viewport);
+    var wide = opts.forceWide || vp.w >= WIDE_AT;
+
+    var tile = document.createElement("div");
+    tile.className = "tile" + (wide ? " wide" : "");
+
+    var stage = document.createElement("div");
+    stage.className = "stage";
+
+    var iframe = document.createElement("iframe");
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("title", item.name || item.path);
+    iframe.src = opts.src || item.path;
+
+    var rec = { el: iframe, vw: vp.w, vh: vp.h, stage: stage };
+    iframe.addEventListener("load", function () {
+      applyToDoc(safeDoc(iframe));
+      fitFrame(rec);
+    });
+    frames.push(rec);
+
+    stage.appendChild(iframe);
+    tile.appendChild(stage);
+
+    var meta = document.createElement("div");
+    meta.className = "meta";
+    var txt = document.createElement("div");
+    txt.className = "txt";
+    var html = "";
+    if (opts.tplBadge) html += '<span class="tpl-badge">Template</span><br>';
+    html += '<p class="name"></p>';
+    if (item.subtitle || item.description) html += '<p class="desc"></p>';
+    html += '<div class="vp">' + (opts.tplBadge ? item.entryPath : item.path) + " · " + vp.w + "×" + vp.h + "</div>";
+    txt.innerHTML = html;
+    txt.querySelector(".name").textContent = item.name || item.path;
+    var d = txt.querySelector(".desc");
+    if (d) d.textContent = item.subtitle || item.description;
+
+    var open = document.createElement("a");
+    open.className = "open";
+    open.textContent = "Open ↗";
+    open.href = opts.src || item.path;
+    open.target = "_blank";
+    open.rel = "noopener";
+
+    meta.appendChild(txt);
+    meta.appendChild(open);
+    tile.appendChild(meta);
+    return tile;
+  }
+
+  function safeDoc(iframe) { try { return iframe.contentDocument; } catch (e) { return null; } }
+
+  function makeGroup(title, count) {
+    var sec = document.createElement("section");
+    sec.className = "group";
+    sec.id = "group-" + title.toLowerCase().replace(/\s+/g, "-");
+    var head = document.createElement("div");
+    head.className = "group-head";
+    head.innerHTML = '<h2></h2><span class="count">' + count + (count === 1 ? " item" : " items") + "</span>";
+    head.querySelector("h2").textContent = title;
+    var grid = document.createElement("div");
+    grid.className = "grid";
+    sec.appendChild(head);
+    sec.appendChild(grid);
+    return { sec: sec, grid: grid };
+  }
+
+  function render(manifest) {
+    var root = document.getElementById("catalog");
+
+    // group cards
+    var byGroup = {};
+    (manifest.cards || []).forEach(function (c) {
+      (byGroup[c.group || "Other"] = byGroup[c.group || "Other"] || []).push(c);
+    });
+
+    var names = Object.keys(byGroup).sort(function (a, b) {
+      var ia = GROUP_ORDER.indexOf(a), ib = GROUP_ORDER.indexOf(b);
+      if (ia === -1) ia = 99; if (ib === -1) ib = 99;
+      return ia - ib || a.localeCompare(b);
+    });
+
+    names.forEach(function (g) {
+      var items = byGroup[g].slice().sort(function (a, b) { return (a.name || "").localeCompare(b.name || ""); });
+      var grp = makeGroup(g, items.length);
+      items.forEach(function (it) { grp.grid.appendChild(makeTile(it)); });
+      root.appendChild(grp.sec);
+    });
+
+    // templates
+    var tpls = manifest.templates || [];
+    if (tpls.length) {
+      var grp = makeGroup("Templates", tpls.length);
+      tpls.slice().sort(function (a, b) { return (a.name || "").localeCompare(b.name || ""); })
+        .forEach(function (t) {
+          grp.grid.appendChild(makeTile(t, { src: t.entryPath, viewport: "1200x760", forceWide: true, tplBadge: true }));
+        });
+      root.appendChild(grp.sec);
+    }
+
+    requestAnimationFrame(fitAll);
+  }
+
+  function showBanner(title, msg) {
+    var b = document.createElement("div");
+    b.className = "banner";
+    b.innerHTML = "<h3></h3><p></p>";
+    b.querySelector("h3").textContent = title;
+    b.querySelector("p").innerHTML = msg;
+    document.getElementById("catalog").appendChild(b);
+  }
+
+  // ── controls ──
+  function wireSeg(id, key, attr) {
+    var seg = document.getElementById(id);
+    seg.addEventListener("click", function (e) {
+      var btn = e.target.closest("button");
+      if (!btn) return;
+      state[key] = btn.getAttribute(attr);
+      seg.querySelectorAll("button").forEach(function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      themeAllFrames();
+    });
+  }
+  wireSeg("theme-seg", "theme", "data-theme-val");
+  wireSeg("season-seg", "season", "data-season-val");
+
+  var rt;
+  window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(fitAll, 120); });
+
+  function showOfflineNote() {
+    var n = document.createElement("div");
+    n.className = "note";
+    n.innerHTML =
+      '<strong>Opened directly from a file.</strong> Everything below renders, and the ' +
+      'Theme / Season controls still retint this page. Browsers block a file-opened page from ' +
+      'reaching <em>into</em> the previews, though, so each tile follows your operating-system ' +
+      'light/dark setting instead of the toggle. Want the toggle to drive every tile too? ' +
+      'Open the catalog over a link (GitHub Pages) or a local server — see “How to use” above.';
+    var root = document.getElementById("catalog");
+    root.parentNode.insertBefore(n, root);
+  }
+
+  function readEmbedded() {
+    var el = document.getElementById("fabric-manifest");
+    if (!el) return null;
+    try {
+      var data = JSON.parse(el.textContent);
+      return (data && data.cards) ? data : null;
+    } catch (e) { return null; }
+  }
+
+  // ── boot ──
+  // Strategy: when served over HTTP, fetch the live manifest so the catalog
+  // auto-syncs on every rebuild. When opened straight off disk (file://) — or
+  // if the fetch fails for any reason — fall back to the manifest snapshot
+  // embedded in this page, so double-clicking the file Just Works.
+  var embedded = readEmbedded();
+  var offline = location.protocol === "file:";
+
+  if (offline) {
+    if (embedded) { render(embedded); showOfflineNote(); }
+    else showBanner(
+      "Manifest snapshot missing",
+      "This page couldn’t read its embedded catalog list. Re-export <code class=\"inl\">index.html</code>, " +
+      "or serve the project over HTTP so it can fetch <code class=\"inl\">_ds_manifest.json</code> directly."
+    );
+    return;
+  }
+
+  fetch("_ds_manifest.json", { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (m) { render(m); })
+    .catch(function () {
+      if (embedded) render(embedded);
+      else showBanner(
+        "Couldn’t load _ds_manifest.json",
+        "The catalog reads <code class=\"inl\">_ds_manifest.json</code> at the project root. " +
+        "Serve the project root over HTTP, or open the bundled <code class=\"inl\">index.html</code> with its embedded snapshot."
+      );
+    });
+})();
+</script>
+</body>
+</html>
