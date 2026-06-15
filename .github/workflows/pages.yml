@@ -27,6 +27,12 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      # Opt into Node.js 24 runtime proactively — it becomes the default
+      # June 16, 2026. The official Pages actions haven't shipped a native
+      # Node 24 build yet; this env var forces the runner to use Node 24
+      # in the meantime so behaviour matches the soon-to-be default.
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
