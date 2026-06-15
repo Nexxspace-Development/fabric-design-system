@@ -1,0 +1,60 @@
+/* Fabric — Brand (primary hue parameterization)
+ * ----------------------------------------------------------------------------
+ * Fabric is deliberately muted; only ONE family is "the brand": the primary.
+ * Rather than ship a hand-authored 50–900 scale per brand (and redo every
+ * dark-mode lift), the whole primary scale is GENERATED from a single hue —
+ * `--brand-h` — over Fabric's fixed lightness ramp and low chroma. A rebrand
+ * is then one line: `:root { --brand-h: 274 }`.
+ *
+ * STRATEGY: primary-only. The terracotta / ochre / marsh accents and the
+ * sage-lineage status colors (success/warning/info) do NOT chase the brand —
+ * they stay Fabric's earthen supporting cast. Only `--primary*` and the focus
+ * ring point at this scale (see colors.css / dark.css).
+ *
+ *   --brand-h   hue angle, 0–360. Sage default = 145.
+ *   --brand-c   chroma MULTIPLIER over Fabric's muted baseline. 1 = exactly
+ *               as restrained as sage. Treat ~1.6 as the ceiling so no brand
+ *               can shout loud enough to break Fabric's recessive character.
+ *               Cooler/warmer hues read as less saturated at the same chroma,
+ *               so the presets below nudge it up a touch to stay legible.
+ *
+ * The lightness per step and the baseline chroma per step are lifted verbatim
+ * from sage, so at `--brand-h: 145; --brand-c: 1` the output is sage to the eye.
+ */
+:root {
+  --brand-h: 145; /* @kind other */
+  --brand-c: 1; /* @kind other */
+}
+
+/* The primary ramp is derived wherever a brand hue is set — :root for the house
+ * default AND every [data-brand] subtree — NOT only in :root. Custom properties
+ * substitute their inner var() at the element that declares them, so if the
+ * scale lived only in :root it would bake in :root's hue and inherit those
+ * fixed values down; a [data-brand] on a subtree would change --brand-h but
+ * never the (already-substituted) scale. Re-declaring the scale here lets each
+ * theme boundary recompute its own ramp from its own --brand-h / --brand-c. */
+:root, [data-brand] {
+  --brand-50:  oklch(0.962 calc(0.013 * var(--brand-c)) var(--brand-h));
+  --brand-100: oklch(0.930 calc(0.022 * var(--brand-c)) var(--brand-h));
+  --brand-200: oklch(0.872 calc(0.032 * var(--brand-c)) var(--brand-h));
+  --brand-300: oklch(0.792 calc(0.040 * var(--brand-c)) var(--brand-h));
+  --brand-400: oklch(0.700 calc(0.045 * var(--brand-c)) var(--brand-h));
+  --brand-500: oklch(0.612 calc(0.047 * var(--brand-c)) var(--brand-h));
+  --brand-600: oklch(0.522 calc(0.044 * var(--brand-c)) var(--brand-h));
+  --brand-700: oklch(0.438 calc(0.039 * var(--brand-c)) var(--brand-h));
+  --brand-800: oklch(0.360 calc(0.033 * var(--brand-c)) var(--brand-h));
+  --brand-900: oklch(0.292 calc(0.025 * var(--brand-c)) var(--brand-h));
+}
+
+/* ----------------------------------------------------------------------------
+ * Named presets — opt-in, swappable on any subtree, exactly like data-season /
+ * data-theme. Compose freely with Nightfall and Seasons. Hue + a modest chroma
+ * lift so each brand stays recognizable while still reading as Fabric-muted.
+ * `data-brand="sage"` (or no attribute at all) is the house default.
+ * -------------------------------------------------------------------------- */
+[data-brand="sage"]    { --brand-h: 145; /* @kind other */ --brand-c: 1.0; /* @kind other */ }
+[data-brand="indigo"]  { --brand-h: 274; /* @kind other */ --brand-c: 1.5; /* @kind other */ }
+[data-brand="ocean"]   { --brand-h: 245; /* @kind other */ --brand-c: 1.5; /* @kind other */ }
+[data-brand="teal"]    { --brand-h: 195; /* @kind other */ --brand-c: 1.3; /* @kind other */ }
+[data-brand="plum"]    { --brand-h: 330; /* @kind other */ --brand-c: 1.4; /* @kind other */ }
+[data-brand="crimson"] { --brand-h: 18;  /* @kind other */ --brand-c: 1.4; /* @kind other */ }

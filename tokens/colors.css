@@ -107,14 +107,16 @@
   /* Inverse chrome (tooltips, inverse blocks) */
   --text-on-inverse: var(--stone-50);
 
-  /* Primary (sage) */
-  --primary:         var(--sage-600);
-  --primary-hover:   var(--sage-700);
-  --primary-press:   var(--sage-800);
-  --primary-soft:    var(--sage-100);
-  --primary-soft-hover: var(--sage-200);
-  --primary-soft-tx: var(--sage-800);
-  --primary-ring:    var(--sage-400);
+  /* Primary (brand) — generated from --brand-h in tokens/brand.css.
+     Defaults to sage (--brand-h:145). Status colors below stay sage on
+     purpose: this is the primary-only strategy. */
+  --primary:         var(--brand-600);
+  --primary-hover:   var(--brand-700);
+  --primary-press:   var(--brand-800);
+  --primary-soft:    var(--brand-100);
+  --primary-soft-hover: var(--brand-200);
+  --primary-soft-tx: var(--brand-800);
+  --primary-ring:    var(--brand-400);
 
   /* Accents */
   --accent-warm:     var(--terracotta-500);
@@ -135,12 +137,12 @@
   --info:         var(--marsh-600);
   --info-soft:    var(--marsh-100);
 
-  /* Focus */
-  --focus-ring: var(--sage-500);
+  /* Focus — follows the brand */
+  --focus-ring: var(--brand-500);
 
   /* Content color for tinted soft fills (badges, toasts, chips).
      Flips to light text in Nightfall — see tokens/dark.css. */
-  --on-primary-soft: var(--sage-800);
+  --on-primary-soft: var(--brand-800);
   --on-warm-soft:    var(--terracotta-800);
   --on-gold-soft:    var(--ochre-900);
   --on-cool-soft:    var(--marsh-800);

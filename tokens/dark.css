@@ -1,8 +1,12 @@
 /* Fabric — Nightfall (dark theme)
  * Night, still grounded in nature: not a cold blue-black but warm dark earth —
  * loam, bark and peat for surfaces, moonlight-on-linen for ink, and a luminous
- * moonlit moss for the primary. Only the SEMANTIC layer changes; the base
- * OKLCH scales stay put, so every component flips for free.
+ * moonlit primary. Only the SEMANTIC layer changes; the base OKLCH scales stay
+ * put, so every component flips for free.
+ *
+ * Primary follows --brand-h (tokens/brand.css) in every scope below — a rebrand
+ * lifts into Nightfall for free. Status (success/warning/info) stays sage-lineage
+ * on purpose: the primary-only strategy. Default --brand-h:145 reads as moss.
  *
  * Three scopes, by design:
  *   1. @media (prefers-color-scheme: dark) :root   — follows the OS.
@@ -34,13 +38,13 @@
     --border-default: oklch(0.368 0.013 58);
     --border-strong:  oklch(0.452 0.014 58);
 
-    --primary:           var(--sage-400);
-    --primary-hover:     var(--sage-300);
-    --primary-press:     var(--sage-500);
-    --primary-soft:      oklch(0.318 0.034 147);
-    --primary-soft-hover: oklch(0.372 0.038 147);
-    --primary-soft-tx:   oklch(0.838 0.040 147);
-    --primary-ring:      var(--sage-500);
+    --primary:           var(--brand-400);
+    --primary-hover:     var(--brand-300);
+    --primary-press:     var(--brand-500);
+    --primary-soft:      oklch(0.318 calc(0.034 * var(--brand-c)) var(--brand-h));
+    --primary-soft-hover: oklch(0.372 calc(0.038 * var(--brand-c)) var(--brand-h));
+    --primary-soft-tx:   oklch(0.838 calc(0.040 * var(--brand-c)) var(--brand-h));
+    --primary-ring:      var(--brand-500);
 
     --accent-warm:      var(--terracotta-400);
     --accent-warm-soft: oklch(0.342 0.052 45);
@@ -59,7 +63,7 @@
     --info:         var(--marsh-400);
     --info-soft:    oklch(0.330 0.034 244);
 
-    --on-primary-soft: oklch(0.838 0.040 147);
+    --on-primary-soft: oklch(0.838 calc(0.040 * var(--brand-c)) var(--brand-h));
     --on-warm-soft:    var(--terracotta-200);
     --on-gold-soft:    var(--ochre-200);
     --on-cool-soft:    var(--marsh-200);
@@ -75,7 +79,7 @@
     --texture-ink:        hsl(48 24% 82% / 0.09);
     --texture-ink-strong: hsl(48 24% 82% / 0.17);
 
-    --focus-ring: var(--sage-400);
+    --focus-ring: var(--brand-400);
     --shadow-color: 40 30% 2%;
   }
 }
@@ -99,13 +103,13 @@
   --border-default: oklch(0.368 0.013 58);
   --border-strong:  oklch(0.452 0.014 58);
 
-  --primary:           var(--sage-400);
-  --primary-hover:     var(--sage-300);
-  --primary-press:     var(--sage-500);
-  --primary-soft:      oklch(0.318 0.034 147);
-  --primary-soft-hover: oklch(0.372 0.038 147);
-  --primary-soft-tx:   oklch(0.838 0.040 147);
-  --primary-ring:      var(--sage-500);
+  --primary:           var(--brand-400);
+  --primary-hover:     var(--brand-300);
+  --primary-press:     var(--brand-500);
+  --primary-soft:      oklch(0.318 calc(0.034 * var(--brand-c)) var(--brand-h));
+  --primary-soft-hover: oklch(0.372 calc(0.038 * var(--brand-c)) var(--brand-h));
+  --primary-soft-tx:   oklch(0.838 calc(0.040 * var(--brand-c)) var(--brand-h));
+  --primary-ring:      var(--brand-500);
 
   --accent-warm:      var(--terracotta-400);
   --accent-warm-soft: oklch(0.342 0.052 45);
@@ -124,7 +128,7 @@
   --info:         var(--marsh-400);
   --info-soft:    oklch(0.330 0.034 244);
 
-  --on-primary-soft: oklch(0.838 0.040 147);
+  --on-primary-soft: oklch(0.838 calc(0.040 * var(--brand-c)) var(--brand-h));
   --on-warm-soft:    var(--terracotta-200);
   --on-gold-soft:    var(--ochre-200);
   --on-cool-soft:    var(--marsh-200);
@@ -140,7 +144,7 @@
   --texture-ink:        hsl(48 24% 82% / 0.09);
   --texture-ink-strong: hsl(48 24% 82% / 0.17);
 
-  --focus-ring: var(--sage-400);
+  --focus-ring: var(--brand-400);
   --shadow-color: 40 30% 2%;
 }
 
@@ -164,13 +168,13 @@
   --border-default: var(--stone-300);
   --border-strong:  var(--stone-400);
 
-  --primary:           var(--sage-600);
-  --primary-hover:     var(--sage-700);
-  --primary-press:     var(--sage-800);
-  --primary-soft:      var(--sage-100);
-  --primary-soft-hover: var(--sage-200);
-  --primary-soft-tx:   var(--sage-800);
-  --primary-ring:      var(--sage-400);
+  --primary:           var(--brand-600);
+  --primary-hover:     var(--brand-700);
+  --primary-press:     var(--brand-800);
+  --primary-soft:      var(--brand-100);
+  --primary-soft-hover: var(--brand-200);
+  --primary-soft-tx:   var(--brand-800);
+  --primary-ring:      var(--brand-400);
 
   --accent-warm:      var(--terracotta-500);
   --accent-warm-soft: var(--terracotta-100);
@@ -189,7 +193,7 @@
   --info:         var(--marsh-600);
   --info-soft:    var(--marsh-100);
 
-  --on-primary-soft: var(--sage-800);
+  --on-primary-soft: var(--brand-800);
   --on-warm-soft:    var(--terracotta-800);
   --on-gold-soft:    var(--ochre-900);
   --on-cool-soft:    var(--marsh-800);
@@ -205,6 +209,6 @@
   --texture-ink:        hsl(56 16% 28% / 0.09);
   --texture-ink-strong: hsl(56 16% 28% / 0.17);
 
-  --focus-ring: var(--sage-500);
+  --focus-ring: var(--brand-500);
   --shadow-color: 60 22% 30%;
 }

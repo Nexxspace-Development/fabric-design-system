@@ -4,6 +4,31 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.8.0] — 2026-06-15
+### Added
+- **Brand versatility — primary-hue parameterization** (`tokens/brand.css`).
+  Fabric now adapts to any brand primary without hand-authoring a scale. The
+  full 50–900 primary ramp is GENERATED from a single hue token `--brand-h`
+  over Fabric's fixed lightness ramp and muted chroma, so a rebrand is one line:
+  `:root { --brand-h: 274 }`. A `--brand-c` chroma multiplier (1 = sage-muted,
+  ~1.6 ceiling) keeps even loud brands from breaking Fabric's recessive
+  character. Ships six `data-brand` presets (sage / indigo / ocean / teal /
+  plum / crimson), swappable on any subtree like `data-season` / `data-theme`.
+- **`guidelines/color-brand.card.html`** — Colors-group specimen showing the
+  same ramp regenerated across five preset hues, with the strategy note.
+- **`compare/Brand Strategy — Primary-only vs Harmony.html`** — the decision
+  artifact: side-by-side of the two strategies under a live hue slider, presets,
+  chroma and a Nightfall toggle. Records WHY we chose primary-only.
+### Changed
+- **Strategy: primary-only.** Re-pointed the `--primary*` aliases and the focus
+  ring at the generated `--brand-*` scale across all three scopes — `:root`
+  (`tokens/colors.css`) and Nightfall's media-query / `data-theme="dark"` /
+  `data-theme="light"` blocks (`tokens/dark.css`). The terracotta / ochre /
+  marsh accents and the sage-lineage status colors (success / warning / info)
+  deliberately do NOT chase the brand, so semantic meaning (a green "success",
+  a warm "urgent") never drifts when the primary changes. Nightfall lifts the
+  brand primary for free.
+
 ## [0.7.2] — 2026-06-15
 ### Added
 - **`guidelines/motion-components.card.html`** — a new Motion group card that
@@ -200,6 +225,7 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.8.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.0
 [0.7.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.2
 [0.7.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.1
 [0.7.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.0

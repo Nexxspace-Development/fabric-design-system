@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fabric — Brand Strategy Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+ * Fabric brand-versatility demo
+ * The whole trick lives in --brand-h (hue) + --brand-c (chroma mult).
+ * Primary scale is generated from those. Accents either stay fixed
+ * (primary-only) or rotate by a fixed offset from brand hue (harmony).
+ * ============================================================ */
+
+:root {
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans:  'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:  'IBM Plex Mono', ui-monospace, monospace;
+
+  --brand-h: 145;   /* sage default */
+  --brand-c: 1;     /* chroma multiplier; 1 = Fabric-muted */
+
+  /* Stone neutral backbone (fixed, brand-independent) */
+  --stone-50:  oklch(0.978 0.006 83);
+  --stone-100: oklch(0.958 0.008 82);
+  --stone-150: oklch(0.938 0.009 81);
+  --stone-200: oklch(0.910 0.010 80);
+  --stone-300: oklch(0.855 0.012 78);
+  --stone-400: oklch(0.730 0.014 72);
+  --stone-500: oklch(0.605 0.015 66);
+  --stone-600: oklch(0.492 0.016 62);
+  --stone-700: oklch(0.398 0.016 58);
+  --stone-800: oklch(0.312 0.015 56);
+  --stone-900: oklch(0.242 0.013 54);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  background: var(--stone-200);
+  color: var(--stone-900);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+/* ----- Page chrome ----- */
+.page-head {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 40px 32px 8px;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--stone-600);
+  margin: 0 0 10px;
+}
+.page-head h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 2.25rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  color: var(--stone-900);
+}
+.page-head p {
+  margin: 0;
+  max-width: 64ch;
+  color: var(--stone-700);
+  font-size: 1.0625rem;
+}
+
+/* ----- Control bar ----- */
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in oklch, var(--stone-100) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--stone-300);
+  margin-top: 22px;
+}
+.controls-inner {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.ctrl-group { display: flex; align-items: center; gap: 12px; }
+.ctrl-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone-600);
+  white-space: nowrap;
+}
+.hue-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 280px;
+  height: 12px;
+  border-radius: 999px;
+  outline: none;
+  background: linear-gradient(to right,
+    oklch(0.62 0.12 0), oklch(0.62 0.12 60), oklch(0.62 0.12 120),
+    oklch(0.62 0.12 180), oklch(0.62 0.12 240), oklch(0.62 0.12 300),
+    oklch(0.62 0.12 360));
+  border: 1px solid var(--stone-300);
+}
+.hue-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: oklch(0.62 calc(0.12 * var(--brand-c)) var(--brand-h));
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+.hue-slider::-moz-range-thumb {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: oklch(0.62 calc(0.12 * var(--brand-c)) var(--brand-h));
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+.chroma-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--stone-300);
+  outline: none;
+}
+.chroma-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--stone-700); cursor: pointer; border: 2px solid #fff;
+}
+.chroma-slider::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--stone-700); cursor: pointer; border: 2px solid #fff;
+}
+.hue-readout {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--stone-800);
+  min-width: 52px;
+}
+.presets { display: flex; gap: 6px; flex-wrap: wrap; }
+.preset {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--stone-300);
+  background: var(--stone-50);
+  color: var(--stone-700);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+  transition: border-color .15s, background .15s;
+}
+.preset:hover { border-color: var(--stone-400); }
+.preset.active { border-color: var(--stone-500); background: #fff; }
+.preset .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.12);
+}
+.toggle {
+  font-family: var(--font-sans);
+  font-size: 13px; font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--stone-400);
+  background: var(--stone-900);
+  color: var(--stone-50);
+  cursor: pointer;
+}
+
+/* ----- Comparison grid ----- */
+.grid {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 30px 32px 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+@media (max-width: 1080px) { .grid { grid-template-columns: 1fr; } }
+
+.col-head { margin: 0 0 14px; }
+.col-head h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+.col-head p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--stone-600);
+}
+.col-head .pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  margin-bottom: 9px;
+}
+
+/* ============================================================
+ * THEME SCOPE — each panel sets its own brand-derived tokens.
+ * Both panels share --brand-h/--brand-c from :root (set by JS),
+ * but resolve accents differently.
+ * ============================================================ */
+.panel {
+  /* Primary scale — generated from brand hue + chroma. Identical in both panels. */
+  --primary-50:  oklch(0.962 calc(0.013 * var(--brand-c)) var(--brand-h));
+  --primary-100: oklch(0.930 calc(0.022 * var(--brand-c)) var(--brand-h));
+  --primary-200: oklch(0.872 calc(0.032 * var(--brand-c)) var(--brand-h));
+  --primary-300: oklch(0.792 calc(0.040 * var(--brand-c)) var(--brand-h));
+  --primary-400: oklch(0.700 calc(0.045 * var(--brand-c)) var(--brand-h));
+  --primary-500: oklch(0.612 calc(0.047 * var(--brand-c)) var(--brand-h));
+  --primary-600: oklch(0.522 calc(0.044 * var(--brand-c)) var(--brand-h));
+  --primary-700: oklch(0.438 calc(0.039 * var(--brand-c)) var(--brand-h));
+  --primary-800: oklch(0.360 calc(0.033 * var(--brand-c)) var(--brand-h));
+  --primary-900: oklch(0.292 calc(0.025 * var(--brand-c)) var(--brand-h));
+
+  --primary:      var(--primary-600);
+  --primary-hover:var(--primary-700);
+  --primary-soft: var(--primary-100);
+  --primary-soft-tx: var(--primary-800);
+  --primary-ring: var(--primary-400);
+}
+
+/* --- PRIMARY-ONLY: accents are fixed at Fabric's original earthen hues --- */
+.panel.primary-only {
+  --warm-h: 44;    /* terracotta — fixed */
+  --gold-h: 80;    /* ochre — fixed */
+  --cool-h: 244;   /* marsh — fixed */
+}
+/* --- HARMONY: accents rotate, keeping their offset from the brand hue --- *
+ * Offsets are each family's original hue minus sage's 145:
+ *   terracotta 44-145 = -101 | ochre 80-145 = -65 | marsh 244-145 = +99    */
+.panel.harmony {
+  --warm-h: calc(var(--brand-h) - 101);
+  --gold-h: calc(var(--brand-h) - 65);
+  --cool-h: calc(var(--brand-h) + 99);
+}
+
+.panel {
+  /* Accent fills derived from the per-strategy hues above */
+  --accent-warm:      oklch(0.628 calc(0.090 * var(--brand-c)) var(--warm-h));
+  --accent-warm-soft: oklch(0.920 calc(0.030 * var(--brand-c)) var(--warm-h));
+  --accent-warm-tx:   oklch(0.398 calc(0.064 * var(--brand-c)) var(--warm-h));
+  --accent-gold:      oklch(0.736 calc(0.082 * var(--brand-c)) var(--gold-h));
+  --accent-gold-soft: oklch(0.938 calc(0.034 * var(--brand-c)) var(--gold-h));
+  --accent-gold-tx:   oklch(0.430 calc(0.052 * var(--brand-c)) var(--gold-h));
+  --accent-cool:      oklch(0.610 calc(0.042 * var(--brand-c)) var(--cool-h));
+  --accent-cool-soft: oklch(0.922 calc(0.018 * var(--brand-c)) var(--cool-h));
+  --accent-cool-tx:   oklch(0.358 calc(0.030 * var(--brand-c)) var(--cool-h));
+
+  /* Surfaces/ink (neutral, shared) */
+  --surface-canvas: var(--stone-100);
+  --surface-card:   var(--stone-50);
+  --surface-raised: #fffdf8;
+  --surface-sunken: var(--stone-150);
+  --text-strong: var(--stone-900);
+  --text-body:   var(--stone-800);
+  --text-muted:  var(--stone-600);
+  --border-subtle:  var(--stone-200);
+  --border-default: var(--stone-300);
+}
+
+/* --- Dark (Nightfall-style) overrides, applied when body.dark --- */
+body.dark .panel {
+  --surface-canvas: oklch(0.232 0.012 75);
+  --surface-card:   oklch(0.282 0.013 74);
+  --surface-raised: oklch(0.318 0.013 74);
+  --surface-sunken: oklch(0.205 0.011 74);
+  --text-strong: oklch(0.948 0.010 78);
+  --text-body:   oklch(0.890 0.011 78);
+  --text-muted:  oklch(0.700 0.012 76);
+  --border-subtle:  oklch(0.350 0.012 74);
+  --border-default: oklch(0.410 0.013 73);
+  /* lift primary + accents for dark grounds */
+  --primary:      var(--primary-400);
+  --primary-hover:var(--primary-300);
+  --primary-soft: oklch(0.360 calc(0.033 * var(--brand-c)) var(--brand-h));
+  --primary-soft-tx: oklch(0.872 calc(0.032 * var(--brand-c)) var(--brand-h));
+  --accent-warm:      oklch(0.720 calc(0.078 * var(--brand-c)) var(--warm-h));
+  --accent-warm-soft: oklch(0.398 calc(0.060 * var(--brand-c)) var(--warm-h));
+  --accent-warm-tx:   oklch(0.880 calc(0.040 * var(--brand-c)) var(--warm-h));
+  --accent-gold:      oklch(0.800 calc(0.080 * var(--brand-c)) var(--gold-h));
+  --accent-gold-soft: oklch(0.430 calc(0.050 * var(--brand-c)) var(--gold-h));
+  --accent-gold-tx:   oklch(0.900 calc(0.045 * var(--brand-c)) var(--gold-h));
+  --accent-cool:      oklch(0.700 calc(0.040 * var(--brand-c)) var(--cool-h));
+  --accent-cool-soft: oklch(0.358 calc(0.030 * var(--brand-c)) var(--cool-h));
+  --accent-cool-tx:   oklch(0.900 calc(0.030 * var(--brand-c)) var(--cool-h));
+}
+
+/* ============================================================
+ * The UI specimen — same markup in both panels.
+ * ============================================================ */
+.app {
+  background: var(--surface-canvas);
+  border: 1px solid var(--border-default);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(60,50,30,0.05), 0 12px 30px -18px rgba(60,50,30,0.22);
+}
+.app-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.brandmark {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--primary);
+  display: grid; place-items: center;
+  color: #fff; font-family: var(--font-serif); font-weight: 600; font-size: 17px;
+  flex-shrink: 0;
+}
+.app-bar .name {
+  font-weight: 600; font-size: 15px; color: var(--text-strong);
+}
+.app-bar .spacer { flex: 1; }
+.app-bar .nav {
+  font-size: 13px; color: var(--text-muted); display: flex; gap: 18px;
+}
+.app-bar .nav a { color: inherit; text-decoration: none; }
+.app-bar .nav a.cur { color: var(--primary); font-weight: 600; }
+.avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--surface-sunken);
+  border: 2px solid var(--primary-ring);
+  flex-shrink: 0;
+}
+
+.app-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted); margin: 0;
+}
+
+/* metric row */
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.metric {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.metric .v {
+  font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500;
+  color: var(--text-strong); line-height: 1.1;
+}
+.metric .k { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.metric .delta {
+  font-family: var(--font-mono); font-size: 11px; margin-top: 6px;
+  display: inline-block;
+}
+
+/* tags / badges row */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  font-size: 12px; font-weight: 600;
+  padding: 5px 11px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.tag .d { width: 7px; height: 7px; border-radius: 50%; }
+.tag.primary { background: var(--primary-soft); color: var(--primary-soft-tx); }
+.tag.warm { background: var(--accent-warm-soft); color: var(--accent-warm-tx); }
+.tag.gold { background: var(--accent-gold-soft); color: var(--accent-gold-tx); }
+.tag.cool { background: var(--accent-cool-soft); color: var(--accent-cool-tx); }
+
+/* category bar chart using all accents */
+.chart {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 16px;
+}
+.bars { display: flex; align-items: flex-end; gap: 14px; height: 110px; margin-top: 12px; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
+.bar { width: 100%; border-radius: 7px 7px 3px 3px; }
+.bar-l { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.04em; }
+.bar.b1 { background: var(--primary); }
+.bar.b2 { background: var(--accent-warm); }
+.bar.b3 { background: var(--accent-gold); }
+.bar.b4 { background: var(--accent-cool); }
+.bar.b5 { background: var(--primary-400); }
+
+/* progress + buttons */
+.progress-row { display: flex; flex-direction: column; gap: 6px; }
+.progress {
+  height: 9px; border-radius: 999px; background: var(--surface-sunken); overflow: hidden;
+}
+.progress > i { display: block; height: 100%; width: 68%; background: var(--primary); border-radius: 999px; }
+.progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn {
+  font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  padding: 9px 18px; border-radius: 10px; cursor: pointer; border: 1px solid transparent;
+}
+.btn.solid { background: var(--primary); color: #fff; }
+.btn.solid:hover { background: var(--primary-hover); }
+.btn.soft { background: var(--primary-soft); color: var(--primary-soft-tx); }
+.btn.ghost { background: transparent; color: var(--primary); border-color: var(--border-default); }
+.btn.warm { background: var(--accent-warm); color: #fff; }
+.link { color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; }
+
+/* notification toast strip */
+.toast {
+  display: flex; gap: 11px; align-items: flex-start;
+  background: var(--accent-cool-soft);
+  border: 1px solid color-mix(in oklch, var(--accent-cool) 30%, transparent);
+  border-radius: 12px; padding: 12px 14px;
+}
+.toast .ic {
+  width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+  background: var(--accent-cool); display: grid; place-items: center;
+  color: #fff; font-size: 13px; font-weight: 700;
+}
+.toast .tx { font-size: 13px; color: var(--text-body); }
+.toast .tx b { color: var(--text-strong); }
+
+.foot-note {
+  max-width: 1340px; margin: 0 auto; padding: 0 32px 60px;
+  color: var(--stone-600); font-size: 0.9375rem;
+}
+.foot-note code {
+  font-family: var(--font-mono); font-size: 0.85em;
+  background: var(--stone-100); border: 1px solid var(--stone-300);
+  padding: 1px 6px; border-radius: 5px; color: var(--stone-800);
+}
+body.dark { background: oklch(0.18 0.01 75); }
+body.dark .page-head h1, body.dark .col-head h2 { color: oklch(0.95 0.01 78); }
+body.dark .page-head p, body.dark .col-head p, body.dark .foot-note { color: oklch(0.74 0.012 76); }
+body.dark .controls { background: color-mix(in oklch, oklch(0.24 0.012 75) 88%, transparent); border-color: oklch(0.36 0.012 74); }
+body.dark .eyebrow, body.dark .ctrl-label { color: oklch(0.7 0.012 76); }
+body.dark .preset { background: oklch(0.3 0.013 74); border-color: oklch(0.4 0.012 74); color: oklch(0.85 0.011 78); }
+body.dark .foot-note code { background: oklch(0.3 0.013 74); border-color: oklch(0.42 0.012 74); color: oklch(0.88 0.011 78); }
+</style>
+</head>
+<body data-screen-label="Brand strategy comparison">
+
+<div class="page-head">
+  <p class="eyebrow">Fabric · Brand Versatility</p>
+  <h1>Primary-only vs. Accents-in-harmony</h1>
+  <p>The exact same Fabric interface, rebranded by a single hue. On the left the accents hold Fabric's original earthen hues; on the right they rotate to stay in harmony with the brand. Drag the hue, try a preset, and watch how differently the two strategies behave — especially away from sage.</p>
+</div>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Brand hue</span>
+      <input type="range" min="0" max="360" value="145" class="hue-slider" id="hue">
+      <span class="hue-readout" id="hueRead">145°</span>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Presets</span>
+      <div class="presets" id="presets"></div>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Chroma</span>
+      <input type="range" min="0.6" max="1.6" step="0.05" value="1" class="chroma-slider" id="chroma">
+    </div>
+    <div class="ctrl-group">
+      <button class="toggle" id="darkToggle">◑ Dark</button>
+    </div>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="foot-note" id="footNote"></div>
+
+<template id="specimen">
+  <div class="app">
+    <div class="app-bar">
+      <div class="brandmark">N</div>
+      <span class="name">Nimbus</span>
+      <div class="spacer"></div>
+      <nav class="nav">
+        <a href="#" class="cur">Overview</a>
+        <a href="#">Projects</a>
+        <a href="#">Reports</a>
+      </nav>
+      <div class="avatar"></div>
+    </div>
+    <div class="app-body">
+      <div class="metrics">
+        <div class="metric">
+          <div class="v">$48.2k</div>
+          <div class="k">Revenue</div>
+          <span class="delta" style="color: var(--accent-warm-tx); background: var(--accent-warm-soft); padding:2px 7px; border-radius:6px;">▲ 12.4%</span>
+        </div>
+        <div class="metric">
+          <div class="v">1,284</div>
+          <div class="k">Active users</div>
+          <span class="delta" style="color: var(--primary-soft-tx); background: var(--primary-soft); padding:2px 7px; border-radius:6px;">▲ 6.1%</span>
+        </div>
+        <div class="metric">
+          <div class="v">92.7%</div>
+          <div class="k">Uptime</div>
+          <span class="delta" style="color: var(--accent-cool-tx); background: var(--accent-cool-soft); padding:2px 7px; border-radius:6px;">▲ 0.3%</span>
+        </div>
+      </div>
+
+      <p class="section-label">Labels &amp; status</p>
+      <div class="tags">
+        <span class="tag primary"><span class="d" style="background: var(--primary)"></span>In review</span>
+        <span class="tag warm"><span class="d" style="background: var(--accent-warm)"></span>Urgent</span>
+        <span class="tag gold"><span class="d" style="background: var(--accent-gold)"></span>Pending</span>
+        <span class="tag cool"><span class="d" style="background: var(--accent-cool)"></span>Scheduled</span>
+      </div>
+
+      <div class="chart">
+        <p class="section-label">Traffic by channel</p>
+        <div class="bars">
+          <div class="bar-wrap"><div class="bar b1" style="height:78%"></div><span class="bar-l">Direct</span></div>
+          <div class="bar-wrap"><div class="bar b2" style="height:54%"></div><span class="bar-l">Social</span></div>
+          <div class="bar-wrap"><div class="bar b3" style="height:88%"></div><span class="bar-l">Email</span></div>
+          <div class="bar-wrap"><div class="bar b4" style="height:40%"></div><span class="bar-l">Search</span></div>
+          <div class="bar-wrap"><div class="bar b5" style="height:62%"></div><span class="bar-l">Referral</span></div>
+        </div>
+      </div>
+
+      <div class="progress-row">
+        <div class="progress-meta"><span>Onboarding</span><span>68%</span></div>
+        <div class="progress"><i></i></div>
+      </div>
+
+      <div class="toast">
+        <div class="ic">i</div>
+        <div class="tx"><b>Sync complete.</b> 14 new records imported from the warehouse a moment ago.</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn solid">Publish</button>
+        <button class="btn soft">Save draft</button>
+        <button class="btn ghost">Preview</button>
+        <a href="#" class="link">View changelog →</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+const PRESETS = [
+  { name: 'Sage',   h: 145 },
+  { name: 'Indigo', h: 274 },
+  { name: 'Plum',   h: 330 },
+  { name: 'Teal',   h: 195 },
+  { name: 'Ocean',  h: 245 },
+  { name: 'Crimson',h: 18  },
+];
+
+const hue = document.getElementById('hue');
+const hueRead = document.getElementById('hueRead');
+const chroma = document.getElementById('chroma');
+const grid = document.getElementById('grid');
+const specimen = document.getElementById('specimen');
+
+// Build the two panels from the same specimen template
+const COLS = [
+  { cls: 'primary-only', tag: 'Strategy A', pillBg: 'var(--stone-200)', pillTx: 'var(--stone-700)',
+    title: 'Primary only', desc: 'Accents stay at Fabric’s earthen hues. The brand owns buttons, links and key fills — the supporting palette never moves.' },
+  { cls: 'harmony', tag: 'Strategy B', pillBg: 'var(--primary-soft)', pillTx: 'var(--primary-soft-tx)',
+    title: 'Accents rotate in harmony', desc: 'Accents keep their angular offset from the brand hue, so the whole palette turns together as one coordinated wheel.' },
+];
+
+COLS.forEach(c => {
+  const wrap = document.createElement('div');
+  const head = document.createElement('div');
+  head.className = 'col-head';
+  head.innerHTML = `<span class="pill" style="background:${c.pillBg};color:${c.pillTx}">${c.tag}</span>
+    <h2>${c.title}</h2><p>${c.desc}</p>`;
+  const panel = document.createElement('div');
+  panel.className = 'panel ' + c.cls;
+  panel.appendChild(specimen.content.cloneNode(true));
+  wrap.appendChild(head);
+  wrap.appendChild(panel);
+  grid.appendChild(wrap);
+});
+
+// Presets
+const presetWrap = document.getElementById('presets');
+PRESETS.forEach(p => {
+  const b = document.createElement('button');
+  b.className = 'preset';
+  b.dataset.h = p.h;
+  b.innerHTML = `<span class="dot" style="background: oklch(0.6 0.12 ${p.h})"></span>${p.name}`;
+  b.addEventListener('click', () => { setHue(p.h); });
+  presetWrap.appendChild(b);
+});
+
+function syncPresetActive(h) {
+  [...presetWrap.children].forEach(b => {
+    b.classList.toggle('active', Math.abs(+b.dataset.h - h) < 1);
+  });
+}
+
+function setHue(h) {
+  hue.value = h;
+  document.documentElement.style.setProperty('--brand-h', h);
+  hueRead.textContent = Math.round(h) + '°';
+  syncPresetActive(+h);
+}
+
+hue.addEventListener('input', () => setHue(+hue.value));
+chroma.addEventListener('input', () => {
+  document.documentElement.style.setProperty('--brand-c', chroma.value);
+});
+
+document.getElementById('darkToggle').addEventListener('click', (e) => {
+  document.body.classList.toggle('dark');
+  e.target.textContent = document.body.classList.contains('dark') ? '◐ Light' : '◑ Dark';
+});
+
+document.getElementById('footNote').innerHTML =
+  'Mechanism: both panels read one <code>--brand-h</code>. The primary scale is generated from it (fixed Fabric lightness ramp, low chroma). ' +
+  'In <b>harmony</b>, each accent hue is <code>calc(--brand-h + offset)</code> where the offsets are the families’ original distances from sage (terracotta −101°, ochre −65°, marsh +99°) — so at 145° both panels are identical to today’s Fabric.';
+
+// init
+setHue(145);
+</script>
+</body>
+</html>
