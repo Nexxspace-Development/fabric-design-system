@@ -11,7 +11,7 @@
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--surface-canvas);
+    background: var(--season-canvas);
     color: var(--text-default);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -22,7 +22,7 @@
     position: sticky; top: 0; z-index: 20;
     display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
     padding: 16px 32px;
-    background: color-mix(in srgb, var(--surface-canvas) 88%, transparent);
+    background: color-mix(in srgb, var(--season-canvas) 88%, transparent);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-subtle);
   }
@@ -33,7 +33,9 @@
 
   .cat-controls { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
   .ctl { display: flex; align-items: center; gap: 8px; }
+  .ctl > div > label { font-family: var(--font-data); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
   .ctl > label { font-family: var(--font-data); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+  .ctl-hint { font-family: var(--font-data); font-size: 9px; letter-spacing: 0.04em; color: var(--text-faint); opacity: 0.7; margin-top: 1px; }
   .seg { display: inline-flex; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 3px; gap: 2px; }
   .seg button {
     appearance: none; border: 0; background: transparent; cursor: pointer;
@@ -48,7 +50,7 @@
 
   /* Intro + how-to */
   .intro { padding: 44px 0 8px; }
-  .intro .eyebrow { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--primary); }
+  .intro .eyebrow { font-family: var(--font-data); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--season-accent); }
   .intro h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 52px); font-weight: 500; line-height: 1.04; letter-spacing: -0.025em; color: var(--text-strong); margin: 12px 0 0; }
   .intro p.lead { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 56ch; margin: 18px 0 0; }
 
@@ -104,7 +106,7 @@
   }
   .tile .open:hover { background: var(--primary-soft, var(--surface-sunken)); border-color: var(--primary); }
 
-  .tpl-badge { display: inline-block; font-family: var(--font-data); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-on-sage, #fff); background: var(--primary); border-radius: var(--radius-pill); padding: 3px 9px; margin-bottom: 8px; }
+  .tpl-badge { display: inline-block; font-family: var(--font-data); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-on-sage, #fff); background: var(--season-accent); border-radius: var(--radius-pill); padding: 3px 9px; margin-bottom: 8px; }
 
   /* Error / file:// banner */
   .banner { margin: 32px 0; padding: 22px 24px; border: 1px solid var(--danger, #a8632f); border-radius: var(--radius-lg, 20px); background: color-mix(in srgb, var(--danger, #a8632f) 8%, var(--surface-card)); }
@@ -138,7 +140,10 @@
         </div>
       </div>
       <div class="ctl">
-        <label>Season</label>
+        <div>
+          <label>Season</label>
+          <div class="ctl-hint">tints page &amp; season-aware components</div>
+        </div>
         <div class="seg" id="season-seg">
           <button data-season-val="none" aria-pressed="true">None</button>
           <button data-season-val="spring" aria-pressed="false">Spring</button>
@@ -154,7 +159,7 @@
     <section class="intro">
       <div class="eyebrow">// made from nature</div>
       <h1>The whole system, on one page.</h1>
-      <p class="lead">Every foundation specimen, component, UI kit and template in Fabric — rendered live, grouped the way the design tooling shows them. Flip the theme and season above and watch every preview turn at once.</p>
+      <p class="lead">Every foundation specimen, component, UI kit and template in Fabric — rendered live, grouped the way the design tooling shows them. Use <strong>Theme</strong> to flip light/dark across every preview. <strong>Season</strong> tints this page's background and any component that opts into <code style="font-family:var(--font-mono);font-size:0.85em">--season-canvas</code> / <code style="font-family:var(--font-mono);font-size:0.85em">--season-accent</code>.</p>
     </section>
 
     <details class="howto" open>
