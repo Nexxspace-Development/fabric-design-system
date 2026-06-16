@@ -4,6 +4,24 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.8.2] — 2026-06-15
+### Added
+- **"Daybreak" — official name for the light theme.** The API attribute value
+  `data-theme="light"` is unchanged (CSS/consumer contract intact). Daybreak is
+  the display name used everywhere a human reads it: UI labels, docs, comments,
+  SKILL.md, badges. Pairs intentionally with Nightfall — both atmospheric
+  conditions, neither a clock time.
+### Changed
+- `index.html` catalog: "Light" button label → "Daybreak".
+- `ui_kits/app/App.jsx`: theme-toggle tooltip "Daylight" → "Daybreak" (also
+  corrects a pre-existing typo).
+- `adapters/shadcn/demo.html`: toggle label updated.
+- `tokens/dark.css`, `tokens/colors.css`, `tokens/finance.css`,
+  `tokens/seasons.css`: inline comments updated to "Daybreak".
+- `README.md`: badge, catalog description, Seasons paragraph, dark-theme
+  section, `dark.css` / `seasons.css` bullets all updated.
+- `SKILL.md`: dark theme orientation line updated.
+
 ## [0.8.1] — 2026-06-15
 ### Changed
 - **`adapters/shadcn/fabric-shadcn.css`** — `.dark` block re-points `--primary`
@@ -243,6 +261,7 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.8.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.2
 [0.8.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.1
 [0.8.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.0
 [0.7.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.2

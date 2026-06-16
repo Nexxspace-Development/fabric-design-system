@@ -84,7 +84,7 @@
    * Semantic aliases — reference these in components, not the raw scales.
    * ====================================================================== */
 
-  /* Surfaces (light, warm paper) */
+  /* Surfaces (Daybreak — warm paper) */
   --surface-canvas:    var(--stone-100);   /* app/page background */
   --surface-card:      var(--stone-50);    /* raised cards, panels */
   --surface-raised:    #fffdf8;            /* highest paper, popovers */

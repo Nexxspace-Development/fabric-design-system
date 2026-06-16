@@ -11,7 +11,7 @@
  * Three scopes, by design:
  *   1. @media (prefers-color-scheme: dark) :root   — follows the OS.
  *   2. :root[data-theme="dark"]                    — force dark (toggle).
- *   3. :root[data-theme="light"]                   — force light, even when the
+ *   3. :root[data-theme="light"]                   — force Daybreak, even when the
  *                                                    OS prefers dark (toggle back).
  * The attribute selectors (specificity 0,2,0) always beat the media :root
  * (0,1,0), so an explicit choice wins over the OS in either direction.
@@ -148,7 +148,7 @@
   --shadow-color: 40 30% 2%;
 }
 
-/* ---- Force light, overriding an OS dark preference (toggle back to day) ---- */
+/* ---- Force Daybreak, overriding an OS dark preference (toggle back to light) ---- */
 :root[data-theme="light"] {
   --surface-canvas:  var(--stone-100);
   --surface-card:    var(--stone-50);

@@ -78,7 +78,7 @@ function App() {
               { value: 'active', label: 'Active' },
               { value: 'completed', label: 'Done' },
             ]} />
-            <Tooltip label={theme === 'dark' ? 'Daylight' : 'Nightfall'}>
+            <Tooltip label={theme === 'dark' ? 'Daybreak' : 'Nightfall'}>
               <IconButton label="Toggle theme" variant="outline"
                 onClick={() => setTheme((t) => t === 'dark' ? 'light' : 'dark')}>
                 <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} />

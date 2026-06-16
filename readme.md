@@ -4,7 +4,7 @@
 
 ![status](https://img.shields.io/badge/status-living-5b6f54)
 ![components](https://img.shields.io/badge/components-15-5b6f54)
-![themes](https://img.shields.io/badge/themes-light%20%2B%20Nightfall-3d4a36)
+![themes](https://img.shields.io/badge/themes-Daybreak%20%2B%20Nightfall-3d4a36)
 ![seasons](https://img.shields.io/badge/seasons-4-a8632f)
 ![tokens](https://img.shields.io/badge/tokens-301-8a8170)
 
@@ -28,7 +28,7 @@ to prove the system out and show it in use.
 After cloning, you can review the whole system in one page — no special tooling.
 The repo root ships an **`index.html` visual catalog** that renders every foundation
 card, component, UI kit and template as a live, grouped preview, with Theme
-(Auto / Light / Nightfall) and Season toggles.
+(Auto / Daybreak / Nightfall) and Season toggles.
 
 Three ways to open it, easiest first:
 
@@ -158,7 +158,7 @@ How Fabric writes.
 
 **Texture.** Fabric is cloth, so its surfaces are *woven and grained, not flat* — but the texture is felt more than seen, so the interface still recedes. A small family of gradient-built, theme-aware utilities (no image assets) keyed to the flipping `--texture-ink` token: `.fabric-weave` (default linen cross-hatch), `.fabric-linen` (finer/denser), `.fabric-grain` (cold-press paper tooth), `.fabric-ribbed` (directional thread, for accent/CTA panels), `.fabric-felt` (dense matte wool), `.fabric-frost` (crystalline crosshatch), and `.fabric-stitch` (a dashed running-stitch thread, also a `Divider variant="stitch"`). Rules of use: **one texture per surface** (never stack), reserve them for large calm areas (canvases, heroes, empty states, dark bands, marketing/login panels) and keep dense working UI (task rows, forms, tables) clean. Because `--texture-ink` flips with theme, textures read on warm paper and on Nightfall's dark earth; for an *always-dark* surface, override `--texture-ink` locally to a light fleck so the grain still shows. **Intensity** is set to the "Linen" weight (`--texture-ink` alpha ≈ 0.09) — clearly tactile up close, still quiet under text; dial `--texture-ink` / `--texture-ink-strong` globally or per-surface to go softer ("Whisper", ≈0.05) or louder ("Canvas", ≈0.14). See `tokens/textures.css` and the **Texture** card in the Brand group.
 
-**Seasons.** A gentle seasonal layer, *orthogonal* to light/dark — set `data-season="spring|summer|autumn|winter"` on `<html>` for the whole product, or on any single element to season just one banner/section. A season does **not** repaint the UI; it rotates three things only: a **seasonal accent** (drawn from Fabric's existing families — spring→sage, summer→ochre, autumn→terracotta, winter→marsh) exposed as `--season-accent` / `--season-accent-soft` / `--season-on-soft`; a **signature texture** you apply to surfaces (spring→`.fabric-weave`, summer→`.fabric-ribbed`, autumn→`.fabric-felt`, winter→`.fabric-frost`); and a **canvas whisper** (`--season-canvas`) — the page background with a ~5–6% breath of the season's accent mixed in, warm in autumn, cool in winter. All are derived with `color-mix` against the current surface/ink, so a season composes with Nightfall (light *and* dark) with no per-theme duplication. Seasons are a whisper — keep the sage primary and neutral core constant so the product stays recognizably Fabric year-round. See `tokens/seasons.css` and the **Seasons** card in the Brand group.
+**Seasons.** A gentle seasonal layer, *orthogonal* to Daybreak/Nightfall — set `data-season="spring|summer|autumn|winter"` on `<html>` for the whole product, or on any single element to season just one banner/section. A season does **not** repaint the UI; it rotates three things only: a **seasonal accent** (drawn from Fabric's existing families — spring→sage, summer→ochre, autumn→terracotta, winter→marsh) exposed as `--season-accent` / `--season-accent-soft` / `--season-on-soft`; a **signature texture** you apply to surfaces (spring→`.fabric-weave`, summer→`.fabric-ribbed`, autumn→`.fabric-felt`, winter→`.fabric-frost`); and a **canvas whisper** (`--season-canvas`) — the page background with a ~5–6% breath of the season's accent mixed in, warm in autumn, cool in winter. All are derived with `color-mix` against the current surface/ink, so a season composes with Daybreak and Nightfall with no per-theme duplication. Seasons are a whisper — keep the sage primary and neutral core constant so the product stays recognizably Fabric year-round. See `tokens/seasons.css` and the **Seasons** card in the Brand group.
 
 **Shadows.** Warm-tinted (bark hue at low alpha), soft and diffuse — `xs`→`xl` plus an `inset` well for sunken tracks. Never hard or neutral-gray. Cards combine a hairline border with a small shadow.
 
@@ -201,8 +201,8 @@ How Fabric writes.
 - `spacing.css` — spacing grid, radii, borders, shadows, motion, z-index, widths.
 - `base.css` — element defaults, `.fabric-eyebrow`, reduced-motion.
 - `textures.css` — surface texture utilities (`.fabric-weave/-linen/-grain/-ribbed/-felt/-frost/-stitch`).
-- `dark.css` — **Nightfall** dark-theme semantic overrides (`prefers-color-scheme` + `[data-theme]`).
-- `seasons.css` — seasonal accent + signature-texture + canvas-whisper layer (`[data-season]`), composes with light/dark.
+- `dark.css` — **Nightfall** (dark) + **Daybreak** (forced-light) semantic overrides (`prefers-color-scheme` + `[data-theme]`).
+- `seasons.css` — seasonal accent + signature-texture + canvas-whisper layer (`[data-season]`), composes with Daybreak/Nightfall.
 
 **Components** (`components/`, namespace `window.FabricDesignSystem_7bb975`)
 - `forms/` — **Button, IconButton, Input, Textarea, Select, Checkbox, Switch**

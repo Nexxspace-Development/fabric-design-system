@@ -1,5 +1,5 @@
 /* Fabric — Seasons
- * A gentle seasonal layer, orthogonal to light/dark (Nightfall). A season
+ * A gentle seasonal layer, orthogonal to Daybreak/Nightfall. A season
  * rotates the *accent* and the *signature texture* so the product can feel the
  * turn of the year — WITHOUT touching the calm neutral core (surfaces, ink,
  * the sage primary all stay put). Seasons are a whisper, not a reskin:
@@ -10,7 +10,7 @@
  * the element and inherits to its subtree).
  *
  * The soft fill and accent-text are derived with color-mix against the CURRENT
- * surface/ink, so a season composes with light AND dark for free — no per-theme
+ * surface/ink, so a season composes with Daybreak AND Nightfall for free — no per-theme
  * duplication. Spring is the default.
  *
  * Signature texture (apply the matching utility on the surface):
