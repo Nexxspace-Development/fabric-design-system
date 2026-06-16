@@ -32,9 +32,12 @@
   --popover:               var(--surface-raised);
   --popover-foreground:    var(--text-strong);
 
-  /* ---- primary (sage) ---- */
-  --primary:               var(--primary);          /* sage-600 in daylight */
-  --primary-foreground:    var(--text-on-sage);
+  /* ---- primary (brand) ---- */
+  /* Follows --brand-h automatically. Set :root { --brand-h: 274 } or
+   * <html data-brand="indigo"> and every --primary* re-resolves for free.
+   * Status colors (success/warning/info) stay sage-lineage on purpose. */
+  --primary:               var(--primary);          /* brand-600 in daylight */
+  --primary-foreground:    var(--text-on-color);
 
   /* ---- secondary / muted (warm stone wells) ---- */
   --secondary:             var(--surface-sunken);
@@ -59,7 +62,8 @@
   --radius:                var(--radius-md);         /* 10px */
 
   /* ---- chart palette (Fabric's accent families) ---- */
-  --chart-1: var(--sage-500);
+  /* chart-1 follows brand; 2-5 stay on Fabric's earthen accents (primary-only) */
+  --chart-1: var(--brand-500);
   --chart-2: var(--marsh-500);
   --chart-3: var(--ochre-500);
   --chart-4: var(--terracotta-500);
@@ -89,7 +93,7 @@
   --card-foreground:       oklch(0.955 0.008 85);
   --popover:               oklch(0.288 0.014 56);
   --popover-foreground:    oklch(0.955 0.008 85);
-  --primary:               var(--sage-400);
+  --primary:               var(--brand-400);   /* lifts with brand in dark */
   --primary-foreground:    oklch(0.205 0.014 56);
   --secondary:             oklch(0.172 0.010 58);
   --secondary-foreground:  oklch(0.955 0.008 85);
@@ -101,7 +105,7 @@
   --destructive-foreground: oklch(0.205 0.012 58);
   --border:                oklch(0.368 0.013 58);
   --input:                 oklch(0.368 0.013 58);
-  --ring:                  var(--sage-400);
+  --ring:                  var(--brand-400);   /* focus ring follows brand */
   --sidebar:                  oklch(0.246 0.013 57);
   --sidebar-foreground:       oklch(0.882 0.008 82);
   --sidebar-accent:           oklch(0.172 0.010 58);

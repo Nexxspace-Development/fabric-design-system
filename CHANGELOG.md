@@ -4,6 +4,24 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.8.1] — 2026-06-15
+### Changed
+- **`adapters/shadcn/fabric-shadcn.css`** — `.dark` block re-points `--primary`
+  and `--ring` from `--sage-400` to `--brand-400`/`--brand-400` so Nightfall
+  follows a brand rebrand; `--chart-1` updated to `--brand-500` (primary-only,
+  charts 2–5 stay earthen). Header comment updated to document the brand strategy.
+- **`adapters/shadcn/tailwind.fabric.js`** — adds the full `brand-50…900`
+  color scale as Tailwind utilities (`bg-brand-600`, `text-brand-200` etc.) and
+  Fabric's named motion personalities as `transitionDuration` /
+  `transitionTimingFunction` extensions (`duration-base`, `ease-settle`,
+  `ease-flutter`, `ease-press`, `ease-drift`). v4 `@theme` block updated to match.
+- **`adapters/shadcn/README.md`** — new **Brand theming** section documenting
+  `--brand-h`, `--brand-c`, `data-brand` presets and the primary-only strategy;
+  new **Motion** section documenting the material easing personalities and
+  duration tokens with Tailwind utility examples; new **Brand × Tailwind
+  utilities** section; HSL-bridge freeze warning added; map table updated to
+  reflect brand-following primary and ring.
+
 ## [0.8.0] — 2026-06-15
 ### Added
 - **Brand versatility — primary-hue parameterization** (`tokens/brand.css`).
@@ -225,6 +243,7 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.8.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.1
 [0.8.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.0
 [0.7.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.2
 [0.7.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.7.1
