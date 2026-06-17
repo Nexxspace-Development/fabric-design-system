@@ -4,6 +4,22 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.8.3] — 2026-06-16
+### Changed
+- **Fluid type scale** (`tokens/typography.css`) — all `--text-*` tokens
+  replaced with `clamp(min, intercept + slope·vw, max)` values. Body text
+  shifts ~2 px between 360–1440 vw; display sizes shift up to 36 px, so
+  `--text-5xl` is 40 px on mobile and 76 px on desktop with no overflow.
+  Min values (capped at 360 vw) and max values (capped at 1440 vw) are
+  unchanged from the old fixed scale — consumers pinning to the max already
+  see identical output on wide viewports.
+- **Variable webfonts** (`tokens/fonts.css`) — Hanken Grotesk and IBM Plex
+  Mono switched from discrete weight lists (`400;500;600;700` / `400;500`)
+  to full variable-axis ranges (`ital,wght 100..900` / `ital,wght 100..700`).
+  Newsreader's weight range widened to `100..900` (both axes). One URL loads
+  the entire weight continuum; intermediate values like `font-weight: 350`
+  or `font-weight: 450` now render correctly without browser faux-synthesis.
+
 ## [0.8.2] — 2026-06-15
 ### Added
 - **"Daybreak" — official name for the light theme.** The API attribute value
@@ -261,6 +277,7 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.8.3]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.3
 [0.8.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.2
 [0.8.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.1
 [0.8.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.0
