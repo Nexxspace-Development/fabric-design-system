@@ -1,24 +1,28 @@
-<!-- @dsCard group="Type" viewport="700x300" name="Type scale" subtitle="Minor-third scale, 11 → 76px" -->
+<!-- @dsCard group="Type" viewport="700x340" name="Type scale" subtitle="Fluid clamp · 10–40 px mobile → 11–76 px desktop" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <link rel="stylesheet" href="../styles.css" />
 <style>
-  body { margin: 0; background: var(--surface-card); padding: 24px 32px; }
-  .row { display: flex; align-items: baseline; gap: 18px; padding: 5px 0; border-bottom: 1px solid var(--border-subtle); }
+  body { margin: 0; background: var(--surface-card); padding: 20px 32px 14px; }
+  .row { display: flex; align-items: baseline; gap: 18px; padding: 4px 0; border-bottom: 1px solid var(--border-subtle); }
   .row:last-child { border-bottom: 0; }
-  .tok { font-family: var(--font-data); font-size: 11px; color: var(--text-faint); width: 116px; flex: none; }
-  .samp { font-family: var(--font-display); color: var(--text-strong); line-height: 1.1; white-space: nowrap; }
+  .tok { font-family: var(--font-data); font-size: 10.5px; color: var(--text-faint); width: 148px; flex: none; white-space: nowrap; }
+  .tok em { color: var(--text-muted); font-style: normal; }
+  .samp { font-family: var(--font-display); color: var(--text-strong); line-height: 1.1; white-space: nowrap; overflow: hidden; }
+  .note { font-family: var(--font-data); font-size: 10px; letter-spacing: 0.06em; color: var(--text-faint); margin-top: 10px; }
 </style>
 </head>
 <body>
-  <div class="row"><span class="tok">--text-4xl 60</span><span class="samp" style="font-size:46px">Fabric</span></div>
-  <div class="row"><span class="tok">--text-3xl 46</span><span class="samp" style="font-size:38px">Made from nature</span></div>
-  <div class="row"><span class="tok">--text-2xl 36</span><span class="samp" style="font-size:30px">A page title</span></div>
-  <div class="row"><span class="tok">--text-xl 28</span><span class="samp" style="font-size:25px">Section heading</span></div>
-  <div class="row"><span class="tok">--text-lg 22</span><span class="samp" style="font-size:21px">Small heading</span></div>
-  <div class="row"><span class="tok">--text-base 16</span><span class="samp" style="font-family:var(--font-body);font-size:16px">Body copy sits here</span></div>
-  <div class="row"><span class="tok">--text-sm 14</span><span class="samp" style="font-family:var(--font-body);font-size:14px;color:var(--text-muted)">Secondary UI text</span></div>
+  <div class="row"><span class="tok">--text-5xl <em>40→76px</em></span><span class="samp" style="font-size:var(--text-5xl)">Fabric</span></div>
+  <div class="row"><span class="tok">--text-4xl <em>36→60px</em></span><span class="samp" style="font-size:var(--text-4xl)">Made from nature</span></div>
+  <div class="row"><span class="tok">--text-3xl <em>30→46px</em></span><span class="samp" style="font-size:var(--text-3xl)">A quiet place</span></div>
+  <div class="row"><span class="tok">--text-2xl <em>26→36px</em></span><span class="samp" style="font-size:var(--text-2xl)">Section heading</span></div>
+  <div class="row"><span class="tok">--text-xl <em>22→28px</em></span><span class="samp" style="font-size:var(--text-xl)">Subheading</span></div>
+  <div class="row"><span class="tok">--text-lg <em>18→22px</em></span><span class="samp" style="font-family:var(--font-body);font-size:var(--text-lg)">Small heading</span></div>
+  <div class="row"><span class="tok">--text-base <em>14→16px</em></span><span class="samp" style="font-family:var(--font-body);font-size:var(--text-base)">Body copy sits here</span></div>
+  <div class="row"><span class="tok">--text-sm <em>12→14px</em></span><span class="samp" style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--text-muted)">Secondary UI text</span></div>
+  <p class="note">clamp(min, calc(intercept + slope·vw), max) · scales between 360 px and 1440 px viewport</p>
 </body>
 </html>

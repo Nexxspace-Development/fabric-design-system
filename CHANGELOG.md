@@ -4,6 +4,23 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.8.4] — 2026-06-16
+### Changed
+- **Type cards** (`guidelines/type-*.card.html`) — all four Type-group specimen
+  cards updated to reflect variable fonts and the fluid scale:
+  - *Type scale* — subtitle updated; token labels now show the fluid range
+    (`36→60px` etc.); font sizes use `var(--text-*)` tokens instead of hardcoded
+    px values; a formula note added at the bottom of the card.
+  - *Body — Hanken Grotesk* — Thin (100) and Light (300) weights added to the
+    weight strip (now real instances, not faux-synthesised); meta updated to
+    "variable · 100–900".
+  - *Display — Newsreader* — meta updated to "variable · 100–900 · roman &
+    italic"; subtitle updated.
+  - *Data — IBM Plex Mono* — weight strip added (Thin → Bold); meta updated to
+    "variable · 100–700"; card height bumped to 200 px.
+- **README.md** — Type paragraph rewritten to note variable fonts and the fluid
+  scale; `fonts.css` and `typography.css` token bullets updated to match.
+
 ## [0.8.3] — 2026-06-16
 ### Changed
 - **Fluid type scale** (`tokens/typography.css`) — all `--text-*` tokens
@@ -277,6 +294,7 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.8.4]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.4
 [0.8.3]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.3
 [0.8.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.2
 [0.8.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.1

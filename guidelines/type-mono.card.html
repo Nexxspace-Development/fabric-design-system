@@ -1,4 +1,4 @@
-<!-- @dsCard group="Type" viewport="700x180" name="Data — IBM Plex Mono" subtitle="Eyebrows, numerals, code & labels" -->
+<!-- @dsCard group="Type" viewport="700x200" name="Data — IBM Plex Mono" subtitle="Variable humanist mono · 100–700 · eyebrows, numerals & code" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,16 +6,25 @@
 <link rel="stylesheet" href="../styles.css" />
 <style>
   body { margin: 0; background: var(--surface-card); padding: 28px 32px; font-family: var(--font-data); }
-  .eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 16px; }
-  .nums { font-size: 30px; font-weight: 500; color: var(--text-strong); margin: 0 0 12px; letter-spacing: 0.01em; }
+  .eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 12px; }
+  .nums { font-size: 30px; font-weight: 500; color: var(--text-strong); margin: 0 0 10px; letter-spacing: 0.01em; }
   .code { font-size: 14px; color: var(--text-body); background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 12px; display: inline-block; }
-  .meta { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-top: 16px; }
+  .weights { display: flex; gap: 20px; align-items: baseline; margin-top: 12px; }
+  .weights span { font-size: 16px; color: var(--text-strong); }
+  .meta { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-top: 12px; }
 </style>
 </head>
 <body>
   <p class="eyebrow">// Section label</p>
   <p class="nums">0123456789 · 24h 36m</p>
   <code class="code">--surface-card: var(--stone-50);</code>
-  <p class="meta">IBM Plex Mono · 400 / 500</p>
+  <div class="weights">
+    <span style="font-weight:100">Thin</span>
+    <span style="font-weight:300">Light</span>
+    <span style="font-weight:400">Regular</span>
+    <span style="font-weight:500">Medium</span>
+    <span style="font-weight:700">Bold</span>
+  </div>
+  <p class="meta">IBM Plex Mono · variable · 100–700</p>
 </body>
 </html>
