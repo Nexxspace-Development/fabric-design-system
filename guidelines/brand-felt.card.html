@@ -1,0 +1,49 @@
+<!-- @dsCard group="Brand" viewport="700x640" name="Felt surface" subtitle="Pressed-wool felt · coloured, cozy backgrounds · Daybreak & Nightfall" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+body{margin:0;background:var(--surface-card);padding:24px 28px;display:flex;flex-direction:column;gap:14px}
+.hero{height:150px;border-radius:var(--radius-lg);padding:22px 26px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px}
+.hero h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:32px;letter-spacing:-0.02em;line-height:1.1}
+.hero p,.theme h3{margin:0;font-family:var(--font-data);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:.85}
+.row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sw{height:84px;border-radius:var(--radius-md);display:flex;align-items:flex-end;padding:10px}
+.sw span{font-family:var(--font-data);font-size:10.5px}
+.themes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.theme{border-radius:var(--radius-lg);padding:14px;display:flex;flex-direction:column;gap:10px}
+.theme h3{font-weight:400}
+.day{background:var(--stone-100);color:var(--stone-700);box-shadow:inset 0 0 0 1px var(--stone-200)}
+.night{background:oklch(0.205 0.012 54);color:var(--stone-300)}
+.theme .row4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.theme .sw{height:72px}
+</style>
+</head>
+<body>
+<div class="hero fabric-felt-surface"><p>// .fabric-felt-surface</p><h2>Warm, soft, pressed wool</h2></div>
+<div class="row">
+<div class="sw fabric-felt-surface fabric-felt-surface--sage"><span>--sage</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--terracotta"><span>--terracotta</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--ochre"><span>--ochre</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--marsh"><span>--marsh</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--stone fabric-felt-surface--dense"><span>--stone --dense</span></div>
+</div>
+<div class="themes">
+<div class="theme day"><h3>Daybreak</h3><div class="row4">
+<div class="sw fabric-felt-surface fabric-felt-surface--oat" data-felt-tone="light"><span>--oat</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--dawn" data-felt-tone="light"><span>--dawn</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--honey" data-felt-tone="light"><span>--honey</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--mist" data-felt-tone="light"><span>--mist</span></div>
+</div></div>
+<div class="theme night"><h3>Nightfall</h3><div class="row4">
+<div class="sw fabric-felt-surface fabric-felt-surface--loam"><span>--loam</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--moss"><span>--moss</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--peat"><span>--peat</span></div>
+<div class="sw fabric-felt-surface fabric-felt-surface--dusk"><span>--dusk</span></div>
+</div></div>
+</div>
+</body>
+</html>

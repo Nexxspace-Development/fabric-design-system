@@ -200,7 +200,7 @@ How Fabric writes.
 - `typography.css` — families, **fluid type scale** (`clamp()` from 360→1440 px viewport), weights, leading, tracking.
 - `spacing.css` — spacing grid, radii, borders, shadows, motion, z-index, widths.
 - `base.css` — element defaults, `.fabric-eyebrow`, reduced-motion.
-- `textures.css` — surface texture utilities (`.fabric-weave/-linen/-grain/-ribbed/-felt/-frost/-stitch`).
+- `textures.css` — surface texture utilities (`.fabric-weave/-linen/-grain/-ribbed/-felt/-frost/-stitch`), plus `.fabric-felt-surface` — a coloured, realistic pressed-wool felt background (procedural SVG; `--sage/-terracotta/-ochre/-marsh/-stone`, `--dense`, or override `background-color`).
 - `dark.css` — **Nightfall** (dark) + **Daybreak** (forced-light) semantic overrides (`prefers-color-scheme` + `[data-theme]`).
 - `seasons.css` — seasonal accent + signature-texture + canvas-whisper layer (`[data-season]`), composes with Daybreak/Nightfall.
 

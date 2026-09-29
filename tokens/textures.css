@@ -46,17 +46,79 @@
     repeating-linear-gradient(90deg, var(--texture-ink-strong) 0 1px, transparent 1px 6px);
 }
 
-/* Felt — dense, matte wool: a fine speckle crossed with short diagonal fibers.
-   The cozy, warm tooth of autumn/winter surfaces. */
+/* Felt — non-woven matted wool: pressed fibers, no threads. Seven speckle grids
+   at mutually prime periods, each offset to a different phase, so no lattice
+   ever resolves — the eye reads scattered fiber ends, not a weave. Dots stay
+   crisp (tight falloff) so the nap adds tooth without lifting the surface's
+   value. The cozy surface. Add --felt-dense for blanket-weight nap. */
 .fabric-felt {
   background-image:
-    radial-gradient(var(--texture-ink-strong) 0.5px, transparent 0.7px),
-    radial-gradient(var(--texture-ink) 0.5px, transparent 0.7px),
-    repeating-linear-gradient(45deg,  var(--texture-ink) 0 0.5px, transparent 0.5px 3px),
-    repeating-linear-gradient(-45deg, var(--texture-ink) 0 0.5px, transparent 0.5px 3px);
-  background-size: 3px 3px, 5px 5px, auto, auto;
-  background-position: 0 0, 1px 2px, 0 0, 0 0;
+    radial-gradient(circle at 20% 30%, var(--texture-ink-strong) 0.4px, transparent 0.9px),
+    radial-gradient(circle at 70% 15%, var(--texture-ink) 0.5px, transparent 1px),
+    radial-gradient(circle at 40% 80%, var(--texture-ink) 0.4px, transparent 0.9px),
+    radial-gradient(circle at 85% 60%, var(--texture-ink-strong) 0.35px, transparent 0.85px),
+    radial-gradient(circle at 10% 65%, var(--texture-ink) 0.45px, transparent 0.95px),
+    radial-gradient(circle at 55% 45%, var(--texture-ink-strong) 0.3px, transparent 0.8px),
+    radial-gradient(circle at 30% 5%,  var(--texture-ink) 0.4px, transparent 0.9px);
+  background-size: 7px 7px, 9px 9px, 11px 11px, 13px 13px, 17px 17px, 19px 19px, 23px 23px;
 }
+.fabric-felt.fabric-felt--dense {
+  background-size: 4px 4px, 5px 5px, 7px 7px, 9px 9px, 11px 11px, 13px 13px, 17px 17px;
+}
+
+/* Felt surface — realistic pressed-wool felt: fine, curly, matted fibers with no
+   visible threads, over a faint, even mottle. Grounds are dyes muted toward warm stone so the
+   felt stays calm under buttons, inputs and figures. Unlike the overlay
+   textures above, this is a coloured surface: it paints its own dyed-wool ground
+   (sage by default; colourway classes swap it) with light fibers on top, so it works the same
+   in Daybreak and Nightfall. Procedural SVG noise (feTurbulence), no image asset;
+   480px seamless tile. Use for large, static, cozy backgrounds (hero panels,
+   empty states, cards) with light text (--stone-50) on top. Avoid on elements
+   that animate or scroll inside a container. --dense = finer, thicker nap. */
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface) {
+  background-color: color-mix(in oklab, var(--sage-600) 62%, var(--stone-700));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cfilter id='f' filterUnits='userSpaceOnUse' x='-480' y='-480' width='1440' height='1440' color-interpolation-filters='sRGB'%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='fractalNoise' baseFrequency='0.01' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.22 0.14' result='m'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='fractalNoise' baseFrequency='0.02' numOctaves='2' seed='53' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 -0.03' result='h'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.05 0.065' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.075'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='31' dy='137' result='l0'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.07 0.055' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.095'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='128' dy='190' result='l1'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.06 0.08' seed='6' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.115'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='225' dy='243' result='l2'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.09 0.075' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.075'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='322' dy='296' result='l3'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.08 0.1' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.095'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='419' dy='349' result='l4'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.11 0.09' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.115'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='36' dy='402' result='l5'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.045 0.06' seed='10' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.075'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='133' dy='455' result='l6'/%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='turbulence' baseFrequency='0.1 0.12' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix x='0' y='0' width='480' height='480' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -45 0 0 0 1'/%3E%3CfeComponentTransfer x='0' y='0' width='480' height='480'%3E%3CfeFuncA type='table' tableValues='0 0 0 0.095'/%3E%3C/feComponentTransfer%3E%3CfeTile/%3E%3CfeOffset dx='230' dy='28' result='l7'/%3E%3CfeMerge result='fib'%3E%3CfeMergeNode in='l0'/%3E%3CfeMergeNode in='l1'/%3E%3CfeMergeNode in='l2'/%3E%3CfeMergeNode in='l3'/%3E%3CfeMergeNode in='l4'/%3E%3CfeMergeNode in='l5'/%3E%3CfeMergeNode in='l6'/%3E%3CfeMergeNode in='l7'/%3E%3C/feMerge%3E%3CfeTurbulence x='0' y='0' width='480' height='480' type='fractalNoise' baseFrequency='0.03' numOctaves='2' seed='93' stitchTiles='stitch'/%3E%3CfeTile/%3E%3CfeDisplacementMap in='fib' scale='12' xChannelSelector='R' yChannelSelector='G' result='fw'/%3E%3CfeMerge%3E%3CfeMergeNode in='m'/%3E%3CfeMergeNode in='h'/%3E%3CfeMergeNode in='fw'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23f)'/%3E%3C/svg%3E");
+  background-size: 480px 480px;
+  color: var(--stone-50);
+  border-color: transparent;
+  /* Re-point semantic text/border tokens so components nested on felt stay legible */
+  --text-strong: var(--stone-50);
+  --text-body: var(--stone-50);
+  --text-muted: color-mix(in oklab, var(--stone-50) 82%, transparent);
+  --text-faint: color-mix(in oklab, var(--stone-50) 68%, transparent);
+  --border-subtle: color-mix(in oklab, var(--stone-50) 18%, transparent);
+  --hover-wash: color-mix(in oklab, var(--stone-50) 10%, transparent);
+}
+.fabric-felt-surface :is(h1,h2,h3,h4,h5,h6,p) { color: inherit; }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--dense { background-size: 320px 320px; }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--sage { background-color: color-mix(in oklab, var(--sage-600) 62%, var(--stone-700)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--terracotta { background-color: color-mix(in oklab, var(--terracotta-600) 62%, var(--stone-700)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--ochre { background-color: color-mix(in oklab, var(--ochre-700) 62%, var(--stone-700)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--marsh { background-color: color-mix(in oklab, var(--marsh-600) 62%, var(--stone-700)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--stone { background-color: color-mix(in oklab, var(--stone-600) 70%, var(--stone-700)); }
+/* Theme colourways. Daybreak = pale, sunlit wools (dark text; add data-felt-tone="light" for nested components);
+   Nightfall = deep, low-lit wools (light text). Same fibers and mottle as above. */
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--oat { background-color: color-mix(in oklab, var(--stone-300) 70%, var(--ochre-200)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--dawn { background-color: color-mix(in oklab, var(--terracotta-300) 55%, var(--stone-300)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--honey { background-color: color-mix(in oklab, var(--ochre-300) 60%, var(--stone-300)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--mist { background-color: color-mix(in oklab, var(--sage-300) 55%, var(--stone-300)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface):is(.fabric-felt-surface--oat, .fabric-felt-surface--dawn, .fabric-felt-surface--honey, .fabric-felt-surface--mist) {
+  color: var(--stone-900);
+}
+/* Pale felts: add data-felt-tone="light" so nested components pick up dark ink. */
+[data-felt-tone="light"] {
+  --text-strong: var(--stone-900);
+  --text-body: var(--stone-800);
+  --text-muted: var(--stone-700);
+  --text-faint: var(--stone-600);
+  --border-subtle: color-mix(in oklab, var(--stone-900) 14%, transparent);
+  --hover-wash: color-mix(in oklab, var(--stone-900) 6%, transparent);
+}
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--loam { background-color: color-mix(in oklab, var(--stone-900) 80%, var(--ochre-900)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--moss { background-color: color-mix(in oklab, var(--sage-900) 75%, var(--stone-900)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--peat { background-color: color-mix(in oklab, var(--terracotta-900) 70%, var(--stone-900)); }
+:is(.fabric-felt-surface, .fab-card.fabric-felt-surface).fabric-felt-surface--dusk { background-color: color-mix(in oklab, var(--marsh-900) 70%, var(--stone-900)); }
+
 
 /* Frost — a fine crystalline crosshatch with a sparse glint. Winter surfaces. */
 .fabric-frost {

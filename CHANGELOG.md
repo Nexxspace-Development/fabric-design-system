@@ -4,6 +4,74 @@ All notable changes to the Fabric design system are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/); this project
 uses loose [semantic versioning](https://semver.org/) while pre-1.0.
 
+## [0.9.4] — 2026-09-28
+### Added
+- Felt theme colourways. Daybreak: `--oat`, `--dawn`, `--honey`, `--mist` (pale
+  wools, dark text re-pointed automatically). Nightfall: `--loam`, `--moss`,
+  `--peat`, `--dusk` (deep wools, light text).
+- `[data-felt-tone="light"]` scope re-points text/border tokens to dark ink for
+  components nested on pale felts.
+- Felt card shows both theme sets on their canvases.
+
+## [0.9.3] — 2026-09-28
+### Changed
+- `.fabric-felt-surface`: fiber and mottle contrast cut ~60% so the nap reads as
+  quiet tooth instead of marbling.
+- Felt grounds muted toward `--stone-700` (all colourways) for a softer, cozier
+  surface under buttons, inputs and figures.
+
+## [0.9.2] — 2026-09-28
+### Fixed
+- Felt colourways (`--sage`, `--terracotta`, `--ochre`, `--marsh`, `--stone`)
+  set `background-color` directly instead of a class-scoped `--felt-color`
+  custom property, clearing the unregistered-token warning.
+
+## [0.9.1] — 2026-09-27
+### Added
+- **Felt test page** (`ui_kits/app/felt-test.html` + `felt-test.js`) — the
+  workspace app with a harness bar: toggle `.fabric-felt-surface` on the focus
+  card, intention card, focus rail, sidebar, header or login card; switch wool
+  colour and `--dense`; live fps and a 60-frame forced-repaint cost probe.
+
+### Fixed
+- `.fabric-felt-surface` now wins over `Card`'s `background` shorthand and
+  re-points `--text-*`, `--border-subtle` and `--hover-wash` so nested
+  components stay legible on felt.
+- Colourways set `--felt-color` instead of `background-color`, and `--dense`
+  is scoped to match, so both still apply at the higher specificity.
+
+## [0.9.0] — 2026-09-27
+### Added
+- **`.fabric-felt-surface`** (`tokens/textures.css`) — realistic pressed-wool
+  felt background: fine, curly, matted fibers with no visible threads over a
+  soft light-and-shadow mottle. Built from procedural SVG noise (`feTurbulence`
+  + displacement), no image asset, 480 px seamless tile. Unlike the overlay
+  textures it paints its own ground via `--felt-color` (sage by default) and
+  sets light text. Colourways `--sage`, `--terracotta`, `--ochre`, `--marsh`,
+  `--stone`; `--dense` for a finer, thicker nap. Intended for large, static
+  backgrounds.
+- **Felt surface card** (`guidelines/brand-felt.card.html`).
+- README and SKILL.md texture notes updated.
+
+### Unchanged
+- `.fabric-felt` stays the barely-there autumn overlay used by seasons.
+
+## [0.8.5] — 2026-08-17
+### Changed
+- **`.fabric-felt`** (`tokens/textures.css`) — rebuilt to read as a genuine
+  non-woven textile. The previous version crossed a speckle with 45°/-45°
+  repeating linear gradients, which showed as visible thread; felt has none.
+  Now seven radial speckle grids at mutually prime periods (7/9/11/13/17/19/23 px),
+  each phased to a different position, so no lattice resolves — the eye reads
+  scattered pressed fiber ends rather than a weave. Dot falloff kept tight so
+  the nap adds tooth without lifting the surface value.
+
+### Added
+- **`.fabric-felt--dense`** — blanket-weight variant of felt (same layers at
+  tighter periods) for a thicker, spongier nap.
+- **Texture card** (`guidelines/brand-textures.card.html`) — added a
+  `.fabric-felt--dense` tile; card viewport grown to 700×400.
+
 ## [0.8.4] — 2026-06-16
 ### Changed
 - **Type cards** (`guidelines/type-*.card.html`) — all four Type-group specimen
@@ -294,6 +362,12 @@ uses loose [semantic versioning](https://semver.org/) while pre-1.0.
   Spacing, Brand) and the bespoke leaf brand mark.
 - `SKILL.md` Agent-Skill manifest.
 
+[0.9.4]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.9.4
+[0.9.3]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.9.3
+[0.9.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.9.2
+[0.9.1]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.9.1
+[0.9.0]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.9.0
+[0.8.5]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.5
 [0.8.4]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.4
 [0.8.3]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.3
 [0.8.2]: https://github.com/Nexxspace-Development/fabric-design-system/releases/tag/v0.8.2

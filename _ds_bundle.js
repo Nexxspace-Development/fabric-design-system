@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":3,"namespace":"FabricDesignSystem_7bb975","components":[{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Tag","sourcePath":"components/feedback/Tag.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/feedback/Tooltip.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"IconButton","sourcePath":"components/forms/IconButton.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Avatar","sourcePath":"components/layout/Avatar.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"Divider","sourcePath":"components/layout/Divider.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"}],"sourceHashes":{"adapters/shadcn/tailwind.fabric.js":"b78e1dae28c7","compare/compare.jsx":"d6299f1f4766","compare/design-canvas.jsx":"bd8746af6e58","components/feedback/Badge.jsx":"54d350c0a4ed","components/feedback/Tag.jsx":"f89f8aaaa844","components/feedback/Toast.jsx":"d223f07667ab","components/feedback/Tooltip.jsx":"2182ccee551f","components/forms/Button.jsx":"fed507c87f59","components/forms/Checkbox.jsx":"32495e0c9d5f","components/forms/IconButton.jsx":"4740530c149c","components/forms/Input.jsx":"9008436823dd","components/forms/Select.jsx":"e70d795c07a7","components/forms/Switch.jsx":"4ea303fbf982","components/forms/Textarea.jsx":"4a1eb2af57b5","components/layout/Avatar.jsx":"3c4c17a8cd1e","components/layout/Card.jsx":"20b0bb310028","components/layout/Divider.jsx":"056b799da2e6","components/navigation/Tabs.jsx":"286bd20d0ab9","ui_kits/app/App.jsx":"ac3cdd2c97f5","ui_kits/app/FocusRail.jsx":"03dbaa91b35f","ui_kits/app/Login.jsx":"4f38c0bdcf49","ui_kits/app/Sidebar.jsx":"d51366a5c564","ui_kits/app/TaskList.jsx":"653ae710d335","ui_kits/app/data.jsx":"d1ca11835f5f","ui_kits/app/icons.jsx":"a9244e9a2b03","ui_kits/site/Site.jsx":"058f11485291","ui_kits/site/icons.jsx":"a9244e9a2b03"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":4,"namespace":"FabricDesignSystem_7bb975","components":[{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Tag","sourcePath":"components/feedback/Tag.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/feedback/Tooltip.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"IconButton","sourcePath":"components/forms/IconButton.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Avatar","sourcePath":"components/layout/Avatar.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"Divider","sourcePath":"components/layout/Divider.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"}],"sourceHashes":{"adapters/shadcn/tailwind.fabric.js":"b78e1dae28c7","compare/compare.jsx":"d6299f1f4766","compare/design-canvas.jsx":"bd8746af6e58","components/feedback/Badge.jsx":"54d350c0a4ed","components/feedback/Tag.jsx":"f89f8aaaa844","components/feedback/Toast.jsx":"d223f07667ab","components/feedback/Tooltip.jsx":"2182ccee551f","components/forms/Button.jsx":"fed507c87f59","components/forms/Checkbox.jsx":"32495e0c9d5f","components/forms/IconButton.jsx":"4740530c149c","components/forms/Input.jsx":"9008436823dd","components/forms/Select.jsx":"e70d795c07a7","components/forms/Switch.jsx":"4ea303fbf982","components/forms/Textarea.jsx":"4a1eb2af57b5","components/layout/Avatar.jsx":"3c4c17a8cd1e","components/layout/Card.jsx":"20b0bb310028","components/layout/Divider.jsx":"056b799da2e6","components/navigation/Tabs.jsx":"286bd20d0ab9","ui_kits/app/App.jsx":"ac3cdd2c97f5","ui_kits/app/FocusRail.jsx":"03dbaa91b35f","ui_kits/app/Login.jsx":"4f38c0bdcf49","ui_kits/app/Sidebar.jsx":"d51366a5c564","ui_kits/app/TaskList.jsx":"653ae710d335","ui_kits/app/data.jsx":"d1ca11835f5f","ui_kits/app/felt-test.js":"3bd8ec8b7bee","ui_kits/app/icons.jsx":"a9244e9a2b03","ui_kits/site/Site.jsx":"058f11485291","ui_kits/site/icons.jsx":"a9244e9a2b03"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -21,8 +21,9 @@ try { (() => {
  * TAILWIND v3 — extend your existing tailwind.config.{js,ts}
  * Copy the `theme.extend` keys you need into your own config.
  * ------------------------------------------------------------------ */
+let __ds_default_adapters_shadcn_tailwind_fabric_67f6op;
 try {
-  void {
+  __ds_default_adapters_shadcn_tailwind_fabric_67f6op = {
     // ...your existing config (darkMode, content, the shadcn color mapping)...
     theme: {
       extend: {
@@ -159,6 +160,7 @@ try {
  * Then: <span class="font-mono tabular-nums text-fin-loss">−$48.17</span>
  * Or:   <div class="transition duration-base ease-settle">…</div>
  */
+Object.assign(__ds_scope, { __ds_default_adapters_shadcn_tailwind_fabric_67f6op });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "adapters/shadcn/tailwind.fabric.js", error: String((e && e.message) || e) }); }
 
 // compare/compare.jsx
@@ -3620,6 +3622,167 @@ const SEASONS = [{
 window.FabricApp.SEASONS = SEASONS;
 window.FabricApp.seasonById = id => SEASONS.find(s => s.id === id) || SEASONS[0];
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/app/data.jsx", error: String((e && e.message) || e) }); }
+
+// ui_kits/app/felt-test.js
+try { (() => {
+// Felt test harness: applies .fabric-felt-surface to chosen app surfaces and measures frame cost.
+(() => {
+  const KEY = 'fabric.feltTest';
+  const PLACES = [['focus', 'Focus card', '.fa-focus'], ['intention', 'Intention card', '.fa-intention'], ['rail', 'Focus rail', '.fa-rail'], ['sidebar', 'Sidebar', '.fa-side'], ['header', 'Header', '.fa-head'], ['login', 'Login card', '.fa-login__card']];
+  const COLORS = [['sage', '--sage-600'], ['terracotta', '--terracotta-600'], ['ochre', '--ochre-700'], ['marsh', '--marsh-600'], ['stone', '--stone-600']];
+  const COLOR_CLS = COLORS.map(([c]) => 'fabric-felt-surface--' + c);
+  let st = {
+    on: ['focus'],
+    color: 'sage',
+    dense: false
+  };
+  try {
+    st = {
+      ...st,
+      ...JSON.parse(localStorage.getItem(KEY) || '{}')
+    };
+  } catch (e) {}
+  const save = () => localStorage.setItem(KEY, JSON.stringify(st));
+  const apply = () => {
+    for (const [id,, sel] of PLACES) {
+      document.querySelectorAll(sel).forEach(el => {
+        const on = st.on.includes(id);
+        el.classList.toggle('fabric-felt-surface', on);
+        el.classList.toggle('fabric-felt-surface--dense', on && st.dense);
+        COLOR_CLS.forEach(c => el.classList.toggle(c, on && c === 'fabric-felt-surface--' + st.color));
+      });
+    }
+  };
+  const btn = (label, pressed, onClick, extra) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.setAttribute('aria-pressed', pressed);
+    b.onclick = onClick;
+    if (extra) extra(b);
+    return b;
+  };
+  const grp = label => {
+    const g = document.createElement('div');
+    g.className = 'ft__grp';
+    const l = document.createElement('span');
+    l.className = 'ft__lbl';
+    l.textContent = label;
+    g.appendChild(l);
+    return g;
+  };
+  let perfEl;
+  const render = () => {
+    let bar = document.querySelector('.ft');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.className = 'ft';
+      document.body.appendChild(bar);
+    }
+    bar.innerHTML = '';
+    const g1 = grp('Felt on');
+    PLACES.forEach(([id, label]) => g1.appendChild(btn(label, st.on.includes(id), () => {
+      st.on = st.on.includes(id) ? st.on.filter(x => x !== id) : [...st.on, id];
+      if (id === 'login' && st.on.includes('login')) localStorage.setItem('fabric.screen', 'login');
+      save();
+      apply();
+      render();
+      if (id === 'login' && st.on.includes('login') && !document.querySelector('.fa-login')) location.reload();
+    })));
+    const g2 = grp('Wool');
+    COLORS.forEach(([c, v]) => g2.appendChild(btn('', st.color === c, () => {
+      st.color = c;
+      save();
+      apply();
+      render();
+    }, b => {
+      b.className = 'ft__sw';
+      b.title = c;
+      b.style.background = `var(${v})`;
+    })));
+    g2.appendChild(btn('Dense', st.dense, () => {
+      st.dense = !st.dense;
+      save();
+      apply();
+      render();
+    }));
+    const g3 = grp('Cost');
+    g3.appendChild(btn('Repaint ×60', false, stress));
+    perfEl = document.createElement('span');
+    perfEl.className = 'ft__perf';
+    perfEl.textContent = '— fps';
+    g3.appendChild(perfEl);
+    bar.append(g1, g2, g3);
+  };
+
+  // Live fps
+  let frames = 0,
+    last = performance.now(),
+    busy = false;
+  const tick = t => {
+    frames++;
+    if (t - last >= 1000 && !busy) {
+      if (perfEl) perfEl.textContent = Math.round(frames * 1000 / (t - last)) + ' fps idle';
+      frames = 0;
+      last = t;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+
+  // Force the felt layers to re-rasterize every frame (1px size nudge) and time it.
+  function stress() {
+    const els = [...document.querySelectorAll('.fabric-felt-surface')];
+    if (!els.length) {
+      perfEl.textContent = 'no felt on screen';
+      return;
+    }
+    busy = true;
+    perfEl.textContent = 'measuring…';
+    const base = st.dense ? 320 : 480;
+    let i = 0,
+      prev = performance.now(),
+      worst = 0;
+    const times = [];
+    const step = t => {
+      const dt = t - prev;
+      prev = t;
+      if (i > 0) {
+        times.push(dt);
+        worst = Math.max(worst, dt);
+      }
+      if (i++ < 60) {
+        const s = base + i % 2;
+        els.forEach(el => {
+          el.style.backgroundSize = s + 'px ' + s + 'px';
+        });
+        requestAnimationFrame(step);
+      } else {
+        els.forEach(el => {
+          el.style.backgroundSize = '';
+        });
+        const avg = times.reduce((a, b) => a + b, 0) / times.length;
+        perfEl.textContent = `${avg.toFixed(1)} ms avg · ${worst.toFixed(0)} ms worst · ${els.length} el`;
+        busy = false;
+        frames = 0;
+        last = performance.now();
+      }
+    };
+    requestAnimationFrame(step);
+  }
+  const start = () => {
+    render();
+    apply();
+    new MutationObserver(apply).observe(document.getElementById('root'), {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);else start();
+})();
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/app/felt-test.js", error: String((e && e.message) || e) }); }
 
 // ui_kits/app/icons.jsx
 try { (() => {
