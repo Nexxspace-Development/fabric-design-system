@@ -148,7 +148,7 @@ How Fabric writes.
 
 **Color.** A muted, nature-derived palette defined in OKLCH at low chroma. Backbone neutral is **stone** (warm linen → bark). Primary is **sage** (muted moss). Warm accents are **terracotta** (fired clay) and **ochre** (dried grass/honey); the cool accent is **marsh** (still water). Danger is **rust** — earthen, never an alarming pure red. Nothing is saturated. Light, warm paper surfaces; ink is warm near-black, never pure `#000`. See `tokens/colors.css`.
 
-**Type.** Three humanist families. *Newsreader* (serif) carries all display, headlines, and quotes — warm, literary, calm. *Hanken Grotesk* (sans) is the steady UI/body voice. *IBM Plex Mono* handles eyebrows, numerals, code, and data labels. Display is set tight (`-0.02em`) at weight 400–500; body at 400/500/600; the mono eyebrow is uppercase, tracked `0.16em`, prefixed `//`. See `tokens/typography.css`.
+**Type.** Three humanist families, all loaded as **variable fonts** — no faux synthesis, the full weight continuum is always available. *Newsreader* (serif, 100–900) carries all display, headlines, and quotes — warm, literary, calm. *Hanken Grotesk* (sans, 100–900) is the steady UI/body voice. *IBM Plex Mono* (mono, 100–700) handles eyebrows, numerals, code, and data labels. Display is set tight (`-0.02em`); body at 400/500/600; the mono eyebrow is uppercase, tracked `0.16em`, prefixed `//`. The type scale is **fluid** — all `--text-*` tokens use `clamp()` to scale smoothly between 360 px and 1440 px viewport, so display sizes shrink gracefully on mobile without overflow. See `tokens/typography.css`.
 
 **Spacing & layout.** 4px base grid. Generous, breathing layouts — whitespace is part of the calm. Readable prose capped at ~42rem. See `tokens/spacing.css`.
 
@@ -195,9 +195,9 @@ How Fabric writes.
 - `styles.css` — the one file consumers link (imports the tokens + base below).
 
 **Tokens** (`tokens/`)
-- `fonts.css` — `@import` of the three Google Fonts.
+- `fonts.css` — `@import` of all three Google Fonts as **variable fonts** (full `wght` axis; `ital` axis on Hanken Grotesk and IBM Plex Mono).
 - `colors.css` — OKLCH scales (stone, sage, terracotta, ochre, marsh, rust) + semantic aliases.
-- `typography.css` — families, type scale, weights, leading, tracking.
+- `typography.css` — families, **fluid type scale** (`clamp()` from 360→1440 px viewport), weights, leading, tracking.
 - `spacing.css` — spacing grid, radii, borders, shadows, motion, z-index, widths.
 - `base.css` — element defaults, `.fabric-eyebrow`, reduced-motion.
 - `textures.css` — surface texture utilities (`.fabric-weave/-linen/-grain/-ribbed/-felt/-frost/-stitch`).
